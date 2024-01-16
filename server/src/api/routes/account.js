@@ -1,13 +1,11 @@
 import { Router } from 'express';
 
-import { register } from "../../services/account.js"
+import { getUserInfo, signin, signout } from "../../services/account.js"
 
 const router = Router();
 
-router.post('/register', register);
-
-router.post('/signin', (req, res) => {
-    res.status(200).send("SignIn");
-})
+router.get('/signin', signin);
+router.get('/signout', signout);
+router.post('/userinfo', getUserInfo)
 
 export default router;

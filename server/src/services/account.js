@@ -1,31 +1,50 @@
-import bcrypt from "bcrypt";
+import { OAuth2Client } from 'google-auth-library';
+import axios from 'axios';
 
-import pool from '../data-access/mysql.js'
+import pool from '../data-access/mysql.js';
+import keys from '../config/oauth2.keys.json' assert { type: "json" };;
 
-const register = async (req, res) => {
+const oAuth2Client = new OAuth2Client(
+    keys.web.client_id,
+    keys.web.client_secret,
+    keys.web.redirect_uris[0]
+);
+
+const signin = (req, res) => {
+    const authorizeUrl = oAuth2Client.generateAuthUrl({
+        access_type: 'offline',
+        scope: 'https://www.googleapis.com/auth/userinfo.profile',
+    });
+
+    res.status(200).send(authorizeUrl);
+}
+
+const getUserInfo = async (req, res) => {
     try {
-        const { password, ...info } = req.body;
-
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-        pool((mysql) => {
-            const query = `insert into user(email, password, name) values ("${info.email}", "${hashedPassword}", "${info.name}")`
-            mysql.query(query, function (error, results, fields) {
-                if (error) throw error;
-            })
-
-            mysql.release();
+        const code = req.body.code;
+        const r = await oAuth2Client.getToken(code);
+        oAuth2Client.setCredentials(r.tokens);
+        const googleApi = 'https://www.googleapis.com/oauth2/v2/userinfo';
+        const userInfo = await axios.get(googleApi, {
+            headers: {
+                Authorization: `Bearer ${oAuth2Client.credentials.access_token}`,
+            }
         })
-
-        res.status(200).json({ info, message: "create account successful" })
+        
+        res.status(200).send(userInfo.data);
     } catch (error) {
-        throw new Error(`Error registering user: ${error}`);
+        console.log("사용자 가져오기 에러")
     }
 }
 
-const signin = (req, res) => {
-
+const signout = (req, res) => {
+    try {
+        oAuth2Client.revokeCredentials((err, body) => {
+            console.log(err, body)
+        });
+    } catch (error) {
+        console.log("로그아웃 에러")
+    }
 }
 
-export { register }
+export { signin, signout, getUserInfo }
