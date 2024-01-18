@@ -4,6 +4,7 @@ import { fetchUser } from "../../fetch/google-oauth";
 
 export default function Signup() {
     const [userInfo, setUserInfo] = useState(undefined);
+    const [loginUrl, setLoginUrl] = useState();
 
     useEffect(() => {
         const getUser = async () => {
@@ -13,17 +14,28 @@ export default function Signup() {
             setUserInfo(userInfo.data);
         }
 
+        window.addEventListener("message", (event) => {
+            if (event.origin !== "http://localhost:3000") {
+                return
+            } else {
+                setLoginUrl(event.currentTarget);
+            }
+        })
+
         getUser();
     }, []);
 
-    console.log(userInfo)
+    const closeWindow = () => {
+        loginUrl.close();
+    }
+
     return (
         <div>
             {userInfo && (
                 <>
-                    <button>계정 만들기</button>
+                    <button onClick={closeWindow}>계정 만들기</button>
                     <h1>{userInfo.name}</h1>
-                    <img src={userInfo.picture} />
+                    <img src={userInfo.picture} alt="img"/>
                 </>
             )}
         </div>

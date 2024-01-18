@@ -1,4 +1,4 @@
-import { useState, createContext } from 'react';
+import { useState } from 'react';
 
 import { fetchLogin } from "../fetch/google-oauth"
 import LoginModal from "../components/account/loginModal"
@@ -15,6 +15,10 @@ export default function Home() {
     const loginHandler = async () => {
         const googleAuthUrl = await fetchLogin();
         const googleWindow = window.open(googleAuthUrl, "", "width=400, height=600, left=800, top=300, scrollbars=yes");
+
+        setTimeout(() => {
+            googleWindow.postMessage("Hello", "http://localhost:3000/auth/google/redirect");
+        }, 1000)
     }
 
     return (
