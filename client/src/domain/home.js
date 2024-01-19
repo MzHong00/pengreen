@@ -22,14 +22,12 @@ export default function Home() {
     }
 
     return (
-        <div>
+        <div className='min-h-screen'>
             <header>
-                <button onClick={modalHandler}>{user === undefined ? "login" : user}</button>
+                <button onClick={modalHandler}>{user === undefined ? "로그인" : user}</button>
             </header>
             <main>
-                <h1 className="text-3xl font-bold underline">
-                    Hello world!
-                </h1>
+                
             </main>
             <footer>
 
