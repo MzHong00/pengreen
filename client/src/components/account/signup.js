@@ -4,7 +4,8 @@ import { fetchUser } from "../../fetch/google-oauth";
 
 export default function Signup() {
     const [userInfo, setUserInfo] = useState(undefined);
-    const [loginUrl, setLoginUrl] = useState();
+    const [modalWindow, setModalWindow] = useState();
+    const [homeWindow, setHomeWindow] = useState();
 
     useEffect(() => {
         const getUser = async () => {
@@ -18,7 +19,10 @@ export default function Signup() {
             if (event.origin !== "http://localhost:3000") {
                 return
             } else {
-                setLoginUrl(event.currentTarget);
+                //홈의 window 객체
+                setHomeWindow(event.source);
+                //모달창의 window 객체
+                setModalWindow(event.currentTarget);
             }
         }
         window.addEventListener("message", postMessage);
@@ -30,9 +34,11 @@ export default function Signup() {
         )
     }, []);
 
-    const closeWindow = () => {
+    const closeWindow = async () => {
+        await homeWindow.postMessage(userInfo, "http://localhost:3000/");
+
         //구글에서 얻은 id, name, 그리고 추가의 폼에서 얻은 date날짜를 합쳐서 post요청 
-        loginUrl.close();
+        modalWindow.close();
     }
 
     return (

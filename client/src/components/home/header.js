@@ -1,9 +1,7 @@
-import { useState } from "react";
 
 import { Button, LogoButton } from '../common/Button'
 
-export default function Header({ setModalOpen }) {
-    const [user, setUser] = useState(undefined);
+export default function Header({ setModalOpen, user}) {
 
     const modalHandler = () => {
         setModalOpen(true);
@@ -12,7 +10,7 @@ export default function Header({ setModalOpen }) {
     return (
         <header className="flex justify-between py-4">
             <LogoButton />
-            <Button handler={modalHandler} name={user === undefined ? "로그인" : user} />
+            <Button handler={modalHandler} name={user.name === undefined ? "로그인" : user.name} />
         </header>
     )
 }
