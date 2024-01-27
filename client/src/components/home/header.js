@@ -10,7 +10,8 @@ export default function Header({ setModalOpen, user}) {
     return (
         <header className="flex justify-between py-4">
             <LogoButton />
-            <Button handler={modalHandler} name={user.name === undefined ? "로그인" : user.name} />
+            
+            <Button handler={modalHandler} name={user === undefined ? "로그인" : user.name} />
         </header>
     )
 }

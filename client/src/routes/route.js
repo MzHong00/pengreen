@@ -13,7 +13,7 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: "/auth/google/redirect",
+        path: "/auth/google",
         element: <Signup />
     }
 ])

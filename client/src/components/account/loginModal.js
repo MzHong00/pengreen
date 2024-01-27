@@ -19,9 +19,7 @@ export default function LoginModal({ setModalOpen }) {
                 const googleAuthUrl = await fetchLogin();
                 const googleWindow = window.open(googleAuthUrl, "", "width=400, height=600, left=800, top=300, scrollbars=yes");
 
-                setTimeout(() => {
-                    googleWindow.postMessage("이거아니야", "http://localhost:3000/auth/google/redirect");
-                }, 1000)
+                googleWindow.postMessage("이거아니야");
             },
             tailwind: "border"
         },
