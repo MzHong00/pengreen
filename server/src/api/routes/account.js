@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
-import { getUserInfo, signin, signout } from "../../services/account.js"
+import google from './oauth_google.js'
+import auth from './auth.js'
 
 const router = Router();
 
-router.get('/signin', signin);
-router.get('/signout', signout);
-router.post('/userinfo', getUserInfo)
+router.use('/auth', auth)
+router.use('/google', google)
 
 export default router;
