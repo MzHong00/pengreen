@@ -17,9 +17,7 @@ export default function LoginModal({ setModalOpen }) {
             logo: () => <FcGoogle size={'20'} viewBox="0 0 48 48" />,
             handler: async () => {
                 const googleAuthUrl = await fetchLogin();
-                const googleWindow = window.open(googleAuthUrl, "", "width=400, height=600, left=800, top=300, scrollbars=yes");
-
-                googleWindow.postMessage("이거아니야");
+                window.open(googleAuthUrl, "", "width=400, height=600, left=800, top=300, scrollbars=yes");
             },
             tailwind: "border"
         },

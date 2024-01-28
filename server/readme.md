@@ -10,5 +10,11 @@ return 구글 로그인 폼 url
 `POST` /api/account/google/redirect
 return 구글 로그인 사용자 정보
 
-`POST` /api/account/auth/google
-return {accessToken, refreshToken}
+`POST` /api/account/signin
+return { accessToken, refreshToken }
+
+`POST` /api/account/auth
+return jwt_payload or expired
+
+`POST` /api/account/reissue
+return accessToken

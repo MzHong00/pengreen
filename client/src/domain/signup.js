@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-import { fetchAccess_token } from "../../fetch/google-oauth";
+import { fetchAccess_token } from "../fetch/google-oauth";
 
 export default function Signup() {
     useEffect(() => {
@@ -9,18 +9,16 @@ export default function Signup() {
             const name = params.get("code");
 
             await fetchAccess_token(name);
+            window.opener.postMessage('login');
+            window.close();
         }
-
+        
         getToken();
     }, []);
 
-    const closeWindow = async () => {
-        window.postMessage("hi", "http://localhost:3000");
-    }
-
     return (
         <div>
-            <button onClick={closeWindow}>돌아가기</button>
+            로그인중....
         </div>
     )
 }
