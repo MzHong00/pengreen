@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 import mysql from '../data-access/mysql.js';
 
-const ACCESS_TOKEN_EXPIRES = "1h"
+const ACCESS_TOKEN_EXPIRES = "1s"
 
 const auth = async (req, res) => {
     try {
@@ -11,7 +11,6 @@ const auth = async (req, res) => {
         if (authorizationHeader) {
             // "Bearer <token>" 형식으로 전송된 토큰에서 "Bearer " 부분을 제거하여 토큰을 추출합니다.
             const accessToken = authorizationHeader.split(' ')[1];
-
             const data = jwt.verify(accessToken, process.env.ACCESS_SECRET_KEY);
 
             res.status(200).send(data);
@@ -27,11 +26,11 @@ const auth = async (req, res) => {
 const signin = async (req, res) => {
     try {
         const user = req.body;
-        const isAcoount = await verify(user.data.email);
+        const isAcoount = await verify(user.email);
         if (!isAcoount) {
-            signup(user.data)
+            signup(user)
         }
-        const token = issueToken(user.data);
+        const token = issueToken(user);
 
         res.status(200).send(token);
     } catch (error) {

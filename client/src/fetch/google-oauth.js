@@ -3,20 +3,22 @@ import {
   setCookie, getCookie
 } from '../config/cookie';
 
+//구글 로그인 폼 호출
 const fetchLogin = async () => {
   const res = await axios.get('http://localhost:5001/api/account/google/signin');
 
   return res.data;
 }
 
+//구글 로그인이 완료되면 redirect로 code를 받음
+//code로 서버에 로그인 후, 토큰을 받아 브라우저에 쿠키 생성
 const fetchAccess_token = async (code) => {
   try {
-    //google 사용자 정보를 가져옴
     const user = await axios.post('http://localhost:5001/api/account/google/redirect', {
       code: code
     });
 
-    const token = await axios.post('http://localhost:5001/api/account/signin', user);
+    const token = await axios.post('http://localhost:5001/api/account/signin', user.data);
 
     setCookie('access_token', token.data.accessToken, {
       path: '/',
@@ -35,46 +37,66 @@ const fetchAccess_token = async (code) => {
   }
 }
 
+//브라우저에 쿠키를 갖고 서버에 요청하여 계정 정보를 가져옴
 const fetchUser = async () => {
   try {
     const accessToken = getCookie('access_token');
-    const user = await axios.post('http://localhost:5001/api/account/auth', {}, {
+    let user;
+
+    if (!accessToken) {
+      throw new Error('Access token is missing');
+    }
+
+    user = await axios.post('http://localhost:5001/api/account/auth', {}, {
       headers: {
         'Authorization': `Bearer ${accessToken}`
       }
-    })
+    });
 
-    //만약 access token이 만료되었을 경우, 서버에 refresh token을 보내고
-    //서버는 refresh 토큰을 받아 access token을 다시 보내준 후 갱신
+    //Access Token이 만료되었다면 Refresh Token을 사용하여 재발급
     if (user.data === 'expired') {
       const refreshToken = getCookie('refresh_token');
-      const reissue_accessToken = await axios.post('http://localhost:5001/api/account/reissue', {}, {
-        headers: {
-          'Authorization': `Bearer ${refreshToken}`
-        }
-      })
+      const reissuedToken = await reissueToken(refreshToken);
 
-      setCookie('access_token', reissue_accessToken.data, {
+      setCookie('access_token', reissuedToken, {
         path: '/',
         secure: true,
+        httponly: true
       });
 
-      const accessToken = getCookie('access_token');
-      const user = await axios.post('http://localhost:5001/api/account/auth', {}, {
+      user = await axios.post('http://localhost:5001/api/account/auth', {}, {
         headers: {
-          'Authorization': `Bearer ${accessToken}`
+          'Authorization': `Bearer ${reissuedToken}`
         }
-      })
-      console.log("access토큰 재발급");
-      return user.data.name;
+      });
     }
 
-
-    return user.data.name;
+    return user.data;
   } catch (error) {
     console.error("fetchUser error: ", error);
   }
 }
+
+const reissueToken = async (refreshToken) => {
+  try {
+    if (!refreshToken) {
+      throw new Error('Refresh token is missing');
+    }
+
+    const reissueResponse = await axios.post('http://localhost:5001/api/account/reissue', {}, {
+      headers: {
+        'Authorization': `Bearer ${refreshToken}`
+      }
+    });
+
+    console.log(reissueResponse);
+    return reissueResponse.data;
+  } catch (error) {
+    console.error("reissueToken error: ", error);
+    throw error;
+  }
+}
+
 
 //미구현
 const fetchLogout = async () => {
