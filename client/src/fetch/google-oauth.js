@@ -89,7 +89,6 @@ const reissueToken = async (refreshToken) => {
       }
     });
 
-    console.log(reissueResponse);
     return reissueResponse.data;
   } catch (error) {
     console.error("reissueToken error: ", error);
