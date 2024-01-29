@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {
-  setCookie, getCookie
+  setCookie, getCookie, removeCookie
 } from '../config/cookie';
 
 //구글 로그인 폼 호출
@@ -98,11 +98,13 @@ const reissueToken = async (refreshToken) => {
 
 
 //미구현
-const fetchLogout = async () => {
+const fetchLogout = () => {
   try {
-    await axios.get('http://localhost:5001/api/account/signout');
+    removeCookie('access_token');
+    removeCookie('refresh_token');
+    window.location.reload();
   } catch (error) {
-    console.error("error: ", error);
+    console.error("로그인 상태가 아닙니다");
   }
 }
 

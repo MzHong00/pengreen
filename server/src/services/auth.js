@@ -26,7 +26,7 @@ const auth = async (req, res) => {
 const signin = async (req, res) => {
     try {
         const user = req.body;
-        const isAcoount = await verify(user.email);
+        const isAcoount = await verify(user);
         if (!isAcoount) {
             signup(user)
         }
@@ -39,11 +39,11 @@ const signin = async (req, res) => {
 }
 
 //boolean, 사용자 DB에 사용자가 존재하는지 여부
-const verify = async (email) => {
+const verify = async (user) => {
     try {
         const query = "select * from account";
         const data = await mysql(query);
-        const isAcoount = data.some(idx => idx.email === email)
+        const isAcoount = data.some(idx => idx.email === user.email && idx.id === user.id);
 
         return isAcoount
     } catch (error) {
@@ -54,18 +54,18 @@ const verify = async (email) => {
 //로그인하여 token을 발급
 const issueToken = (user) => {
     try {
-        const accessToken = jwt.sign({
+        const payload = {
             email: user.email,
-            name: user.name
-        }, process.env.ACCESS_SECRET_KEY, {
+            name: user.name,
+            picture: user.picture
+        }
+        
+        const accessToken = jwt.sign(payload, process.env.ACCESS_SECRET_KEY, {
             expiresIn: ACCESS_TOKEN_EXPIRES,
             issuer: 'access issuer'
         })
 
-        const refreshToken = jwt.sign({
-            email: user.email,
-            name: user.name
-        }, process.env.REFRESH_SECRET_KEY, {
+        const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET_KEY, {
             expiresIn: '24h',
             issuer: 'refresh issuer'
         })
@@ -98,11 +98,14 @@ const reissue_token = (req, res) => {
             const refreshToken = authorizationHeader.split(' ')[1];
             const data = jwt.verify(refreshToken, process.env.REFRESH_SECRET_KEY);
 
+            const payload = {
+                email: data.email,
+                name: data.name,
+                picture: data.picture
+            }
+
             if (data) {
-                const accessToken = jwt.sign({
-                    email: data.email,
-                    name: data.name
-                }, process.env.ACCESS_SECRET_KEY, {
+                const accessToken = jwt.sign(payload, process.env.ACCESS_SECRET_KEY, {
                     expiresIn: ACCESS_TOKEN_EXPIRES,
                     issuer: 'access issuer'
                 })

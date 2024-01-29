@@ -6,7 +6,7 @@ import { SiNaver } from "react-icons/si";
 import { RiKakaoTalkFill } from "react-icons/ri";
 
 import { fetchLogin } from "../../fetch/google-oauth"
-import {LoginButton} from "../common/Button";
+import {LoginButton, Button} from "../common/Button";
 
 export default function LoginModal({ setModalOpen }) {
     const modalOutside = useRef();
@@ -49,13 +49,13 @@ export default function LoginModal({ setModalOpen }) {
     return (
         <div onClick={clickModalOutside} ref={modalOutside} className="top-0 left-0 fixed flex items-center justify-center w-full h-full bg-black/60">
             <div className="flex flex-col items-center p-5 w-112 h-160 bg-white shadow-lg rounded-3xl overflow-hidden gap-10">
-                <LoginButton logo={closeIcon} handler={closeModal} btnClass={'!justify-end'} containerClass={'!justify-end'} />
+                <Button componentImg={closeIcon} handler={closeModal} containerClass={'w-full !justify-end'} />
                 <div className="flex flex-col justify-between items-center w-full h-full ">
                     <div>
                         <h1 className="text-4xl">환영합니다</h1>
                     </div>
                     <div className="grid gap-2">
-                        {oauth.map((oauth) => <LoginButton key={oauth.name} {...oauth} btnClass={`w-72 hover:opacity-90 ${oauth.tailwind}`} />)}
+                        {oauth.map((oauth) => <LoginButton key={oauth.name} {...oauth} btnClass={`w-72 hover:opacity-75 ${oauth.tailwind}`} />)}
                     </div>
                     <p className="text-sm">로그인하여 다양한 서비스들을 누려보세요!</p>
                 </div>
