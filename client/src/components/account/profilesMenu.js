@@ -1,7 +1,7 @@
 import { LuLogOut } from "react-icons/lu";
 import { LuUser2 } from "react-icons/lu";
 
-import { ListButton } from "../common/Button";
+import ListButton from '../common/ListButton'
 import { fetchLogout } from "../../fetch/google-oauth";
 
 export default function ProfilesMenu() {
@@ -19,16 +19,14 @@ export default function ProfilesMenu() {
 
     return (
         <div className="relative flex flex-col w-full rounded-2xl bg-violet-50 overflow-hidden ">
-            {list.map((idx) => {
-                return (
-                    <ListButton key={idx.name}
-                        handler={idx.handler}
-                        componentImg={idx.icon}
-                        name={idx.name}
-                        btnClass="h-12 text-sm"
-                        containerClass="px-4 border-b-4 border-purple-200 shadow-inner" />
-                )
-            })}
+            {list.map((idx) =>
+                <ListButton key={idx.name}
+                    handler={idx.handler}
+                    componentImg={idx.icon}
+                    name={idx.name}
+                    containerStyles="h-12 border-b-4 border-purple-200 shadow-inner"
+                    btnStyles="px-4"/>
+            )}
         </div>
     )
 }

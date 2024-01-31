@@ -1,17 +1,16 @@
-import { useRef } from "react";
+import { useMemo } from "react";
 
 import { FcGoogle } from "react-icons/fc";
-import { IoMdClose } from "react-icons/io";
 import { SiNaver } from "react-icons/si";
 import { RiKakaoTalkFill } from "react-icons/ri";
 
 import { fetchLogin } from "../../fetch/google-oauth"
-import {LoginButton, Button} from "../common/Button";
+import LoginButton from "./loginButton";
+import Dialog from "../common/dialog";
 
 export default function LoginModal({ setModalOpen }) {
-    const modalOutside = useRef();
 
-    const oauth = [
+    const oauth = useMemo(() => [
         {
             name: "구글",
             logo: () => <FcGoogle size={'20'} viewBox="0 0 48 48" />,
@@ -33,33 +32,29 @@ export default function LoginModal({ setModalOpen }) {
             logo: () => <RiKakaoTalkFill size={'20'} />,
             tailwind: "bg-yellow-300"
         }
-    ]
+    ], [])
 
-    const closeIcon = () => <IoMdClose size={`30`} />
-
-    const clickModalOutside = (e) => {
-        //모달창 영역 밖을 클릭하면 모달창을 닫는 핸들러
-        e.target === modalOutside.current && (setModalOpen(false))
-    }
-
-    const closeModal = () => {
-        setModalOpen(false)
+    const contents = () => {
+        return (
+            <div className="flex flex-col justify-between items-center w-full h-full p-10 gap-10">
+                <div>
+                    <h1 className="text-4xl">환영합니다</h1>
+                </div>
+                <div className="grid gap-2">
+                    {oauth.map((oauth) => <LoginButton key={oauth.name} {...oauth} btnClass={`w-72 hover:opacity-75 ${oauth.tailwind}`} />)}
+                </div>
+                <p className="text-sm">로그인하여 다양한 서비스들을 누려보세요!</p>
+            </div>
+        )
     }
 
     return (
-        <div onClick={clickModalOutside} ref={modalOutside} className="top-0 left-0 fixed flex items-center justify-center w-full h-full bg-black/60">
-            <div className="flex flex-col items-center p-5 w-112 h-160 bg-white shadow-lg rounded-3xl overflow-hidden gap-10">
-                <Button componentImg={closeIcon} handler={closeModal} containerClass={'w-full !justify-end'} />
-                <div className="flex flex-col justify-between items-center w-full h-full ">
-                    <div>
-                        <h1 className="text-4xl">환영합니다</h1>
-                    </div>
-                    <div className="grid gap-2">
-                        {oauth.map((oauth) => <LoginButton key={oauth.name} {...oauth} btnClass={`w-72 hover:opacity-75 ${oauth.tailwind}`} />)}
-                    </div>
-                    <p className="text-sm">로그인하여 다양한 서비스들을 누려보세요!</p>
-                </div>
+            <div>
+                <Dialog 
+                    contentsComponent={contents}
+                    setModalOpen={setModalOpen}
+                    dialogStyles='w-100 h-144 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white'
+                    outsideStyles='bg-black/60'/>
             </div>
-        </div>
     )
 }

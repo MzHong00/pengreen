@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {
-  setCookie, getCookie, removeCookie
-} from '../config/cookie';
+import { Cookies } from "react-cookie";
+
+const cookies = new Cookies();
 
 //구글 로그인 폼 호출
 const fetchLogin = async () => {
@@ -20,13 +20,13 @@ const fetchAccess_token = async (code) => {
 
     const token = await axios.post('http://localhost:5001/api/account/signin', user.data);
 
-    setCookie('access_token', token.data.accessToken, {
+    cookies.set('access_token', token.data.accessToken, {
       path: '/',
       secure: true,
       httponly: true,
     });
 
-    setCookie('refresh_token', token.data.refreshToken, {
+    cookies.set('refresh_token', token.data.refreshToken, {
       path: '/',
       secure: true,
       httponly: true,
@@ -40,7 +40,7 @@ const fetchAccess_token = async (code) => {
 //브라우저에 쿠키를 갖고 서버에 요청하여 계정 정보를 가져옴
 const fetchUser = async () => {
   try {
-    const accessToken = getCookie('access_token');
+    const accessToken = cookies.get('access_token');
     let user;
 
     if (!accessToken) {
@@ -55,10 +55,10 @@ const fetchUser = async () => {
 
     //Access Token이 만료되었다면 Refresh Token을 사용하여 재발급
     if (user.data === 'expired') {
-      const refreshToken = getCookie('refresh_token');
+      const refreshToken = cookies.get('refresh_token');
       const reissuedToken = await reissueToken(refreshToken);
 
-      setCookie('access_token', reissuedToken, {
+      cookies.set('access_token', reissuedToken, {
         path: '/',
         secure: true,
         httponly: true
@@ -100,8 +100,8 @@ const reissueToken = async (refreshToken) => {
 //미구현
 const fetchLogout = () => {
   try {
-    removeCookie('access_token');
-    removeCookie('refresh_token');
+    cookies.remove('access_token');
+    cookies.remove('refresh_token');
     window.location.reload();
   } catch (error) {
     console.error("로그인 상태가 아닙니다");

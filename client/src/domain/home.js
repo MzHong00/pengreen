@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { fetchUser } from '../fetch/google-oauth';
 import LoginModal from "../components/account/loginModal"
 import Header from '../components/home/header';
+import Main from '../components/home/main';
 
 export default function Home() {
     const [user, setUser] = useState();
@@ -36,11 +37,9 @@ export default function Home() {
     }, [])
 
     return (
-        <div className='min-h-screen mx-14'>
+        <div className='min-h-screen'>
             <Header user={user} setModalOpen={setModalOpen} />
-            <main>
-
-            </main>
+            <Main />
             <footer>
 
             </footer>

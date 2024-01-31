@@ -16,7 +16,10 @@ export default function ProfilesDialog({setModalOpen, user}) {
 
     return (
         <div>
-            <Dialog setModalOpen={setModalOpen} dialogStyle={`absolute right-4 w-96 bg-gradient-to-b from-purple-100 to-purple-200`} contentsComponent={contents}/>
+            <Dialog 
+                setModalOpen={setModalOpen} 
+                dialogStyles={`absolute right-4 w-96 bg-gradient-to-b from-purple-100 to-purple-200`} 
+                contentsComponent={contents}/>
         </div>
     )
 }

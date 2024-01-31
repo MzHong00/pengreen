@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { LogoButton } from '../common/Button'
+
+import LogoButton from '../common/logoButton';
 import { IoIosArrowDown } from "react-icons/io";
 import ProfilesDialog from '../account/profilesDialog';
 import ProfilesButton from '../account/profilesButton';
@@ -18,7 +19,7 @@ export default function Header({ setModalOpen, user }) {
     }
 
     return (
-        <header className="flex justify-between py-6">
+        <header className="flex justify-between py-6 px-14">
             <LogoButton />
             {
                 user === undefined ? 
