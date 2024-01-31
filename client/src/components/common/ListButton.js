@@ -9,7 +9,7 @@ const ListButton = ({
 }) => 
     <div className={`flex ${containerStyles}`}>
         <button 
-            className={`flex items-center w-full h-full hover:bg-zinc-200 ${btnStyles}`} 
+            className={`flex items-center w-full h-full hover:bg-zinc-100 ${btnStyles}`} 
             onClick={handler}>
             <div className={`flex items-center rounded-3xl text-sm text-gray-800 gap-3 ${contentStyles}`}>
                 {urlImg &&
