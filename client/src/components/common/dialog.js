@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 
-import Button from "./Button";
+import Button from "./button";
 
 export default function Dialog({ contentsComponent, setModalOpen, dialogStyles, outsideStyles }) {
     const modalOutside = useRef();
@@ -27,10 +27,12 @@ export default function Dialog({ contentsComponent, setModalOpen, dialogStyles, 
                 <Button
                     componentImg={closeIcon}
                     handler={clickCloseBtn}
-                    containerStyles={'absolute right-5'} />
+                    containerStyles={'absolute right-5 top-4'} />
                 {contentsComponent()}
             </div>
-            <div onClick={clickModalOutside} ref={modalOutside} className={`fixed left-0 top-0 w-full h-full ${outsideStyles}`} />
+            <div onClick={clickModalOutside} ref={modalOutside} className={`fixed left-0 top-0 w-full h-full ${outsideStyles}`}>
+                
+            </div>
         </div>
     )
 }

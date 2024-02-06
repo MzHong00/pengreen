@@ -5,7 +5,7 @@ import { SiNaver } from "react-icons/si";
 import { RiKakaoTalkFill } from "react-icons/ri";
 
 import { fetchLogin } from "../../fetch/google-oauth"
-import Button from "../common/Button";
+import Button from "../common/button";
 import Dialog from "../common/dialog";
 
 export default function LoginModal({ setModalOpen }) {

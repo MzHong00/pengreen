@@ -1,10 +1,8 @@
 
-
-export default function Contents() {
+export default function Content() {
     
     return (
         <div className="">
-            Contents
         </div>
     )
 }
