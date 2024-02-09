@@ -1,37 +1,44 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import { FaPlus } from "react-icons/fa6";
+import { ItemContext } from "../common/PvoteCreator";
 
 
-export default function CreateItem({ setItems, sizeClass }) {
+export default function AddChoice({ sizeClass }) {
     const [value, setValue] = useState("");
+    const { setItems } = useContext(ItemContext);
 
     const changeHandler = (e) => {
+        e.preventDefault();
         setValue(e.target.value);
     }
 
-    const changeItems = (e) => {
-        if (e.target.value === "" || e.target.value === undefined)
+    const addItem = () => {
+        //빈칸이면 choice를 추가하지 않음
+        if (value === "" || value === undefined)
             return
 
         const obj = {
             id: Math.random(),
-            content: e.target.value
+            content: value
         }
 
-        setItems((prev) => [...prev, obj]);
+        setItems((prev) => ({
+            ...prev,
+            choice: [...prev.choice, obj]
+        }));
         setValue("");
     }
 
     const createItem = (e) => {
         if (e.key === 'Enter') {
-            changeItems(e);
+            addItem();
         }
     }
 
     return (
         <div className={`flex ${sizeClass} items-center text-sm gap-3 focus:text-blue-400`}>
-            <FaPlus color="#0099FF" onClick={changeItems} />
+            <FaPlus className="cursor-pointer" color="#0099FF" size="18" onClick={addItem} />
             <input
                 value={value}
                 onChange={changeHandler}

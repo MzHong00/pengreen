@@ -1,4 +1,4 @@
-import NewVote from "./newVote";
+import CreateVoteButton from "./createVoteButton";
 
 export default function Dashboard(params) {
 
@@ -8,7 +8,7 @@ export default function Dashboard(params) {
                 <span>
                     My Votes
                 </span>
-                <NewVote />
+                <CreateVoteButton />
             </div>
             <div>
                 Activity

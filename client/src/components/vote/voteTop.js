@@ -1,6 +1,6 @@
 
 
-export default function NewVoteTop(params) {
+export default function VoteTop() {
 
     return (
         <div className="flex items-center">
