@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 import mysql from '../data-access/mysql.js';
 
-const ACCESS_TOKEN_EXPIRES = "1s"
+const ACCESS_TOKEN_EXPIRES = "10s"
 
 const auth = async (req, res) => {
     try {
@@ -55,6 +55,7 @@ const verify = async (user) => {
 const issueToken = (user) => {
     try {
         const payload = {
+            id: user.id,
             email: user.email,
             name: user.name,
             picture: user.picture
@@ -99,6 +100,7 @@ const reissue_token = (req, res) => {
             const data = jwt.verify(refreshToken, process.env.REFRESH_SECRET_KEY);
 
             const payload = {
+                id: data.id,
                 email: data.email,
                 name: data.name,
                 picture: data.picture

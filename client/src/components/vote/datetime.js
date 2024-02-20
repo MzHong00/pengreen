@@ -1,28 +1,25 @@
-import { useContext, useEffect, useMemo, useState } from "react"
-import { ItemContext } from "../common/PvoteCreator";
+import { useEffect, useState } from "react"
 
-export default function Datetime() {
-    const getInitialDate = useMemo(() => {
-        const oneDayLater = new Date().setTime(new Date().getTime() + 24 * 60 * 60 * 1000);
-        return new Date(oneDayLater).toISOString().slice(0, 16);
-    }, [])
-    const {items, setItems} = useContext(ItemContext);
+export default function Datetime({ vote, setVote }) {
 
-    const [deadline, setDeadline] = useState(items.deadline);
+    const [deadline, setDeadline] = useState(vote.deadline);
     useEffect(() => {
-        setItems(prev => ({
+        setVote(prev => ({
             ...prev,
             deadline: deadline
         }))
-    }, [deadline, setItems])
+    }, [deadline, setVote])
 
     const dateHandler = (e) => {
         setDeadline(e.target.value)
     }
 
     return (
-        <div>
-            <input type="datetime-local" id="deadline" value={deadline} className="text-sm" onChange={dateHandler} />
+        <div className="flex flex-col w-1/2">
+            <label htmlFor="deadline" className="text-base font-semibold">기간</label>
+            <div>
+                <input type="datetime-local" id="deadline" value={deadline} className="text-sm hover:cursor-pointer" onChange={dateHandler} />
+            </div>
         </div>
     )
 }

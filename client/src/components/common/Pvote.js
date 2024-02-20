@@ -1,50 +1,42 @@
 import { useState } from "react";
-import { FaCheck } from "react-icons/fa";
 
- function Vote({ id, contentValue, items, setItems }) {
-    const [content, setContent] = useState(contentValue);
+import { AiOutlineLike } from "react-icons/ai";
 
-    const contentHandler = (e) => {
-        setContent(e.target.value);
-    }
+import Button from './button'
+import Pchoice from './Pchoice';
+import Dialog from "./dialog";
+import PvoteDetail from "./PvoteDetail";
 
-    const changeItems = (e) => {
-        const obj = {
-            id: id,
-            content: e.target.value
-        }
-        const index = items.findIndex(item => item.id === id);
-        items.splice(index, 1, obj);
-        setItems(items);
-    }
+export default function Pvote({ profiles_picture, vote }) {
+    const [openModal, setOpenModal] = useState(false);
 
-    //items의 상태를 바꾸는 함수
-    const updateItems = (e) => {
-        if (e.key === 'Enter') {
-            changeItems(e);
-        }
+    const voteDetail = () => <PvoteDetail {...{ profiles_picture, vote }} />
+
+    const openModalHandler = () => {
+        setOpenModal(true);
     }
 
     return (
-        <div>
-            <input type="checkbox" name="vote" id={id} className="hidden" />
-            <label htmlFor={id}>
-                <div className={`flex`}>
-                    <div
-                        className={`flex items-center w-full h-full`}>
-                        <div className={`flex items-center rounded-3xl text-sm text-gray-800 gap-3`}>
-                            <FaCheck color="#0099FF" />
-                            <input
-                                value={content}
-                                onChange={contentHandler}
-                                onKeyDown={updateItems}
-                                onBlur={changeItems}
-                                placeholder="항목"
-                                className="w-full bg-inherit outline-none focus:text-blue-500" />
-                        </div>
-                    </div>
+        <div className="w-96 h-80 flex flex-col justify-between bg-gradient-to-br from-cyan-100 to-blue-200 rounded-3xl overflow-hidden p-5 m-3 shadow-lg">
+            <section className="flex justify-between gap-2">
+                <div className='w-[85%] flex items-center'>
+                    <img src={profiles_picture} alt="프로필 사진" className="w-8 h-8 mr-3 rounded-full" />
+                    <h1 className='truncate'>{vote.title}</h1>
                 </div>
-            </label>
+                <div className='flex items-center'>
+                    <AiOutlineLike className='cursor-pointer' />
+                    <span className='text-base'>{vote.likes}</span>
+                </div>
+            </section>
+            <section className='h-48 max-h-48'>
+                <div className='h-full'>
+                    <Pchoice choice={vote.choice} max_choice={vote.max_choice} type='submit' />
+                </div>
+            </section>
+            <section>
+                <Button name={"상세보기"} btnStyles='w-full py-1 shadow bg-sky-100 hover:shadow-inner' handler={openModalHandler} />
+            </section>
+            {openModal && <Dialog contentsComponent={voteDetail} setModalOpen={setOpenModal} />}
         </div>
     )
 }

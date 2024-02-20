@@ -4,8 +4,4 @@ class Account {
         this.password = password;
         this.name = name;
     }
-    
-    validate() {
-        
-    }
 }

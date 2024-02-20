@@ -2,8 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-    .layout-center {
-      @apply flex justify-center items-center;
-    }
-  }
+  /* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgb(231, 242, 255);
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(147 197 253);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

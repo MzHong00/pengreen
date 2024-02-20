@@ -1,12 +1,9 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 import { FaPlus } from "react-icons/fa6";
-import { ItemContext } from "../common/PvoteCreator";
 
-
-export default function AddChoice({ sizeClass }) {
+export default function AddChoice({ sizeClass, setVote }) {
     const [value, setValue] = useState("");
-    const { setItems } = useContext(ItemContext);
 
     const changeHandler = (e) => {
         e.preventDefault();
@@ -23,7 +20,7 @@ export default function AddChoice({ sizeClass }) {
             content: value
         }
 
-        setItems((prev) => ({
+        setVote((prev) => ({
             ...prev,
             choice: [...prev.choice, obj]
         }));

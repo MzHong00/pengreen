@@ -1,10 +1,14 @@
 import { useState } from "react";
 
 import { FaPlus } from "react-icons/fa6";
-import PvoteCreator from "../common/PvoteCreator";
+
+import VoteForm from "../vote/voteForm";
+import Dialog from "../common/dialog";
 
 export default function CreateVoteButton() {
     const [openDialog, setOpenDialog] = useState(false);
+
+    const voteForm = () => <VoteForm />
 
     const openVoteCreator = () => {
         setOpenDialog(true)
@@ -15,11 +19,11 @@ export default function CreateVoteButton() {
             <div>
                 <button
                     onClick={openVoteCreator}
-                    className="w-80 h-60 flex flex-col justify-center items-center bg-gradient-to-br from-cyan-100 to-blue-200 rounded-3xl overflow-hidden p-5 m-3 shadow-lg">
-                    <FaPlus size="60" color="white" />
+                    className="w-96 h-80 flex flex-col justify-center items-center border-2 border-blue-200 rounded-3xl overflow-hidden p-5 m-3 shadow-lg hover:shadow-inner">
+                    <FaPlus size="60" color="rgb(165 243 252)" />
                 </button>
             </div>
-            { openDialog && <PvoteCreator setModalOpen={setOpenDialog}/> }
+            {openDialog && <Dialog contentsComponent={voteForm} setModalOpen={setOpenDialog}/>}
         </div>
     )
 }

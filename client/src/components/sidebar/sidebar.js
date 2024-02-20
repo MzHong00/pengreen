@@ -12,7 +12,7 @@ export default function Sidebar() {
         return (
             [
                 {
-                    name: "Home",
+                    name: "Explore",
                     icon: () => <MdHome size="20" />,
                     handler: () => {
                         navigate('/')
@@ -30,8 +30,8 @@ export default function Sidebar() {
     }, [navigate]);
 
     return (
-        <div className='w-48 min-h-screen overflow-hidden'>
-            <aside className='flex flex-col'>
+        <aside className='min-w-48 min-h-screen overflow-hidden'>
+            <nav className='flex flex-col'>
                 {
                     sideList.map((idx) =>
                         <ListButton
@@ -43,7 +43,7 @@ export default function Sidebar() {
                             contentStyles="pl-5 w-full h-10 hover:text-blue-400" />
                     )
                 }
-            </aside>
-        </div>
+            </nav>
+        </aside>
     )
 }

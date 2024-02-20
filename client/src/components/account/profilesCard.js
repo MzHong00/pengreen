@@ -1,7 +1,9 @@
+import { useContext } from "react"
+import { UserContext } from "../../domain/home"
 
-
-export default function ProfilesCard({ user }) {
-
+export default function ProfilesCard() {
+    const user = useContext(UserContext);
+    
     return (
         <div className="flex flex-col items-center gap-6">
             {
