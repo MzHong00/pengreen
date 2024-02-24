@@ -41,10 +41,10 @@ const signin = async (req, res) => {
 //boolean, 사용자 DB에 사용자가 존재하는지 여부
 const verify = async (user) => {
     try {
-        const query = "select * from account";
+        const query = "select id from account";
         const data = await mysql(query);
-        const isAcoount = data.some(idx => idx.email === user.email && idx.id === user.id);
-
+        const isAcoount = data.some(idx => idx.id === user.id);
+        
         return isAcoount
     } catch (error) {
         console.log("verify error: ", error);

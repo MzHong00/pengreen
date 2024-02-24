@@ -17,7 +17,7 @@ export default function Dashboard() {
         fetchVotes();
     }, [user]);
 
-    console.log(votes);
+    //console.log(votes);
     return (
         <div className="text-xl font-sans font-semibold">
             <section>
@@ -30,7 +30,7 @@ export default function Dashboard() {
                     <CreateVoteButton />
                     {
                         votes && votes.map((vote, idx) =>
-                            <Pvote key={idx} profiles_picture={user.picture} vote={vote} />)
+                            <Pvote key={idx} user_id={user.id} profiles_picture={user.picture} vote={vote} />)
                     }
                 </div>
             </section>

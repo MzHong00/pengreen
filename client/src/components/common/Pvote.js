@@ -1,19 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { AiOutlineLike } from "react-icons/ai";
+import { AiFillLike } from "react-icons/ai";
 
 import Button from './button'
 import Pchoice from './Pchoice';
 import Dialog from "./dialog";
 import PvoteDetail from "./PvoteDetail";
+import { fetchLikes, fetchLikes_checked } from "../../fetch/vote";
 
-export default function Pvote({ profiles_picture, vote }) {
+export default function Pvote({ user_id, profiles_picture, vote }) {
     const [openModal, setOpenModal] = useState(false);
-
+    const [like, setLike] = useState(vote.likes)
+    const [likeChecked, setLikeChecked] = useState();
     const voteDetail = () => <PvoteDetail {...{ profiles_picture, vote }} />
+
+    useEffect(() => {
+        const fetchChecked = async () => {
+            const isChecked = await fetchLikes_checked(user_id, vote.id);
+            setLikeChecked(isChecked);
+        }
+        fetchChecked();
+    }, [user_id, vote]);
 
     const openModalHandler = () => {
         setOpenModal(true);
+    }
+
+    const likesHandler = async () => {
+        const { checked, like_count } = await fetchLikes(user_id, vote.id);
+        setLikeChecked(checked);
+        setLike(like_count);
     }
 
     return (
@@ -24,8 +41,13 @@ export default function Pvote({ profiles_picture, vote }) {
                     <h1 className='truncate'>{vote.title}</h1>
                 </div>
                 <div className='flex items-center'>
-                    <AiOutlineLike className='cursor-pointer' />
-                    <span className='text-base'>{vote.likes}</span>
+                    {
+                        likeChecked ?
+                            <AiFillLike onClick={likesHandler} className='cursor-pointer' />
+                            :
+                            <AiOutlineLike onClick={likesHandler} className='cursor-pointer' />
+                    }
+                    <span className='text-base'>{like}</span>
                 </div>
             </section>
             <section className='h-48 max-h-48'>

@@ -8,7 +8,7 @@ import Pchoice from './Pchoice';
 export default function PvoteDetail({ profiles_picture, vote }) {
     const [chartType, setChartType] = useState(0);
     const [typeName, setTypeName] = useState();
-    console.log(vote);
+
     useEffect(() => {
         const view = ['기본', '막대', '파이']
 
@@ -20,7 +20,7 @@ export default function PvoteDetail({ profiles_picture, vote }) {
     }
 
     return (
-        <div className='min-w-[80vw] p-5 flex flex-col bg-gradient-to-br from-cyan-100 to-blue-200 gap-8'>
+        <div className='min-w-[70vw] p-5 flex flex-col bg-gradient-to-br from-cyan-100 to-blue-200 gap-8'>
             <section className="flex justify-between gap-2">
                 <div className='mr-20 flex items-center'>
                     <img src={profiles_picture} alt="프로필 사진" className="w-8 h-8 mr-3 rounded-full" />

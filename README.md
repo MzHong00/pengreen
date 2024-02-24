@@ -2,12 +2,14 @@
 ### Client
 01. React
 02. Tailwind
+03. chart.js
 
 `기록할 것들`
 - react-icons
 - react-cookie
 - tailwindcss(PostCss)
 - http-proxy-middleware
+- chart.js
 
 
 ### Server
