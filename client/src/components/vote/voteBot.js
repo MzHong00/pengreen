@@ -1,5 +1,5 @@
 import AddChoice from "./addChoice";
-import SubmitButton from './submitButton'
+import PublicButton from './publicButton'
 
 export default function VoteBot({ vote, setVote }) {
 
@@ -7,7 +7,7 @@ export default function VoteBot({ vote, setVote }) {
         <div className={`flex`}>
             <div className={`flex items-center w-full h-full`}>
                 <AddChoice sizeClass={'w-[90%] h-10'} setVote={setVote} />
-                <SubmitButton sizeClass={'w-[10%] h-10'} vote={vote} />
+                <PublicButton sizeClass={'w-[10%] h-10'} vote={vote} />
             </div>
         </div>
     )

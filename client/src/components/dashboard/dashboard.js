@@ -11,8 +11,8 @@ export default function Dashboard() {
 
     useEffect(() => {
         const fetchVotes = async () => {
-            const votes = user && await getMyVote(user.id);
-            setVotes(votes)
+            const myVotes = user && await getMyVote(user.id);
+            setVotes(myVotes)
         }
         fetchVotes();
     }, [user]);

@@ -1,6 +1,6 @@
 import { createVote } from '../../fetch/vote'
 
-export default function SubmitButton({ vote }) {
+export default function PublicButton({ vote }) {
     const submitHandler = () => {
         createVote(vote);
     }
