@@ -1,13 +1,14 @@
 import { useState, useEffect, createContext } from 'react';
 
 import { fetchUser } from '../fetch/google-oauth';
+
 import LoginModal from "../components/account/loginModal"
-import Header from '../components/home/header';
-import Main from '../components/home/main';
+import Header from '../components/pengreen/header';
+import Main from '../components/pengreen/main';
 
 export const UserContext = createContext();
 
-export default function Home() {
+export default function Pengreen() {
     const [user, setUser] = useState();
     const [isModalOpen, setModalOpen] = useState(false);
 

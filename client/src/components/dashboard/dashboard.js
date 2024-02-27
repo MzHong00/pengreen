@@ -3,12 +3,12 @@ import { useContext, useEffect, useState } from "react";
 import CreateVoteButton from "./createVoteButton";
 import Pvote from "../common/Pvote";
 import { getMyVote } from "../../fetch/vote";
-import { UserContext } from "../../domain/home";
+import { UserContext } from "../../domain/pengreen";
 
 export default function Dashboard() {
     const { user } = useContext(UserContext);
     const [votes, setVotes] = useState();
-
+    
     useEffect(() => {
         const fetchVotes = async () => {
             const myVotes = user && await getMyVote(user.id);
@@ -17,7 +17,6 @@ export default function Dashboard() {
         fetchVotes();
     }, [user]);
 
-    //console.log(votes);
     return (
         <div className="text-xl font-sans font-semibold">
             <section>

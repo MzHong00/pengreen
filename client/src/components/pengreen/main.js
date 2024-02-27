@@ -4,7 +4,7 @@ import Sidebar from "../sidebar/sidebar";
 export default function Main() {
     
     return (
-        <main className="flex gap-14">
+        <main className="flex gap-10">
             <Sidebar />
             <Outlet />
         </main>

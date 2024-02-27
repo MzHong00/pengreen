@@ -12,7 +12,7 @@ export default function VoteMid({ vote, setVote }) {
     const barHandler = (e) => {
         setBar(e.target.innerText);
     }
-    console.log(vote);
+    
     return (
         <div className="h-112 flex flex-col border-solid border-2 rounded-2xl overflow-hidden">
             <div className="w-full h-[10%] px-1 flex items-end bg-black/5 gap-1">

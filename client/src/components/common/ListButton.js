@@ -7,14 +7,12 @@ const ListButton = ({
     btnStyles = '',
     containerStyles = '',
 }) => 
-    <div className={`flex ${containerStyles}`}>
+    <div className={`w-full ${containerStyles}`}>
         <button 
             className={`flex items-center w-full h-full hover:bg-zinc-100 ${btnStyles}`} 
             onClick={handler}>
             <div className={`flex items-center rounded-3xl text-sm text-gray-800 gap-3 ${contentStyles}`}>
-                {urlImg &&
-                    <img src={urlImg} alt="사용자" className={`w-8 h-8 rounded-full`} />
-                }
+                {urlImg && <img src={urlImg} alt="사용자" className={`w-8 h-8 rounded-full`} />}
                 {componentImg && <span>{componentImg()}</span>}
                 {name && <span>{name}</span>}
             </div>

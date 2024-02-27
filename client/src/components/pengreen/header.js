@@ -4,7 +4,7 @@ import LogoButton from '../common/logoButton';
 import { IoIosArrowDown } from "react-icons/io";
 import ProfilesDialog from '../account/profilesDialog';
 import ProfilesButton from '../account/profilesButton';
-import { UserContext } from '../../domain/home';
+import { UserContext } from '../../domain/pengreen';
 
 export default function Header({ setModalOpen }) {
     const { user } = useContext(UserContext)

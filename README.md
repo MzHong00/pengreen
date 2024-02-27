@@ -10,7 +10,7 @@
 - tailwindcss(PostCss)
 - http-proxy-middleware
 - chart.js
-
+- js 유사 객체 (form.child를 배열로)
 
 ### Server
 01. Nodejs

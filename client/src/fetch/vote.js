@@ -23,31 +23,24 @@ export const getMyVote = async (user_id) => {
     }
 }
 
-export const fetchLikes = async (user_id, vote_id) => {
+export const getVote_seqLikes = async () => {
     try {
-        const fetch_like = await axios.put('http://localhost:5001/api/vote/update-like', {
-            user_id: user_id,
-            vote_id: vote_id
-        })
-        console.log(fetch_like);
-        return {
-            checked: fetch_like.data.checked,
-            like_count: fetch_like.data.like_count
-        }
+        const votes = await axios.get('http://localhost:5001/api/vote/read-like');
+        
+        return votes.data;
     } catch (error) {
-        console.log("좋아요 처리 에러");
+        console.log("좋아요 순서로 투표 가져오기 에러");
     }
 }
 
-export const fetchLikes_checked = async (user_id, vote_id) => {
+export const getVoteOwner = async (vote_id) => {
     try {
-        const fetch_like_checked = await axios.post('http://localhost:5001/api/vote/already-like', {
-            user_id: user_id,
+        const owner = await axios.post('http://localhost:5001/api/vote/read-owner', {
             vote_id: vote_id
         })
 
-        return fetch_like_checked.data;
+        return owner.data[0];
     } catch (error) {
-        console.log("좋아요 처리 에러");
+        console.log("투표 소유자 정보 가져오기 에러");
     }
 }

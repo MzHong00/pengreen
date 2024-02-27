@@ -1,16 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "../domain/home";
+import Pengreen from "../domain/pengreen";
 import Signup from "../domain/signup";
 import Dashboard from "../components/dashboard/dashboard";
+import Home from "../components/home";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Home />,
+        element: <Pengreen />,
         children: [
             {
                 path: "",
-                element: <div></div>
+                element: <Home />
             },
             {
                 path: "dashboard",
