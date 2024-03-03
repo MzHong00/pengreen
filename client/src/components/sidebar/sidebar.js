@@ -21,7 +21,7 @@ export default function Sidebar() {
     const sideToggleHandler = () => {
         setSideToggle(sideToggle ? false : true);
     }
-    console.log(sideToggle);
+    
     const sideList = useMemo(() => {
         return (
             [
@@ -60,7 +60,7 @@ export default function Sidebar() {
                             handler={path.handler}
                             containerStyles='w-40'
                             btnStyles="hover:border-r-2 hover:border-solid hover:border-blue-300 "
-                            contentStyles={`px-5 w-full h-10 hover:text-blue-400 ${location.pathname === path.path && 'text-blue-400'}`} />)
+                            contentStyles={`px-5 w-full h-10 hover:text-blue-400 ${location.pathname === path.path && '!text-blue-400'}`} />)
                 }
             </nav>
             <Button
