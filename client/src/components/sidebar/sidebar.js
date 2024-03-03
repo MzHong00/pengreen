@@ -21,7 +21,7 @@ export default function Sidebar() {
     const sideToggleHandler = () => {
         setSideToggle(sideToggle ? false : true);
     }
-
+    console.log(sideToggle);
     const sideList = useMemo(() => {
         return (
             [
@@ -46,7 +46,7 @@ export default function Sidebar() {
     }, [navigate]);
 
     return (
-        <aside className={`relative flex flex-col w-40 h-full left-0 top-0 bg-white duration-500 ${!sideToggle && 'w-14'}`}>
+        <aside className={`relative flex flex-col w-40 h-full left-0 top-0 bg-white duration-500 ${!sideToggle && '!w-14'}`}>
             <div className='w-full h-12 pl-5 overflow-hidden'>
                 {sideToggle && <Plogo />}
             </div>

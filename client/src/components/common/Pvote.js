@@ -8,11 +8,11 @@ import Button from './button'
 import Dialog from "./dialog";
 import PvoteDetail from "./PvoteDetail";
 import PchoiceForm from "./PchoiceForm";
+import PnumberChart from "./PnumberChart";
 
 import { fetchLikes, fetchLikes_checked } from "../../fetch/likes";
 import { getVoteOwner } from "../../fetch/vote";
 import { getChoiceOfVote } from "../../fetch/choice";
-import PnumberChart from "./PnumberChart";
 
 export default function Pvote({ vote }) {
     const [openModal, setOpenModal] = useState(false);
