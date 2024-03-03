@@ -7,7 +7,7 @@ const ListButton = ({
     btnStyles = '',
     containerStyles = '',
 }) => 
-    <div className={`w-full ${containerStyles}`}>
+    <div className={`${containerStyles}`}>
         <button 
             className={`flex items-center w-full h-full hover:bg-zinc-100 ${btnStyles}`} 
             onClick={handler}>

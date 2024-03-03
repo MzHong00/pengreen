@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 
-import LogoButton from '../common/logoButton';
 import { IoIosArrowDown } from "react-icons/io";
+
 import ProfilesDialog from '../account/profilesDialog';
 import ProfilesButton from '../account/profilesButton';
 import { UserContext } from '../../domain/pengreen';
@@ -22,7 +22,6 @@ export default function Header({ setModalOpen }) {
 
     return (
         <header className="flex justify-between py-6 px-14">
-            <LogoButton />
             {
                 user === undefined ?
                     <ProfilesButton handler={modalHandler} name="로그인" />

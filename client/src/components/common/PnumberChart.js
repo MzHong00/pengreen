@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-export default function Pchoice({ data }) {
+export default function Pchoice({ data = [] }) {
     const [choice, setChoice] = useState(data);
 
     useEffect(() => {

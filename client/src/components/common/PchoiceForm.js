@@ -3,7 +3,13 @@ import { useState, useEffect } from "react"
 import Button from "./button";
 import { fetchChoice, fetchChoice_checked } from "../../fetch/choice";
 
-export default function PchoiceForm({ user_id, vote_id, max_choice, choice, setChoice }) {
+export default function PchoiceForm({ 
+    user_id = "",
+    vote_id = "",
+    max_choice,
+    choice = [],
+    setChoice
+ }) {
     const [count, setCount] = useState(0);
     const [choiceChecked, setChoiceChecked] = useState();
 
@@ -49,8 +55,7 @@ export default function PchoiceForm({ user_id, vote_id, max_choice, choice, setC
     }
 
     return (
-        <div>
-            <form>
+            <form className='h-full overflow-y-auto overflow-x-hidden '>
                 <div className="flex h-4 gap-2 mb-2">
                     <input
                         type="submit"
@@ -63,7 +68,7 @@ export default function PchoiceForm({ user_id, vote_id, max_choice, choice, setC
                         contentStyles='text-xs text-white font-light'
                         handler={event_prevent} />
                 </div>
-                <div className="h-40 flex flex-col overflow-y-auto overflow-x-hidden gap-3">
+                <div className="flex flex-col gap-3">
                     {
                         choice.map((value, idx) =>
                             <div key={idx} className="w-fit flex items-center gap-2">
@@ -73,6 +78,5 @@ export default function PchoiceForm({ user_id, vote_id, max_choice, choice, setC
                     }
                 </div>
             </form>
-        </div>
     )
 }

@@ -5,6 +5,7 @@ import { fetchUser } from '../fetch/google-oauth';
 import LoginModal from "../components/account/loginModal"
 import Header from '../components/pengreen/header';
 import Main from '../components/pengreen/main';
+import Sidebar from '../components/sidebar/sidebar';
 
 export const UserContext = createContext();
 
@@ -42,13 +43,14 @@ export default function Pengreen() {
     }, [])
 
     return (
-        <div className='min-h-screen'>
+        <div className='min-h-screen flex'>
             <UserContext.Provider value={{ user }}>
-                <Header setModalOpen={setModalOpen} />
-                <Main />
-                <footer>
+                <Sidebar />
+                <div>
+                    <Header setModalOpen={setModalOpen} />
+                    <Main />
+                </div>
 
-                </footer>
             </UserContext.Provider>
             {isModalOpen && (<LoginModal setModalOpen={setModalOpen} />)}
         </div>

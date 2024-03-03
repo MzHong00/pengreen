@@ -42,9 +42,9 @@ const fetchUser = async () => {
   try {
     const accessToken = cookies.get('access_token');
     let user;
-
     if (!accessToken) {
-      throw new Error('Access token is missing');
+      console.log("엑세스 토큰 없음");
+      return;
     }
 
     user = await axios.post('http://localhost:5001/api/account/auth', {}, {

@@ -23,9 +23,19 @@ export const getMyVote = async (user_id) => {
     }
 }
 
-export const getVote_seqLikes = async () => {
+export const getVote_sortByLikes = async () => {
     try {
         const votes = await axios.get('http://localhost:5001/api/vote/read-like');
+        
+        return votes.data;
+    } catch (error) {
+        console.log("좋아요 순서로 투표 가져오기 에러");
+    }
+}
+
+export const getVote_sortByParticipant = async () => {
+    try {
+        const votes = await axios.get('http://localhost:5001/api/vote/read-participant');
         
         return votes.data;
     } catch (error) {

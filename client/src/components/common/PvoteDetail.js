@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import Button from './button'
 import BarChart from './barChart'
 import PieChart from './pieChart';
-import Pchoice from './Pchoice';
+import Pchoice from './PnumberChart';
 
-export default function PvoteDetail({ profiles_picture, title, choice }) {
+export default function PvoteDetail({ profiles_picture = "", title, choice }) {
     const [chartType, setChartType] = useState(0);
     const [typeName, setTypeName] = useState();
 
@@ -19,7 +19,6 @@ export default function PvoteDetail({ profiles_picture, title, choice }) {
         setChartType(prev => (prev + 1) % 3)
     }
 
-    console.log(choice);
     return (
         <div className={`${choice.length > 8 && "w-[70vw]"} p-5 flex flex-col bg-gradient-to-br from-cyan-100 to-blue-200 gap-8`}>
             <section className="flex justify-between gap-2">
