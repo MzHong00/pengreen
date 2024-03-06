@@ -9,12 +9,12 @@ import { getVote_sortByLikes, getVote_sortByParticipant } from '../../fetch/vote
 import Pvote from '../common/Pvote';
 
 export default function Explore() {
-    const [votes, setVotes] = useState();
+    const [votes, setVotes] = useState([]);
     const ref = useRef();
 
     useEffect(() => {
         const fetchVotes = async () => {
-            const seqLikesVote = await getVote_sortByParticipant();
+            const seqLikesVote = await getVote_sortByLikes();
             setVotes(seqLikesVote);
         }
 
@@ -40,8 +40,8 @@ export default function Explore() {
                     <IoIosArrowDropright size="30px" onClick={rightArrowHandler} />
                 </nav>
             </h2>
-            <div ref={ref} className='h-[43rem] flex flex-col flex-wrap overflow-auto scroll-smooth'>
-                { votes && votes.map((vote, idx) => <Pvote key={idx} vote={vote} />) }
+            <div ref={ref} className='h-152 flex flex-col flex-wrap justify-between overflow-auto scroll-smooth'>
+                { votes.map((vote, idx) => <Pvote key={idx} vote_id={vote.id} />) }
             </div>
         </section>
     )

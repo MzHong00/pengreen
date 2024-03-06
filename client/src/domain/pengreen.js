@@ -43,7 +43,7 @@ export default function Pengreen() {
     }, [])
 
     return (
-        <div className='min-h-screen flex'>
+        <div className='min-h-screen flex gap-8'>
             <UserContext.Provider value={{ user }}>
                 <Sidebar />
                 <div>

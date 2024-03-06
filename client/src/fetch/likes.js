@@ -1,16 +1,13 @@
 import axios from 'axios';
 
-export const fetchLikes = async (user_id, vote_id) => {
+export const fetchLikes_update = async (user_id, vote_id) => {
     try {
         const fetch_like = await axios.put('http://localhost:5001/api/vote/update-like', {
             user_id: user_id,
             vote_id: vote_id
         })
 
-        return {
-            checked: fetch_like.data.checked,
-            like_count: fetch_like.data.like_count
-        }
+        return fetch_like.data.likes;
     } catch (error) {
         console.log("좋아요 처리 에러");
     }

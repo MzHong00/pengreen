@@ -11,6 +11,8 @@
 - http-proxy-middleware
 - chart.js
 - js 유사 객체 (form.child를 배열로)
+- css attr() 가상 요소 선택자에 동적 데이터 전송
+- js scroll 함수
 
 ### Server
 01. Nodejs

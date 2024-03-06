@@ -1,9 +1,9 @@
 import mysql from '../data-access/mysql.js'
 
-//해당 투표의 항목들 가져오기
+//투표 항목 가져오기
 export const getChoiceOfVote = async (req, res) => {
     try {
-        const {vote_id} = req.body;
+        const { vote_id } = req.body;
         const choiceOfVote_query = `select choice.id, content, count from choice join vote on choice.vote_id = vote.id where vote_id = '${vote_id}'`;
         const choiceOfVote = await mysql(choiceOfVote_query);
 
@@ -13,7 +13,7 @@ export const getChoiceOfVote = async (req, res) => {
     }
 }
 
-//사용자의 Pick DB에 반영
+//사용자가 고른 투표 항목 적용 후 고른 항목 가져오기
 export const updateChoiceCount = async (req, res) => {
     try {
         const { user_id, vote_id, pick } = req.body;
@@ -25,20 +25,23 @@ export const updateChoiceCount = async (req, res) => {
         let isParticipant = participate_vote.length !== 0;
 
         if (isParticipant) {
+            //사용자가 기존에 고른 픽들을 1씩 감소
             const countDown_query = `update choice_count set count = count - 1 where user_id = '${user_id}' and vote_id = '${vote_id}'`;
             await mysql(countDown_query);
 
+            //사용자가 참여한 투표 테이블 삭제
             const deletePick_query = `delete from participant_vote where user_id = '${user_id}' and vote_id = '${vote_id}'`;
             await mysql(deletePick_query);
         }
-        
+
         for (const value of pick) {
             const setPick_query = `insert into participant_vote(user_id, vote_id, content) values ('${user_id}', '${vote_id}', '${value}')`;
             await mysql(setPick_query);
         }
 
-        const countUp_query = `update choice_count set count = count + 1 where user_id = '${user_id}' and vote_id = '${vote_id}'`;
-        await mysql(countUp_query);
+        //사용자가 고른 Pick 1증가
+        const applyPick_query = `update choice_count set count = count + 1 where user_id = '${user_id}' and vote_id = '${vote_id}'`;
+        await mysql(applyPick_query);
 
         const returnChoice_query = `select * from choice where vote_id = '${vote_id}'`;
         const returnChoice = await mysql(returnChoice_query);
@@ -49,18 +52,16 @@ export const updateChoiceCount = async (req, res) => {
     }
 }
 
-//사용자가 해당 투표에 참여한 상태인가
-export const isAlreadyChoice = async (req, res) => {
+//사용자가 투표한 목록 가져오기
+export const getPick = async (req, res) => {
     try {
         const { user_id, vote_id } = req.body;
-        
+
         //특정 사용자가 특정 투표를 참여했는지 확인하는 쿼리
-        const participant_query = `select id from participant_vote where user_id = '${user_id}' and vote_id = '${vote_id}'`;
+        const participant_query = `select * from participant_vote where user_id = '${user_id}' and vote_id = '${vote_id}'`;
         const participate_vote = await mysql(participant_query);
 
-        let isParticipant = participate_vote.length !== 0;
-
-        res.send(isParticipant);
+        res.send(participate_vote);
     } catch (error) {
         console.log("사용자가 투표 여부 확인 처리 에러");
     }

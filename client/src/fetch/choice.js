@@ -14,14 +14,14 @@ export const fetchChoice = async (user_id, vote_id, pick) => {
     }
 }
 
-export const fetchChoice_checked = async (user_id, vote_id) => {
+export const fetchPick = async (user_id, vote_id) => {
     try {
-        const fetchChoice_checked = await axios.post('http://localhost:5001/api/vote/already-choice', {
+        const fetchPick = await axios.post('http://localhost:5001/api/vote/already-choice', {
             user_id: user_id,
             vote_id: vote_id
         })
 
-        return fetchChoice_checked.data;
+        return fetchPick.data
     } catch (error) {
         console.log("투표 선택 여부 에러");
     }

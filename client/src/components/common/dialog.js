@@ -30,7 +30,7 @@ export default function Dialog({ contentsComponent, setModalOpen }) {
                     containerStyles={'absolute right-5 top-4'} />
                 {contentsComponent()}
             </div>
-            <div onClick={clickModalOutside} ref={modalOutside} className={`fixed left-0 top-0 w-full h-full bg-black/40`} />
+            <div onClick={clickModalOutside} ref={modalOutside} className={`fixed left-0 top-0 w-full h-full bg-black/40 z-10`} />
         </div>
     )
 }

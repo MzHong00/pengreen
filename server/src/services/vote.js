@@ -21,20 +21,13 @@ export const createVote = async (req, res) => {
     }
 }
 
-//내가 만든 투표 가져오기
+//투표 가져오기 - 나의 투표
 export const getMyVote = async (req, res) => {
     try {
         const { own_id } = req.body;
 
-        const own_vote_query = `select * from vote where own_id = '${own_id}'`;
+        const own_vote_query = `select * from pvote where own_id = '${own_id}'`;
         let votes = await mysql(own_vote_query);
-
-        //투표 데이터에 Choice까지 붙혀서 응답
-        // for (const vote of votes) {
-        //     const vote_choice_join = `select choice.id, content, count from vote join choice on vote.id = choice.vote_id where vote.id = ${vote.id};`
-        //     const choices = await mysql(vote_choice_join);
-        //     vote.choice = choices;
-        // }
 
         res.send(votes);
     } catch (error) {
@@ -42,11 +35,24 @@ export const getMyVote = async (req, res) => {
     }
 }
 
-//좋아요 순서 투표 가져오기
-export const getVote_seqLikes = async (req, res) => {
+export const getVoteById = async (req, res) => {
     try {
-        const seqLikes_query = `SELECT * FROM my_db.vote order by likes desc`;
-        const votes = await mysql(seqLikes_query);
+        const { vote_id } = req.body;
+
+        const getVoteById_query = `select * from pvote where id = ${vote_id}`;
+        const vote = await mysql(getVoteById_query);
+
+        res.send(vote);
+    } catch (error) {
+        console.log("id로 투표 가져오기 에러");
+    }
+}
+
+//투표 가져오기 - 좋아요 많은 순서
+export const getVote_sortByLikes = async (req, res) => {
+    try {
+        const sortByLikes_query = `SELECT * FROM pvote order by likes desc`;
+        const votes = await mysql(sortByLikes_query);
 
         res.send(votes);
     } catch (error) {
@@ -54,7 +60,20 @@ export const getVote_seqLikes = async (req, res) => {
     }
 }
 
-//해당 투표의 소유자 정보 가져오기
+//투표 가져오기 - 투표자 많은 순서
+export const getVote_sortByParticipant = async (req, res) => {
+    try {
+        //Vote 테이블엔 참여자 수가 없기 때문에 Participant_vote 테이블과 Join하여 참여자 수를 얻어 내림차순 
+        const sortByParticipant_query = `select * from pvote order by participants desc`;
+        const votes = await mysql(sortByParticipant_query);
+
+        res.send(votes);
+    } catch (error) {
+        console.log("투표자 많은 순서 투표 가져오기 실패");
+    }
+}
+
+//소유자 정보 가져오기 - 해당 투표 소유자
 export const getVoteOwner = async (req, res) => {
     try {
         const { vote_id } = req.body;

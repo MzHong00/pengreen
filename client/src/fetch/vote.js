@@ -23,6 +23,18 @@ export const getMyVote = async (user_id) => {
     }
 }
 
+export const getVoteById = async (vote_id) => {
+    try {
+        const vote = await axios.post('http://localhost:5001/api/vote/read-id', {
+            vote_id: vote_id
+        });
+
+        return vote.data[0];
+    } catch (error) {
+        console.log("id로 투표 가져오기 에러");
+    }
+}
+
 export const getVote_sortByLikes = async () => {
     try {
         const votes = await axios.get('http://localhost:5001/api/vote/read-like');
@@ -39,11 +51,11 @@ export const getVote_sortByParticipant = async () => {
         
         return votes.data;
     } catch (error) {
-        console.log("좋아요 순서로 투표 가져오기 에러");
+        console.log("참여자 순서로 투표 가져오기 에러");
     }
 }
 
-export const getVoteOwner = async (vote_id) => {
+export const getOwnerOfVote = async (vote_id) => {
     try {
         const owner = await axios.post('http://localhost:5001/api/vote/read-owner', {
             vote_id: vote_id
