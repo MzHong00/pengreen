@@ -96,8 +96,6 @@ const reissueToken = async (refreshToken) => {
   }
 }
 
-
-//미구현
 const fetchLogout = () => {
   try {
     cookies.remove('access_token');

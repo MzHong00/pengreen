@@ -4,7 +4,7 @@ import mysql from '../data-access/mysql.js'
 export const updateLikesCount = async (req, res) => {
     try {
         const { user_id, vote_id } = req.body;
-
+        
         //좋아요를 누른 사용자가 해당 투표에 좋아요를 눌렀는지 판별
         const participant_query = `select * from participant_likes where user_id = '${user_id}' and vote_id = '${vote_id}'`;
         const participate_vote = await mysql(participant_query);

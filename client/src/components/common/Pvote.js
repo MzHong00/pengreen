@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { UserContext } from '../../domain/pengreen';
 import { FaUser } from "react-icons/fa";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 import Button from './button'
 import Dialog from "./dialog";
@@ -14,8 +15,17 @@ import { fetchLikes_checked, fetchLikes_update } from "../../fetch/likes";
 import { getOwnerOfVote, getVoteById } from "../../fetch/vote";
 import { getChoiceOfVote } from "../../fetch/choice";
 
-export default function Pvote({ vote_id }) {
+export default function Pvote({ vote, vote_id }) {
     const { user } = useContext(UserContext);
+    const queryClient = useQueryClient()
+
+    
+    const likesUpdate = useMutation({
+        mutationFn: fetchLikes_update,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['votes'] })
+        }
+    })
 
     const [pvote, setPvote] = useState({});
     const [choice, setChoice] = useState();
@@ -61,8 +71,10 @@ export default function Pvote({ vote_id }) {
             return;
         }
 
-        const likes = await fetchLikes_update(user.id, vote_id);
-        setPvote({ ...pvote, likes: likes });
+        likesUpdate.mutate({
+            user_id: user.id,
+            vote_id: vote_id
+        })
     }
 
     const hoverHandler = (e) => {
@@ -77,13 +89,13 @@ export default function Pvote({ vote_id }) {
             <section className="flex justify-between gap-2">
                 <div className='w-[85%] flex items-center'>
                     {owner && <img src={owner.picture} alt="프로필 사진" className="w-8 h-8 mr-3 rounded-full" />}
-                    <h1 className='truncate'>{pvote.title}</h1>
+                    <h1 className='truncate'>{vote.title}</h1>
                 </div>
             </section>
             <section>
                 {
                     user ?
-                        <Pchoice user={user} vote_id={pvote.id} max_choice={pvote.max_choice} choice={choice} setChoice={setChoice} /> :
+                        <Pchoice user={user} vote_id={vote.id} max_choice={vote.max_choice} choice={choice} setChoice={setChoice} /> :
                         <PnumberChart data={choice} />
                 }
             </section>
@@ -98,11 +110,11 @@ export default function Pvote({ vote_id }) {
                                         <IoMdHeart onClick={likesHandler} className='cursor-pointer' /> :
                                         <IoMdHeartEmpty onClick={likesHandler} className='cursor-pointer' />
                                 }
-                                <span className='text-base'>{pvote.likes}</span>
+                                <span className='text-base'>{vote.likes}</span>
                             </div>
                             <div className="flex items-center">
                                 <FaUser size={15} />
-                                <span>{pvote.participants}</span>
+                                <span>{vote.participants}</span>
                             </div>
                         </div>
                         <Button name={"자세히"} btnStyles='p-1 px-2 shadow bg-sky-100 hover:shadow-inner' contentStyles="text-xs font-sans" handler={openModalHandler} />

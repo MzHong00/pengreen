@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 import { BsFire } from "react-icons/bs";
 import { IoIosArrowDropleft } from "react-icons/io";
@@ -9,17 +10,12 @@ import { getVote_sortByLikes, getVote_sortByParticipant } from '../../fetch/vote
 import Pvote from '../common/Pvote';
 
 export default function Explore() {
-    const [votes, setVotes] = useState([]);
+    const { isPending, data } = useQuery({
+        queryKey: ['votes'],
+        queryFn: getVote_sortByLikes
+    });
+    console.log(data);
     const ref = useRef();
-
-    useEffect(() => {
-        const fetchVotes = async () => {
-            const seqLikesVote = await getVote_sortByLikes();
-            setVotes(seqLikesVote);
-        }
-
-        fetchVotes();
-    }, []);
 
     const rightArrowHandler = () => {
         ref.current.scrollLeft += 400 * 2;
@@ -41,7 +37,7 @@ export default function Explore() {
                 </nav>
             </h2>
             <div ref={ref} className='h-152 flex flex-col flex-wrap justify-between overflow-auto scroll-smooth'>
-                { votes.map((vote, idx) => <Pvote key={idx} vote_id={vote.id} />) }
+                {!isPending && data.map((vote, idx) => <Pvote key={idx} vote={vote} vote_id={vote.id}/>)}
             </div>
         </section>
     )
