@@ -1,8 +1,8 @@
 import { Router } from "express";
 
-import { createVote, getMyVote, getVoteById, getVoteOwner, getVote_sortByLikes, getVote_sortByParticipant } from '../../services/vote.js'
-import { updateChoiceCount, getChoiceOfVote, getPick } from '../../services/choice.js'
-import { updateLikesCount, isAlreadyLikes } from '../../services/likes.js'
+import { createVote, getMyVote, getVoteById, getVoteOwner, getVote_sortByLikes, getVote_sortByParticipant } from '../../../services/vote.js'
+import { updateChoiceCount, getChoiceOfVote, getPick } from '../../../services/choice.js'
+import { updateLikesCount, isAlreadyLikes } from '../../../services/likes.js'
 
 const router = Router();
 

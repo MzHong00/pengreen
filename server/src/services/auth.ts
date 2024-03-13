@@ -1,36 +1,41 @@
 import jwt from "jsonwebtoken";
+import config from "../config";
 
-import mysql from '../data-access/mysql.js';
+import { Request, Response } from "express";
+import { User } from "../models/user";
+import { mongodbFind, mongodbInsert } from "../data-access/mongodb";
 
-const ACCESS_TOKEN_EXPIRES = "10s"
+const ACCESS_TOKEN_EXPIRES: string = "10s"
 
-const auth = async (req, res) => {
+export const tokenAuth = async (req: Request, res: Response): Promise<void> => {
     try {
         const authorizationHeader = req.headers['authorization'];
 
         if (authorizationHeader) {
             // "Bearer <token>" 형식으로 전송된 토큰에서 "Bearer " 부분을 제거하여 토큰을 추출합니다.
-            const accessToken = authorizationHeader.split(' ')[1];
-            const data = jwt.verify(accessToken, process.env.ACCESS_SECRET_KEY);
+            const accessToken: string = authorizationHeader.split(' ')[1];
+            const data = jwt.verify(accessToken, config.access_secret_key as string);
 
             res.status(200).send(data);
         } else {
             res.status(401).send('Access token is missing');
         }
     } catch (error) {
-        console.log("access Token 만료: ", error.expiredAt);
+        console.log("access Token 만료: ", (error as jwt.TokenExpiredError).expiredAt);
         res.send('expired');
     }
 }
 
-const signin = async (req, res) => {
+export const signin = async (req: Request, res: Response): Promise<void> => {
     try {
-        const user = req.body;
-        const isAcoount = await verify(user);
-        if (!isAcoount) {
-            signup(user)
+        const accountOfGoogle = req.body;
+        const isGuest: boolean = await isUserExist(accountOfGoogle);
+        
+        if (isGuest) {
+            await signup(accountOfGoogle);
         }
-        const token = issueToken(user);
+
+        const token = issueToken(accountOfGoogle);
 
         res.status(200).send(token);
     } catch (error) {
@@ -39,34 +44,37 @@ const signin = async (req, res) => {
 }
 
 //boolean, 사용자 DB에 사용자가 존재하는지 여부
-const verify = async (user) => {
+const isUserExist = async (user: any): Promise<boolean> => {
     try {
-        const query = "select id from account";
-        const data = await mysql(query);
-        const isAcoount = data.some(idx => idx.id === user.id);
-        
-        return isAcoount
+        const query = {
+            user_id: user.id
+        };
+
+        const data = await mongodbFind('user', query);
+        const isGuest: boolean = data?.length === 0 ? true : false;
+
+        return isGuest;
     } catch (error) {
-        console.log("verify error: ", error);
+        throw error;
     }
 }
 
 //로그인하여 token을 발급
-const issueToken = (user) => {
+const issueToken = (user: any) => {
     try {
-        const payload = {
-            id: user.id,
+        const payload: User = {
+            user_id: user.id,
             email: user.email,
             name: user.name,
             picture: user.picture
         }
-        
-        const accessToken = jwt.sign(payload, process.env.ACCESS_SECRET_KEY, {
+
+        const accessToken = jwt.sign(payload, config.access_secret_key as string, {
             expiresIn: ACCESS_TOKEN_EXPIRES,
             issuer: 'access issuer'
         })
 
-        const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET_KEY, {
+        const refreshToken = jwt.sign(payload, config.refresh_secret_key as string, {
             expiresIn: '24h',
             issuer: 'refresh issuer'
         })
@@ -80,34 +88,41 @@ const issueToken = (user) => {
 }
 
 //회원가입하여 사용자 DB에 추가
-const signup = (user) => {
-    console.log("회원가입:", user);
+const signup = async (user: any) => {
     try {
-        const query = `insert into Account(id, email, name, picture) values (${user.id}, "${user.email}", "${user.name}", "${user.picture}")`;
-        mysql(query);
+        const data: User = {
+            user_id: user.id,
+            name: user.name,
+            email: user.email,
+            picture: user.picture
+        }
+
+        await mongodbInsert<User>('user', data)
     } catch (error) {
         console.log("회원가입 오류")
     }
 }
 
-const reissue_token = (req, res) => {
+export const reissueToken = (req: Request, res: Response) => {
     try {
         const authorizationHeader = req.headers['authorization'];
 
         if (authorizationHeader) {
             // "Bearer <token>" 형식으로 전송된 토큰에서 "Bearer " 부분을 제거하여 토큰을 추출합니다.
             const refreshToken = authorizationHeader.split(' ')[1];
-            const data = jwt.verify(refreshToken, process.env.REFRESH_SECRET_KEY);
+            const data: any = jwt.verify(refreshToken, config.refresh_secret_key as string);
 
-            const payload = {
-                id: data.id,
+            const payload: User = {
+                user_id: data.id,
                 email: data.email,
                 name: data.name,
                 picture: data.picture
             }
 
+            console.log(payload);
+            
             if (data) {
-                const accessToken = jwt.sign(payload, process.env.ACCESS_SECRET_KEY, {
+                const accessToken = jwt.sign(payload, config.access_secret_key as string, {
                     expiresIn: ACCESS_TOKEN_EXPIRES,
                     issuer: 'access issuer'
                 })
@@ -121,5 +136,3 @@ const reissue_token = (req, res) => {
         res.status(500).json(error);
     }
 }
-
-export { signin, auth, reissue_token }

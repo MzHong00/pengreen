@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import account from "./routes/account.js";
-import vote from './routes/vote.js';
+import account from "./routes/account/account.ts";
+import vote from './routes/vote/vote.js';
 
 const router = Router();
 
