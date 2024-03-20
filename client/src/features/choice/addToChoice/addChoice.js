@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { FaPlus } from "react-icons/fa6";
 
-export default function AddChoice({ sizeClass, setVote }) {
+export default function AddChoice({ setVote }) {
     const [value, setValue] = useState("");
 
     const changeHandler = (e) => {
@@ -16,8 +16,8 @@ export default function AddChoice({ sizeClass, setVote }) {
             return
 
         const obj = {
-            id: Math.random(),
-            content: value
+            content: value,
+            count: 0
         }
 
         setVote((prev) => ({
@@ -34,7 +34,7 @@ export default function AddChoice({ sizeClass, setVote }) {
     }
 
     return (
-        <div className={`flex ${sizeClass} items-center text-sm gap-3 focus:text-blue-400`}>
+        <div className={`flex w-[90%] h-10 items-center text-sm gap-3 focus:text-blue-400`}>
             <FaPlus className="cursor-pointer" color="#0099FF" size="18" onClick={addItem} />
             <input
                 value={value}

@@ -1,17 +1,17 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import CreateVoteButton from "./createVoteButton";
-import Pvote from "../vote/Pvote";
-import { getMyVote } from "../../shared/api/vote";
-import { UserContext } from "../../pages/main";
+import CreateVoteButton from "../../features/vote/openForm/createVoteButton";
+import Pvote from "../../widgets/vote/Pvote";
+import { readVoteByOwnerId } from "../../shared/api/vote";
+import { useUserFetch } from "features/authentication/auth";
 
 export default function Dashboard() {
-    const { user } = useContext(UserContext);
+    const { data: user } = useUserFetch();
     const [votes, setVotes] = useState();
     
     useEffect(() => {
         const fetchVotes = async () => {
-            const myVotes = user && await getMyVote(user.id);
+            const myVotes = user && await readVoteByOwnerId(user.user_id);
             setVotes(myVotes)
         }
         fetchVotes();

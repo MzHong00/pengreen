@@ -6,7 +6,7 @@ export default function Datetime({ vote, setVote }) {
     useEffect(() => {
         setVote(prev => ({
             ...prev,
-            deadline: deadline
+            deadline: new Date(deadline).toISOString()
         }))
     }, [deadline, setVote])
 

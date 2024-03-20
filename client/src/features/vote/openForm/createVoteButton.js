@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import { FaPlus } from "react-icons/fa6";
 
-import VoteForm from "../form/voteForm";
-import Dialog from "../../shared/ui/dialog";
+import VoteForm from "../../form/voteForm";
+import Dialog from "../../../shared/ui/dialog";
 
 export default function CreateVoteButton() {
     const [openDialog, setOpenDialog] = useState(false);

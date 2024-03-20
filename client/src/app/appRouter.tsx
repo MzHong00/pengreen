@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../pages/main";
-import Signup from "../pages/signup";
-import Dashboard from "../widgets/dashboard/dashboard";
-import Home from "../widgets/home";
+import Dashboard from "../pages/dashboard/dashboard";
+import Home from "../pages/home";
+import { Redirect } from "features/authentication/getToken";
 
 const appRouter = createBrowserRouter([
     {
@@ -21,7 +21,7 @@ const appRouter = createBrowserRouter([
     },
     {
         path: "/auth/google",
-        element: <Signup />
+        element: <Redirect />
     }
 ])
 

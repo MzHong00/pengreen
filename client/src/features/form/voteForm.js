@@ -1,25 +1,22 @@
-import { useState, useContext, useMemo } from "react";
+import { useState } from "react";
 
 import VoteTop from "./voteTop";
 import VoteMid from "./voteMid";
 import VoteBot from "./voteBot";
-import { UserContext } from "../../pages/main";
+import { useUserFetch } from "features/authentication/auth";
 
 export default function VoteForm() {
-    const getInitialDate = useMemo(() => {
-        const oneDayLater = new Date().setTime(new Date().getTime() + 24 * 60 * 60 * 1000);
-        return new Date(oneDayLater).toISOString().slice(0, 16);
-    }, [])
-
-    const { user } = useContext(UserContext)
+    const { data: user } = useUserFetch();
 
     const [vote, setVote] = useState({
-        own_id: user.id,
-        own_picture: user.picture,
+        owner: user,
         title: "",
         choice: [],
         max_choice: 1,
-        deadline: getInitialDate
+        start_time: new Date().toISOString(),
+        deadline: new Date().toISOString(),
+        like: 0,
+        participant: 0
     });
 
     return (

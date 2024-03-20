@@ -10,7 +10,7 @@ export const fetchUser = async () => {
         
         if (!accessToken) {
             console.log("엑세스 토큰 없음");
-            return;
+            return "";
         }
 
         let user = await axios.post('http://localhost:5001/api/account/auth', {}, {
@@ -36,7 +36,7 @@ export const fetchUser = async () => {
                 }
             });
         }
-
+        
         return user.data;
     } catch (error) {
         console.error("fetchUser error: ", error);
