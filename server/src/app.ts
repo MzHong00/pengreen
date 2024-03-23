@@ -1,7 +1,7 @@
 import express from 'express';
 import config from './config/index'
 
-import loaders from './loaders/index.js';
+import loaders from './loaders/index';
 import { client } from './data-access/mongodb/index';
 
 async function startServer() {

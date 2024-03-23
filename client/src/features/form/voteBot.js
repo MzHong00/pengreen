@@ -1,5 +1,5 @@
+import PublicButton from "features/postVote/publicButton";
 import AddChoice from "../choice/addToChoice/addChoice";
-import PublicButton from '../vote/postVote/publicButton'
 
 export default function VoteBot({ vote, setVote }) {
 

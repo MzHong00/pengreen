@@ -7,8 +7,7 @@ export async function mongodbRemove(
     const database = client.db("pengreen");
     const movies = database.collection(col);
 
-    const result = await movies.deleteOne(query);
-    console.log(result);
+    const result = await movies.deleteMany(query);
     
     if (result.deletedCount === 1) {
         console.log("Successfully deleted one document.");

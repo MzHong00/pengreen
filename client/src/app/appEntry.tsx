@@ -12,7 +12,7 @@ const AppEntry = () => {
     return (
         <QueryClientProvider client={queryClient}>
             <CookiesProvider>
-                <RouterProvider router={appRouter}></RouterProvider>
+                <RouterProvider router={appRouter} />
             </CookiesProvider>
         </QueryClientProvider>
     )

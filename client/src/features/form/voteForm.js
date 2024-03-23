@@ -3,7 +3,7 @@ import { useState } from "react";
 import VoteTop from "./voteTop";
 import VoteMid from "./voteMid";
 import VoteBot from "./voteBot";
-import { useUserFetch } from "features/authentication/auth";
+import { useUserFetch } from "store/queries/auth";
 
 export default function VoteForm() {
     const { data: user } = useUserFetch();

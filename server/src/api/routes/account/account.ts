@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import google from './googleOauth/oauth_google'
-import { tokenAuth, reissueToken, signin } from '../../../services/auth'
+import { tokenAuth, reissueToken, signin } from '../../../services/auth/auth'
 
 const router = Router();
 

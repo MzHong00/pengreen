@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 
 import Choice from "../choice/updateChoice/choice";
-import Option from "../../widgets/option/option";
-import List from "../../shared/ui/list";
+import Option from "../../component/option/option";
+import List from "../../shared/common/list";
 
 export default function VoteMid({ vote, setVote }) {
 

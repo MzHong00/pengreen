@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { Vote } from 'shared/model/vote';
 
-export const createVote = async (vote: any) => {
+export const createVote = async (vote: Vote): Promise<void> => {
     try {
         await axios.post('http://localhost:5001/api/vote/create', vote);
     } catch (error) {
@@ -8,13 +9,15 @@ export const createVote = async (vote: any) => {
     }
 }
 
-export const readVoteByOwnerId = async (user_id: any) => {
+export const readVoteByOwnerId = async (own_id: any): Promise<Vote[] | undefined> => {
     try {
-        if (!user_id)
+        if (!own_id)
             return;
-        
+
+        console.log("소유자 ID로 투표 가져오기");
+
         const vote_data = await axios.post('http://localhost:5001/api/vote/read-owner', {
-            own_id: user_id
+            own_id: own_id
         });
 
         return vote_data.data;
@@ -23,7 +26,7 @@ export const readVoteByOwnerId = async (user_id: any) => {
     }
 }
 
-export const readVoteSortedLikes = async () => {
+export const readVoteSortedLikes = async (): Promise<Vote[] | undefined> => {
     try {
         const votes = await axios.get('http://localhost:5001/api/vote/read-like');
 
@@ -33,39 +36,12 @@ export const readVoteSortedLikes = async () => {
     }
 }
 
-export const readVoteSortedParticipants = async () => {
+export const readVoteSortedParticipants = async (): Promise<Vote[] | undefined> => {
     try {
         const votes = await axios.get('http://localhost:5001/api/vote/read-participant');
 
         return votes.data;
     } catch (error) {
         console.log("참여자 순서로 투표 가져오기 에러");
-    }
-}
-
-
-
-export const getVoteById = async (vote_id: any) => {
-    try {
-        const vote = await axios.post('http://localhost:5001/api/vote/read-id', {
-            vote_id: vote_id
-        });
-
-        return vote.data[0];
-    } catch (error) {
-        console.log("id로 투표 가져오기 에러");
-    }
-}
-
-
-export const getOwnerOfVote = async (vote_id: any) => {
-    try {
-        const owner = await axios.post('http://localhost:5001/api/vote/read-owner', {
-            vote_id: vote_id
-        })
-
-        return owner.data[0];
-    } catch (error) {
-        console.log("투표 소유자 정보 가져오기 에러");
     }
 }
