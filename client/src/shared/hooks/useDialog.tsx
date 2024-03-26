@@ -1,6 +1,18 @@
 import { useRef, type ReactNode, type MouseEvent } from 'react';
 import { IoMdClose } from "react-icons/io";
 
+/*
+    arg:
+    children: dialog에 표시될 내용물
+    return:
+    [
+        JsxElement: dialog 내용물 
+        usage) 아무 곳에 <div>{JsxElement}</div>
+        openHandler: dialog를 열기 위한 핸들러 함수 
+        usage) button 등의 객체 onClick함수에 장착
+    ]
+*/
+
 export const useDialog = (
     children: () => ReactNode
 ): [ReactNode, () => void] => {

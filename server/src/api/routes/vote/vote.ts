@@ -1,23 +1,23 @@
 import { Router } from "express";
 
-import { createVote, readVoteByOwnerId, readVoteSortedLikes, readVoteSortedParticipants } from "../../../services/vote";
+import { createVote, readVoteByOwnerId, readVoteParticipants, readVoteSortedLikes, readVoteSortedParticipants } from "../../../services/vote";
 import { updateLikeInfo, readLikeInfo } from '../../../services/likes'
+import { readEachChoiceCount, readIsParticipant, updateChoice } from "../../../services/choice";
 
-
-import { updateChoiceCount, getChoiceOfVote, getPick } from '../../../services/choice'
 
 const router = Router();
 
 router.post('/create', createVote);
 router.post('/read-owner', readVoteByOwnerId);
-router.get('/read-like', readVoteSortedLikes);
-router.get('/read-participant', readVoteSortedParticipants);
+router.post('/read-participant', readVoteParticipants);
+router.get('/read-sorted-like', readVoteSortedLikes);
+router.get('/read-sorted-participant', readVoteSortedParticipants);
 
-router.put('/like-update', updateLikeInfo);
-router.post('/like', readLikeInfo);
+router.put('/update-like', updateLikeInfo);
+router.post('/read-like', readLikeInfo);
 
-
-router.put('/update-choice', updateChoiceCount);
-router.post('/already-choice', getPick);
+router.put('/read-choice-count', readEachChoiceCount);
+router.put('/read-isparticipant', readIsParticipant);
+router.post('/update-choice', updateChoice);
 
 export default router;

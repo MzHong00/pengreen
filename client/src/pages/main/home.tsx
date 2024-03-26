@@ -1,4 +1,4 @@
-import Explore from "../../widgets/home/explore";
+import Explore from "../../widgets/Home/explore";
 
 export default function Home() {
 

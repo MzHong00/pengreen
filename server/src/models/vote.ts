@@ -1,4 +1,3 @@
-import { Choice } from "./choice";
 import { User } from "./user";
 
 import { type ObjectId } from "mongodb";
@@ -10,5 +9,5 @@ export interface Vote {
     start_time: Date;
     deadline: Date;
     max_choice: number;
-    choice: Choice[];
+    choice: Array<string>;
 }

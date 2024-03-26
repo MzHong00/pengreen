@@ -2,18 +2,16 @@ import { client } from './index'
 
 export async function mongodbUpdate<T>(
     col: string,
+    query: Object,
     data?: T
 ) {
     const database = client.db("pengreen");
     const movies = database.collection<any>(col);
     
-    const query = {name:"jm"}
     const result = await movies.updateOne(
         query,
         {
-            $set: {
-                name: `mz`,
-            },
+            $set: data as any,
         },
         /* Set the upsert option to insert a document if no documents
         match the filter */

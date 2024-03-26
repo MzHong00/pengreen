@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { Vote } from 'shared/model/vote';
+import { type VoteDto } from 'widgets/vote';
 
-export const createVote = async (vote: Vote): Promise<void> => {
+export const createVote = async (vote: VoteDto): Promise<void> => {
     try {
         await axios.post('http://localhost:5001/api/vote/create', vote);
     } catch (error) {
@@ -9,12 +9,21 @@ export const createVote = async (vote: Vote): Promise<void> => {
     }
 }
 
-export const readVoteByOwnerId = async (own_id: any): Promise<Vote[] | undefined> => {
+export const readVoteParticipants = async (vote_id: string): Promise<string | undefined> => {
     try {
-        if (!own_id)
-            return;
+        const vote_data = await axios.post('http://localhost:5001/api/vote/read-participant', {
+            vote_id: vote_id
+        });
 
-        console.log("소유자 ID로 투표 가져오기");
+        return vote_data.data.participantCount;
+    } catch (error) {
+        console.log("내 투표 가져오기 에러");
+    }
+}
+
+export const readVoteListByOwnerId = async (own_id: string): Promise<VoteDto[] | undefined> => {
+    try {
+        if (!own_id) return;
 
         const vote_data = await axios.post('http://localhost:5001/api/vote/read-owner', {
             own_id: own_id
@@ -26,9 +35,9 @@ export const readVoteByOwnerId = async (own_id: any): Promise<Vote[] | undefined
     }
 }
 
-export const readVoteSortedLikes = async (): Promise<Vote[] | undefined> => {
+export const readVoteListSortedLikes = async (): Promise<VoteDto[] | undefined> => {
     try {
-        const votes = await axios.get('http://localhost:5001/api/vote/read-like');
+        const votes = await axios.get('http://localhost:5001/api/vote/read-sorted-like');
 
         return votes.data;
     } catch (error) {
@@ -36,9 +45,9 @@ export const readVoteSortedLikes = async (): Promise<Vote[] | undefined> => {
     }
 }
 
-export const readVoteSortedParticipants = async (): Promise<Vote[] | undefined> => {
+export const readVoteListSortedParticipants = async (): Promise<VoteDto[] | undefined> => {
     try {
-        const votes = await axios.get('http://localhost:5001/api/vote/read-participant');
+        const votes = await axios.get('http://localhost:5001/api/vote/read-sorted-participant');
 
         return votes.data;
     } catch (error) {
