@@ -1,1 +1,1 @@
-export { useReadVoteListByOwnerId, useReadVoteListSortedLikes, useReadVoteListSortedParticipants } from "./model/queries";
+export { VoteList } from "./ui/voteList";

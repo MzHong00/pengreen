@@ -1,0 +1,22 @@
+.explore {
+    display: flex;
+}
+
+.prevVote {
+    position: absolute;
+    animation-duration: 2s;
+    opacity: 0.2;
+    z-index: -1;
+}
+
+.curVote {
+    position: absolute;
+    animation-duration: 2s;
+}
+
+.nextVote {
+    position: absolute;
+    animation-duration: 2s;
+    opacity: 0.2;
+    z-index: -1;
+}

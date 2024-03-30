@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet } from "react-router-dom";
 import { LayoutHeader } from 'widgets/LayoutHeader';
-import { Sidebar } from 'widgets/LayoutSidebar';
+import { Navbar } from 'widgets/LayoutNavbar';
 
 export default function Main() {
     // root경로에 "login"의 PostMessage가 전송되면 root 페이지를 새로고침하는 리스너 장착
@@ -25,14 +25,14 @@ export default function Main() {
     }, [])
 
     return (
-        <div className='min-h-screen flex gap-8'>
-                <Sidebar />
-                <div>
+        <div>
+                <div className='w-[80rem] m-auto'>
                     <LayoutHeader />
-                    <main className="flex gap-5">
+                    <main className="w-full flex gap-5">
                         <Outlet />
                     </main>
                 </div>
+                <Navbar />
         </div>
     )
 }

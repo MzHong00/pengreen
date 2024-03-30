@@ -2,7 +2,6 @@ import { type Request, Response } from "express"
 
 import { mongodbFind, mongodbFindOne, mongodbInsert, mongodbRemove } from "../data-access/mongodb";
 import { Participant } from "../models/participant";
-import { duplicateChecker } from "../utils/duplicateChecker";
 
 //투표 선택 수
 export const readEachChoiceCount = async (req: Request, res: Response) => {
@@ -34,20 +33,20 @@ export const readEachChoiceCount = async (req: Request, res: Response) => {
 }
 
 //내가 투표자인지
-export const readIsParticipant = async (req: Request, res: Response) => {
+export const readMyPick = async (req: Request, res: Response) => {
     const collection = 'vote_participants';
 
     try {
         const { user_id, vote_id } = req.body;
 
         //내가 투표자인지
-        const participantQuery = {
+        const myPickQuery = {
             user_id: user_id,
             vote_id: vote_id
         }
-        const isParticipant: boolean = await duplicateChecker(collection, participantQuery);
+        const myPick:Participant = await mongodbFindOne(collection, myPickQuery);
 
-        res.send(isParticipant);
+        res.send(myPick?.pick);
     } catch (error) {
         throw error
     }

@@ -38,11 +38,12 @@ const oauthType = (): OAuthProvider[] => {
         }
     ])
 }
+
 export function LoginForm() {
     const oauth = oauthType();
 
     return (
-        <div className="w-96 h-128 p-10 flex flex-col justify-between items-center bg-white gap-10">
+        <div className="w-96 h-128 p-10 flex flex-col justify-between items-center gap-10">
             <h1>
                 <span className="text-4xl">환영합니다</span>
             </h1>

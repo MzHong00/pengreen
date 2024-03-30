@@ -18,7 +18,7 @@ export function Sidebar() {
     });
 
     return (
-        <aside className={`relative flex flex-col ${arrowState ? 'w-40 ' : '!w-14'} h-full left-0 top-0 bg-white duration-500`}>
+        <aside className={`absolute flex flex-col ${arrowState ? 'w-40 ' : '!w-14'} h-full left-0 top-0 bg-white duration-500`}>
             <div className='w-full h-12 pl-5 overflow-hidden'>
                 {arrowState && <Logo />}
             </div>

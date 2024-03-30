@@ -5,7 +5,7 @@ export default function Label({
 }) {
 
     return (
-        <div className={`flex justify-center items-center rounded-3xl gap-1 ${containerStyles}`}>
+        <div className={`flex justify-center items-center rounded gap-1 ${containerStyles}`}>
             <div className={`${contentStyles}`}>
                 {name && <span>{name}</span>}
             </div>

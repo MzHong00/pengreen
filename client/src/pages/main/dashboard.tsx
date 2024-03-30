@@ -4,31 +4,28 @@ import { FaPlus } from "react-icons/fa6";
 import VoteForm from "features/voteForm/generateVote/ui/voteForm/voteForm";
 import { useUserFetch } from "features/authentication/login";
 import { useDialog } from "shared/hooks/useDialog";
-import { useReadVoteListByOwnerId } from "widgets/voteList";
+import { useReadVoteListByOwnerId } from "entities/vote/participant";
 
 export default function Dashboard() {
     const { data: user } = useUserFetch();
     const { data: votes } = useReadVoteListByOwnerId(user?._id);
-    const [voteForm, openVoteForm] = useDialog(VoteForm);
+    const [voteForm, openVoteForm] = useDialog(<VoteForm />);
 
     return (
         <div className="text-xl font-sans font-semibold">
-            <section>
-                <h2>
+            <section className="h-160">
+                <h2 className="flex items-center gap-3">
                     <span>My Votes</span>
+                    <FaPlus 
+                        color="rgb(171 209 213)"
+                        className="border-2 border-blue-200 rounded-lg shadow hover:shadow-inner cursor-pointer"
+                        onClick={openVoteForm}/>
                 </h2>
-                <div className="flex flex-wrap">
-                    <div className="flex flex-wrap">
-                        <button
-                            onClick={openVoteForm}
-                            className="w-96 h-80 flex flex-col justify-center items-center border-2 border-blue-200 rounded-3xl overflow-hidden p-5 m-3 shadow-lg hover:shadow-inner">
-                            <FaPlus size="60" color="rgb(165 243 252)" />
-                        </button>
-                        {voteForm}
-                    </div>
+                <div className="h-152 grid grid-flow-col grid-rows-voteList">
                     {votes?.map((vote: VoteDto, idx: number) => <Vote key={idx} vote={vote} />)}
                 </div>
             </section>
+            {voteForm}
             <h2>
                 <span>Activity</span>
             </h2>

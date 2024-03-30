@@ -9,7 +9,7 @@ export const SelectChoice = ({
     choice, maxChoice
 }: Props) => {
     const [count, setCount] = useState(0);
-    const limit_check = (e: any) => {
+    const limitCheckHandler = (e: any) => {
         const isChecked = e.target.checked;
 
         if (isChecked && count < maxChoice) {
@@ -26,7 +26,7 @@ export const SelectChoice = ({
             {
                 choice.map((value: any, idx) =>
                     <div key={idx} className="w-fit flex items-center gap-2">
-                        <input type="checkbox" id={value.id} onClick={limit_check} className="w-4 h-4" />
+                        <input type="checkbox" id={value.id} onClick={limitCheckHandler} className="w-4 h-4" />
                         <label htmlFor={value.id} className={`text-sm font-normal truncate`}>{value}</label>
                     </div>)
             }

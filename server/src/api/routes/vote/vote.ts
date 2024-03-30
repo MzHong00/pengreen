@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { createVote, readVoteByOwnerId, readVoteParticipants, readVoteSortedLikes, readVoteSortedParticipants } from "../../../services/vote";
 import { updateLikeInfo, readLikeInfo } from '../../../services/likes'
-import { readEachChoiceCount, readIsParticipant, updateChoice } from "../../../services/choice";
+import { readEachChoiceCount, readMyPick, updateChoice } from "../../../services/choice";
 
 
 const router = Router();
@@ -17,7 +17,7 @@ router.put('/update-like', updateLikeInfo);
 router.post('/read-like', readLikeInfo);
 
 router.put('/read-choice-count', readEachChoiceCount);
-router.put('/read-isparticipant', readIsParticipant);
+router.put('/read-mypick', readMyPick);
 router.post('/update-choice', updateChoice);
 
 export default router;

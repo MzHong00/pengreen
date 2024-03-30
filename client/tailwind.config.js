@@ -11,6 +11,9 @@ module.exports = {
         '144': '36rem',
         '152': '38rem',
         '160': "40rem",
+      },
+      gridTemplateRows: {
+        'voteList': 'repeat(2, minmax(0, 20rem))',
       }
     },
   },
