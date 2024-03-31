@@ -9,15 +9,27 @@ export const useSplitVotes = (data: VoteDto[]) => {
     const ref = useRef<any>();
 
     const leftArrowHandler = () => {
-        console.log("left Arrow");
-        //ref.current.scrollLeft += 400 * 2;
-        setPointer(prev => prev - SliceUnit);
+        ref.current.style.transition = '0.2s';
+        ref.current.style.transform = 'translate(50rem, 0)';
+
+        setTimeout(() => {
+            ref.current.style.transitionDuration = '';
+            ref.current.style.transform = '';
+
+            setPointer(prev => prev - SliceUnit);
+        }, 400);
     }
 
     const rightArrowHandler = () => {
-        console.dir(ref.current);
-        //ref.current.scrollLeft -= 400 * 2;
-        setPointer(prev => prev + SliceUnit);
+        ref.current.style.transitionDuration = '0.2s';
+        ref.current.style.transform = 'translate(-50rem, 0)';
+
+        setTimeout(() => {
+            ref.current.style.transitionDuration = '';
+            ref.current.style.transform = '';
+
+            setPointer(prev => prev + SliceUnit);
+        }, 400);
     }
 
     return ({

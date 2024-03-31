@@ -26,7 +26,7 @@ export default function Main() {
 
     return (
         <div>
-                <div className='w-[80rem] m-auto'>
+                <div>
                     <LayoutHeader />
                     <main className="w-full flex gap-5">
                         <Outlet />
