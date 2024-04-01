@@ -40,7 +40,11 @@ export function Vote({
                     <div className="flex justify-between">
                         <UpdateLike userId={user._id} voteId={vote._id} />
                         <Participant voteId={vote._id} />
-                        <Button text={"자세히"} btnStyles='p-1 px-2 shadow bg-purple-600/30 hover:shadow-inner' contentStyles="text-slate-100 text-xs font-sans" handler={openVoteDetail} />
+                        <Button 
+                            text={"자세히"} 
+                            btnStyles='p-1 px-2 shadow bg-white hover:shadow-inner' 
+                            contentStyles="text-xs font-sans" 
+                            handler={openVoteDetail} />
                     </div>
                 }
                         {voteDetail}

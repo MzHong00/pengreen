@@ -1,35 +1,50 @@
 import { BsFire } from "react-icons/bs";
 import { useReadVoteListSortedLikes } from 'entities/vote/participant';
-import { useSplitVotes } from "../model/explore";
+import { splitVotes, useResizeConfig } from "../model/explore";
 import { VoteDto } from "widgets/vote";
 import { VoteList } from "widgets/voteList";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
+
+import styles from './explore.module.css';
+import { useSlider } from "shared/hooks/useSlider";
 
 export default function Explore() {
     const { data: votes } = useReadVoteListSortedLikes();
-    const {
-        ref, splitedVote, leftArrowHandler, rightArrowHandler
-    } = useSplitVotes(votes as VoteDto[]);
+    const splitInterval = useResizeConfig(400);
+    const { splitedVote } = splitVotes(votes as VoteDto[], splitInterval * 2);
+    const { pointer, ref, handler } = useSlider(splitedVote?.length as number, 400 * splitInterval);
     
+
     return (
-        <section className='h-160 relative overflow-hidden'>
-            <div className='flex items-center'>
+        <section className='relative'>
+            <div className='flex items-center px-14'>
                 <BsFire color='red' />
                 <span>Hot</span>
-                <nav className='flex items-center pl-3'>
-                    <div className='absolute w-10 h-20 top-1/2 left-10 transform -translate-y-1/2 bg-black z-10' onClick={leftArrowHandler} />
-                    <div className='absolute w-10 h-20 top-1/2 right-10 transform -translate-y-1/2 bg-black z-10' onClick={rightArrowHandler} />
-                </nav>
             </div>
-            <div className="flex" ref={ref}>
-                <VoteList
-                    votes={splitedVote.prevVote}
-                    className={`absolute left-1/2 -translate-x-[150%] opacity-20`} />
-                <VoteList
-                    votes={splitedVote.curVote}
-                    className="absolute left-1/2 -translate-x-1/2" />
-                <VoteList
-                    votes={splitedVote.nextVote}
-                    className="absolute left-1/2 translate-x-1/2 opacity-20" />
+            <div ref={ref.containerRef} className={styles.slider}>
+                <nav className='flex items-center pl-3'>
+                    <div ref={ref.leftArrowRef} className={`${styles.sliderLeftBtn} ${styles.sliderBtn}`}>
+                        <IoIosArrowBack color="white" size={30} />
+                    </div>
+                    <div ref={ref.rightArrowRef} className={`${styles.sliderRightBtn} ${styles.sliderBtn}`}>
+                        <IoIosArrowForward color="white" size={30} />
+                    </div>
+                </nav>
+                <div>
+                    {
+                        splitedVote?.map((votes, idx) => (
+                            <VoteList
+                                key={idx}
+                                votes={votes}
+                                className={`${idx !== pointer && 'opacity-20'} h-160 grid grid-flow-col grid-rows-2 hover:opacity-100 duration-500`}
+                                onClick={handler.translateElePosHandler}
+                                onMouseEnter={handler.arrowActiveHandler}
+                                onMouseLeave={handler.arrowInActiveHandler} />
+                        ))
+                    }
+                    <div className={styles.whiteSpace} />
+                </div>
             </div>
         </section>
     )

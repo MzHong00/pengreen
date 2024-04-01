@@ -1,5 +1,3 @@
-import Label from "shared/ui/label";
-
 import styles from './choice.module.css';
 
 import { NumChart } from "entities/chart/numChart";
@@ -24,7 +22,7 @@ export const Choice = ({
     const { data: myPick } = useReadMyPick(user?._id, voteId);
     const { state: toggleState, handler: toggleHandler } = useToggle({});
     const submitHandler = useSubmitChoice(user?._id, voteId);
-    
+
     return (
         <form className='h-full'>
             <div className={`relative flex h-4 gap-2 mb-2`}>
@@ -36,12 +34,13 @@ export const Choice = ({
                             toggleHandler();
                             submitHandler(event);
                         }}
-                        className={`px-2 shadow hover:shadow-inner text-xs text-white font-light rounded cursor-pointer ${!myPick ? "bg-[#4b4b4b]" : "bg-purple-600/30"} `} />
+                        className={`px-2 shadow hover:shadow-inner text-xs text-white font-light rounded cursor-pointer ${!myPick ? "bg-[#4b4b4b]" : "bg-sky-300"} `} />
                 </span>
-                <Label
-                    name={`최대: ${maxChoice}`}
-                    containerStyles='px-2 bg-[#7b7b7b] shadow hover:shadow-inner cursor-default'
-                    contentStyles='text-xs text-white font-light' />
+                <div className='flex justify-center items-center rounded gap-1 px-2 bg-[#7b7b7b] shadow hover:shadow-inner cursor-default'>
+                    <div className='text-xs text-white font-light'>
+                        <span>{`최대: ${maxChoice}`}</span>
+                    </div>
+                </div>
             </div>
             {toggleState ? <SelectChoice choice={choice} maxChoice={maxChoice} /> : <NumChart data={choiceData} />}
         </form>

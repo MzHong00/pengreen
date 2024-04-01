@@ -16,7 +16,7 @@ div::-webkit-scrollbar-track {
 
 /* Handle */
 div::-webkit-scrollbar-thumb {
-  background: rgb(147 197 253);
+  background: rgb(54, 54, 54);
   border-radius: 5px;
 }
 
@@ -38,7 +38,7 @@ form::-webkit-scrollbar-track {
 
 /* Handle */
 form::-webkit-scrollbar-thumb {
-  background: rgb(147 197 253);
+  background: rgb(54, 54, 54);
   border-radius: 5px;
 }
 

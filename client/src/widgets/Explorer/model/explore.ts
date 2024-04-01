@@ -1,45 +1,37 @@
-import { useRef, useState } from "react"
+import { useEffect, useState } from "react";
 import { VoteDto } from "widgets/vote";
 
+export const useResizeConfig = (widthOfOneVote: number) => {
+    const [splitInterval, setSplitInterval] = useState((window.innerWidth - 100) / widthOfOneVote);
 
-export const useSplitVotes = (data: VoteDto[]) => {
-    const SliceUnit = 4;
-    const [pointer, setPointer] = useState(0);
+    useEffect(() => {
+        const updateInterval = (e: any) => {
+            setSplitInterval((e.target.innerWidth - 100) / widthOfOneVote)
+        }
 
-    const ref = useRef<any>();
+        window.addEventListener('resize', updateInterval)
 
-    const leftArrowHandler = () => {
-        ref.current.style.transition = '0.2s';
-        ref.current.style.transform = 'translate(50rem, 0)';
+        return () => window.addEventListener('resize', updateInterval)
+    }, [widthOfOneVote])
 
-        setTimeout(() => {
-            ref.current.style.transitionDuration = '';
-            ref.current.style.transform = '';
+    return Math.floor(splitInterval);
+}
 
-            setPointer(prev => prev - SliceUnit);
-        }, 400);
+export const splitVotes = (data: VoteDto[], spliteInterval: number) => {
+    if (spliteInterval === 0) {
+        spliteInterval = 1;
     }
-
-    const rightArrowHandler = () => {
-        ref.current.style.transitionDuration = '0.2s';
-        ref.current.style.transform = 'translate(-50rem, 0)';
-
-        setTimeout(() => {
-            ref.current.style.transitionDuration = '';
-            ref.current.style.transform = '';
-
-            setPointer(prev => prev + SliceUnit);
-        }, 400);
-    }
+    const splitedVote = data && chunkArray(data, spliteInterval);
 
     return ({
-        ref: ref,
-        splitedVote: {
-            prevVote: data?.slice(pointer - SliceUnit, pointer),
-            curVote: data?.slice(pointer, pointer + SliceUnit),
-            nextVote: data?.slice(pointer + SliceUnit, pointer + SliceUnit * 2)
-        },
-        rightArrowHandler: rightArrowHandler,
-        leftArrowHandler: leftArrowHandler
+        splitedVote: splitedVote,
     })
+}
+
+function chunkArray<T>(array: T[], chunkSize: number): T[][] {
+    const chunks: T[][] = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+        chunks.push(array.slice(i, i + chunkSize));
+    }
+    return chunks;
 }
