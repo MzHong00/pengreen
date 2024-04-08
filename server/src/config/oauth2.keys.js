@@ -10,7 +10,8 @@ export const keys = {
             "http://localhost:3000/auth/google"
         ],
         "javascript_origins": [
-            "http://localhost:5001"
+            "http://localhost:5001",
+            "https://pengreen-client.vercel.app/auth/google"
         ]
     }
 }
