@@ -19,7 +19,7 @@ const google_signin = (req: Request, res: Response) => {
         ]
     });
 
-    res.status(200).send(authorizeUrl);
+    res.status(200).send("hello");
 }
 
 const google_redirect = async (req: Request, res: Response) => {
