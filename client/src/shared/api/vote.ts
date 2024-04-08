@@ -3,7 +3,7 @@ import { type VoteDto } from 'widgets/vote';
 
 export const createVote = async (vote: VoteDto): Promise<void> => {
     try {
-        await axios.post('http://localhost:5001/api/vote/create', vote);
+        await axios.post(`https://${process.env.REACT_APP_API_ROOT}/api/vote/create`, vote);
     } catch (error) {
         console.log("투표 생성 에러");
     }
@@ -11,7 +11,7 @@ export const createVote = async (vote: VoteDto): Promise<void> => {
 
 export const readVoteParticipants = async (vote_id: string): Promise<string | undefined> => {
     try {
-        const vote_data = await axios.post('http://localhost:5001/api/vote/read-participant', {
+        const vote_data = await axios.post(`https://${process.env.REACT_APP_API_ROOT}/api/vote/read-participant`, {
             vote_id: vote_id
         });
 
@@ -25,7 +25,7 @@ export const readVoteListByOwnerId = async (own_id: string): Promise<VoteDto[] |
     try {
         if (!own_id) return;
 
-        const vote_data = await axios.post('http://localhost:5001/api/vote/read-owner', {
+        const vote_data = await axios.post(`https://${process.env.REACT_APP_API_ROOT}/api/vote/read-owner`, {
             own_id: own_id
         });
 
@@ -37,7 +37,7 @@ export const readVoteListByOwnerId = async (own_id: string): Promise<VoteDto[] |
 
 export const readVoteListSortedLikes = async (): Promise<VoteDto[] | undefined> => {
     try {
-        const votes = await axios.get('http://localhost:5001/api/vote/read-sorted-like');
+        const votes = await axios.get(`https://${process.env.REACT_APP_API_ROOT}/api/vote/read-sorted-like`);
 
         return votes.data;
     } catch (error) {
@@ -47,7 +47,7 @@ export const readVoteListSortedLikes = async (): Promise<VoteDto[] | undefined> 
 
 export const readVoteListSortedParticipants = async (): Promise<VoteDto[] | undefined> => {
     try {
-        const votes = await axios.get('http://localhost:5001/api/vote/read-sorted-participant');
+        const votes = await axios.get(`https://${process.env.REACT_APP_API_ROOT}/api/vote/read-sorted-participant`);
 
         return votes.data;
     } catch (error) {
