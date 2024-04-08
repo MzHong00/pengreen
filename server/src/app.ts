@@ -7,9 +7,7 @@ import { client } from './data-access/mongodb/index';
 async function startServer() {
     const app = express();
 
-    const server = app.listen(config.port, () => {
-        console.log(`http://localhost:${config.port}`);
-    });
+    const server = app.listen();
     
     app.get('/', (req, res) => {
         res.send("hello");
