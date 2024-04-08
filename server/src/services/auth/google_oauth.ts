@@ -2,7 +2,7 @@ import { type Request, type Response } from 'express';
 import { OAuth2Client } from 'google-auth-library';
 import axios from 'axios';
 
-import { keys } from 'config/oauth2.keys';
+import { keys } from '../../config/oauth2.keys';
 
 const oAuth2Client = new OAuth2Client(
     keys.web.client_id,

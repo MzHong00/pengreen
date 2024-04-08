@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { google_redirect , google_signin, google_signout } from "services/auth/google_oauth"
+import { google_redirect , google_signin, google_signout } from "../../../../services/auth/google_oauth"
 
 const router = Router();
 

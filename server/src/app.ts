@@ -10,7 +10,8 @@ async function startServer() {
     const server = app.listen(config.port, () => {
         console.log(`http://localhost:${config.port}`);
     });
-
+    console.log(app);
+    
     app.get('/', (req, res) => {
         res.send("hello");
     })
