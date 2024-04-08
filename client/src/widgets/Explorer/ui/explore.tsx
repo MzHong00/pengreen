@@ -9,13 +9,12 @@ import { IoIosArrowForward } from "react-icons/io";
 import styles from './explore.module.css';
 import { useSlider } from "shared/hooks/useSlider";
 
-export default function Explore() {
+export function Explore() {
     const { data: votes } = useReadVoteListSortedLikes();
     const splitInterval = useResizeConfig(400);
     const { splitedVote } = splitVotes(votes as VoteDto[], splitInterval * 2);
     const { pointer, ref, handler } = useSlider(splitedVote?.length as number, 400 * splitInterval);
     
-
     return (
         <section className='relative'>
             <div className='flex items-center px-14'>

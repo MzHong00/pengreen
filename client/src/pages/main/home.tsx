@@ -1,10 +1,10 @@
-import Explorer from "../../widgets/Explorer/ui/explore";
+import { Explore } from "widgets/Explorer";
 
 export default function Home() {
 
     return (
         <div className="w-full text-xl font-sans font-semibold">
-            <Explorer />
+            <Explore />
         </div>
     )
 }
