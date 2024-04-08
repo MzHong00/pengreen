@@ -11,6 +11,10 @@ async function startServer() {
         console.log(`http://localhost:${config.port}`);
     });
 
+    app.get('/', (req, res) => {
+        res.send("hello");
+    })
+
     await loaders({
         expressApp: app
     })
