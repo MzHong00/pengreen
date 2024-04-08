@@ -1,13 +1,16 @@
 import express from 'express';
-import config from './config/index'
+import config from '../src/config/index'
 
-import loaders from './loaders/index';
-import { client } from './data-access/mongodb/index';
+import loaders from '../src/loaders/index';
+import { client } from '../src/data-access/mongodb/index';
 
 async function startServer() {
     const app = express();
 
-    const server = app.listen();
+    const server = app.listen(config.port, () => {
+        console.log(`http://localhost:${config.port}`);
+        
+    });
     
     app.get('/', (req, res) => {
         res.send("hello");

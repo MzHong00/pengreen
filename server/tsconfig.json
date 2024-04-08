@@ -10,7 +10,6 @@
       "dom.iterable",
       "esnext"
     ],
-    "baseUrl": "src",
     "paths": {
       "@/*": ["./*"]
     },
@@ -26,7 +25,7 @@
   },
   "include": [
     "src"
-  ],
+, "src/api/routes/index.ts", "api/index.ts"  ],
   "exclude": [
     "node_modules"
   ]

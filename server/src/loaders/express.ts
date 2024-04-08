@@ -1,7 +1,7 @@
 import express, { Express } from 'express';
 import cors from 'cors';
 
-import routes from '../api/index'
+import routes from '../api/routes/index'
 
 export default (app: Express) => {
     app.use(cors());

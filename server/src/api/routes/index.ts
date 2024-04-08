@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import account from "./routes/account/account";
-import vote from './routes/vote/vote';
+import account from "./account/account";
+import vote from './vote/vote';
 
 const router = Router();
 
