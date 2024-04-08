@@ -1,11 +1,19 @@
 {
+  "ts-node": {
+    // Do not forget to `npm i -D tsconfig-paths`
+    "require": ["tsconfig-paths/register"]
+},
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["./*"]
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
@@ -14,11 +22,10 @@
     "noFallthroughCasesInSwitch": true,
     "module": "commonjs",
     "outDir": "dist",
-    "rootDir": "src",
     "esModuleInterop": true
   },
   "include": [
-    "src/**/*"
+    "src"
   ],
   "exclude": [
     "node_modules"

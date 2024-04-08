@@ -1,7 +1,8 @@
+import { type Request, type Response } from 'express';
 import { OAuth2Client } from 'google-auth-library';
 import axios from 'axios';
 
-import keys from '../../config/oauth2.keys.json' assert { type: "json" };
+import { keys } from 'config/oauth2.keys';
 
 const oAuth2Client = new OAuth2Client(
     keys.web.client_id,
@@ -9,7 +10,7 @@ const oAuth2Client = new OAuth2Client(
     keys.web.redirect_uris[0]
 );
 
-const google_signin = (req, res) => {
+const google_signin = (req: Request, res: Response) => {
     const authorizeUrl = oAuth2Client.generateAuthUrl({
         access_type: 'offline',
         scope: [
@@ -21,7 +22,7 @@ const google_signin = (req, res) => {
     res.status(200).send(authorizeUrl);
 }
 
-const google_redirect = async (req, res) => {
+const google_redirect = async (req: Request, res: Response) => {
     try {
         const code = req.body.code;
         const r = await oAuth2Client.getToken(code);
@@ -41,7 +42,7 @@ const google_redirect = async (req, res) => {
     }
 }
 
-const google_signout = (req, res) => {
+const google_signout = (req: Request, res: Response) => {
     try {
         oAuth2Client.revokeCredentials((err, body) => {
             console.log(err, body)
