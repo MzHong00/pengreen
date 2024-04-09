@@ -7,11 +7,11 @@ export const keys = {
         "token_uri": "https://oauth2.googleapis.com/token",
         "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
         "redirect_uris": [
-            "http://localhost:3000/auth/google"
+            "http://localhost:3000/auth/google",
+            "https://pengreen-client.vercel.app/auth/google"
         ],
         "javascript_origins": [
-            "http://localhost:5001",
-            "http://pengreen-client.vercel.app/auth/google"
+            "http://localhost:5001"
         ]
     }
 }
