@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { readVoteListByOwnerId, readVoteListSortedLikes, readVoteListSortedParticipants, readVoteParticipants } from "shared/api"
+import { readVoteListByOwnerId, readVoteParticipants } from "shared/api"
 
 export const useReadVoteParticipants = (voteId: string) => {
     return useQuery({
@@ -14,17 +14,3 @@ export const useReadVoteListByOwnerId = (ownId: string) => {
         enabled: !!ownId
     })
 };
-
-export const useReadVoteListSortedLikes = () => {
-    return useQuery({
-        queryKey: ['vote'],
-        queryFn: () => readVoteListSortedLikes()
-    })
-}
-
-export const useReadVoteListSortedParticipants = () => {
-    return useQuery({
-        queryKey: ['vote'],
-        queryFn: () => readVoteListSortedParticipants()
-    })
-}

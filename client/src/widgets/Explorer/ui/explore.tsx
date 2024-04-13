@@ -1,5 +1,3 @@
-import { BsFire } from "react-icons/bs";
-import { useReadVoteListSortedLikes } from 'entities/vote/participant';
 import { splitVotes, useResizeConfig } from "../model/explore";
 import { VoteDto } from "widgets/vote";
 import { VoteList } from "widgets/voteList";
@@ -8,6 +6,8 @@ import { IoIosArrowForward } from "react-icons/io";
 
 import styles from './explore.module.css';
 import { useSlider } from "shared/hooks/useSlider";
+import { SortByButton } from 'features/vote/sortBy';
+import { useReadVoteListSortedLikes } from "features/vote/sortBy/model/queries";
 
 export function Explore() {
     const { data: votes } = useReadVoteListSortedLikes();
@@ -17,9 +17,8 @@ export function Explore() {
     
     return (
         <section className='relative'>
-            <div className='flex items-center px-14'>
-                <BsFire color='red' />
-                <span>Hot</span>
+            <div className='flex items-center justify-center p-1'>
+                <SortByButton />
             </div>
             <div ref={ref.containerRef} className={styles.slider}>
                 <nav className='flex items-center pl-3'>

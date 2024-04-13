@@ -9,7 +9,7 @@ export const fetchLikeUpdate = async ({
     user_id, vote_id
 }: Props) => {
     try {
-        const fetchLike = await axios.put(`https://${process.env.REACT_APP_API_ROOT}/api/vote/update-like`, {
+        const fetchLike = await axios.put(`${process.env.REACT_APP_API_ROOT}/api/vote/update-like`, {
             user_id: user_id,
             vote_id: vote_id
         })
@@ -28,7 +28,7 @@ export const fetchLikesRead = async ({
     user_id, vote_id
 }: Props) => {
     try {
-        const fetchLike = await axios.post(`https://${process.env.REACT_APP_API_ROOT}/api/vote/read-like`, {
+        const fetchLike = await axios.post(`${process.env.REACT_APP_API_ROOT}/api/vote/read-like`, {
             user_id: user_id,
             vote_id: vote_id
         })

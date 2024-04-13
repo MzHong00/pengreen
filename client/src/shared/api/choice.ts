@@ -13,7 +13,7 @@ export const readEachChoiceCount = async ({
 }: VoteChoice) => {
     console.log("Pick 개수 Fetch");
     try {
-        const eachChoiceCount = await axios.put(`https://${process.env.REACT_APP_API_ROOT}/api/vote/read-choice-count`, {
+        const eachChoiceCount = await axios.put(`${process.env.REACT_APP_API_ROOT}/api/vote/read-choice-count`, {
             vote_id: vote_id,
             choiceList: choiceList
         })
@@ -28,7 +28,7 @@ export const readMyPick = async ({
     user_id, vote_id
 }: VoteChoice) => {
     try {
-        const isParticipant = await axios.put(`https://${process.env.REACT_APP_API_ROOT}/api/vote/read-mypick`, {
+        const isParticipant = await axios.put(`${process.env.REACT_APP_API_ROOT}/api/vote/read-mypick`, {
             user_id: user_id,
             vote_id: vote_id,
         })
@@ -44,7 +44,7 @@ export const updateChoice = async ({
 }: VotePickDto) => {
     console.log("Pick Update Fetch");
     try {
-        const fetchPick = await axios.post(`https://${process.env.REACT_APP_API_ROOT}/api/vote/update-choice`, {
+        const fetchPick = await axios.post(`${process.env.REACT_APP_API_ROOT}/api/vote/update-choice`, {
             user_id: user_id,
             vote_id: vote_id,
             selected: selected

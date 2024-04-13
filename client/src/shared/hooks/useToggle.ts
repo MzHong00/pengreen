@@ -24,7 +24,7 @@ interface Props {
 export const useToggle = ({
     trueState,
     falseState
-}: Props) => {
+}: Props = {}) => {
     const [toggle, setToggle] = useState(false);
 
     const changeState = () => {

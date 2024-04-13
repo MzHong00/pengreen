@@ -8,7 +8,9 @@ export default function Main() {
     // Google 로그인을 모달 창으로 하기 위해 message이벤트를 장착
     useEffect(() => {
         const getMessage = (e: MessageEvent ) => {
-            if (e.origin !== "http://localhost:3000") {
+            console.log(e);
+            
+            if (e.origin !== process.env.REACT_APP_API_ROOT) {
                 return
             } else {
                 if (e.data === "login") {

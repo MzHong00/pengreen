@@ -47,7 +47,7 @@ export function Vote({
                             handler={openVoteDetail} />
                     </div>
                 }
-                        {voteDetail}
+                {voteDetail}
             </section>
         </div>
     )

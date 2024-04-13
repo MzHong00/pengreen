@@ -13,7 +13,7 @@ export const fetchUser = async () => {
             return "";
         }
 
-        let user = await axios.post(`https://${process.env.REACT_APP_API_ROOT}/api/account/auth`, {}, {
+        let user = await axios.post(`${process.env.REACT_APP_API_ROOT}/api/account/auth`, {}, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
@@ -30,7 +30,7 @@ export const fetchUser = async () => {
                 httpOnly: true
             });
 
-            user = await axios.post(`https://${process.env.REACT_APP_API_ROOT}/api/account/auth`, {}, {
+            user = await axios.post(`${process.env.REACT_APP_API_ROOT}/api/account/auth`, {}, {
                 headers: {
                     'Authorization': `Bearer ${reissuedToken}`
                 }
@@ -49,7 +49,7 @@ const reissueToken = async (refreshToken: string) => {
             throw new Error('Refresh token is missing');
         }
 
-        const reissueResponse = await axios.post(`https://${process.env.REACT_APP_API_ROOT}/api/account/reissue`, {}, {
+        const reissueResponse = await axios.post(`${process.env.REACT_APP_API_ROOT}/api/account/reissue`, {}, {
             headers: {
                 'Authorization': `Bearer ${refreshToken}`
             }

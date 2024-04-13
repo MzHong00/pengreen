@@ -11,7 +11,7 @@ export const useNavSidebar = () => {
             {
                 name: "Home",
                 path: '/',
-                icon: () => <MdHome size="20" />,
+                icon: <MdHome size="20" />,
                 handler: () => {
                     navigate('/')
                 }
@@ -19,7 +19,7 @@ export const useNavSidebar = () => {
             {
                 name: "Dashboard",
                 path: '/dashboard',
-                icon: () => <MdOutlineSpaceDashboard size="20" />,
+                icon: <MdOutlineSpaceDashboard size="20" />,
                 handler: () => {
                     navigate('/dashboard')
                 }
