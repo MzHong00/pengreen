@@ -7,7 +7,7 @@ import { keys } from '../../config/oauth2.keys';
 const oAuth2Client = new OAuth2Client(
     keys.web.client_id,
     keys.web.client_secret,
-    keys.web.redirect_uris[1]
+    keys.web.redirect_uris[0]
 );
 
 const google_signin = (req: Request, res: Response) => {
