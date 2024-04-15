@@ -30,7 +30,7 @@ export default function BarChart({ data }) {
               'rgb(153, 102, 255)',
               'rgb(201, 203, 207)'
             ],
-            borderRadius: 10,
+            borderRadius: 3,
             borderWidth: 1,
             minBarLength: 5
           }

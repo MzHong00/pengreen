@@ -34,11 +34,11 @@ export const Choice = ({
                             toggleHandler();
                             submitHandler(event);
                         }}
-                        className={`px-2 shadow hover:shadow-inner text-xs text-white font-light rounded cursor-pointer ${!myPick ? "bg-[#4b4b4b]" : "bg-sky-300"} `} />
+                        className={`px-2 shadow hover:shadow-inner text-xs text-white font-light rounded cursor-pointer ${!myPick ? "bg-sky-300" : "bg-green-300"} `} />
                 </span>
-                <div className='flex justify-center items-center rounded gap-1 px-2 bg-[#7b7b7b] shadow hover:shadow-inner cursor-default'>
+                <div className='flex justify-center items-center rounded gap-1 px-2 bg-sky-300 shadow hover:shadow-inner cursor-default'>
                     <div className='text-xs text-white font-light'>
-                        <span>{`최대: ${maxChoice}`}</span>
+                        <span>{`선택: ${maxChoice}`}</span>
                     </div>
                 </div>
             </div>

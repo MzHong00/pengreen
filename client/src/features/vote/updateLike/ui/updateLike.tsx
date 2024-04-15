@@ -17,7 +17,7 @@ export function UpdateLike({
         <div className='flex items-center'>
             {
                 data?.isLiker ?
-                    <IoMdHeart onClick={updateHandler} className='cursor-pointer' /> :
+                    <IoMdHeart onClick={updateHandler} className='cursor-pointer' color="red"/> :
                     <IoMdHeartEmpty onClick={updateHandler} className='cursor-pointer' />
             }
             <span className='text-base'>{data?.likesCount}</span>

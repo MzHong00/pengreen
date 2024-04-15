@@ -3,14 +3,14 @@ import { readVoteListSortedLikes, readVoteListSortedParticipants } from "shared/
 
 export const useReadVoteListSortedLikes = () => {
     return useQuery({
-        queryKey: ['vote'],
+        queryKey: ['sortedVotesByLikes'],
         queryFn: () => readVoteListSortedLikes()
     })
 }
 
 export const useReadVoteListSortedParticipants = () => {
     return useQuery({
-        queryKey: ['vote'],
+        queryKey: ['sortedVotesByParticipants'],
         queryFn: () => readVoteListSortedParticipants()
     })
 }

@@ -9,6 +9,7 @@ import { useHover } from "shared/hooks/useHover";
 import { Participant } from "entities/vote/participant";
 import { VoteDetail } from "widgets/voteDetail";
 
+
 interface Props {
     vote: VoteDto
 }
@@ -24,7 +25,7 @@ export function Vote({
     const { ref: hoverRef, state: hover } = useHover({});
 
     return (
-        <div ref={hoverRef} className="flex flex-col w-96 h-64 p-5 m-2 rounded-xl overflow-hidden shadow-lg gap-2 bg-gradient-to-br from-[#E3E1D9] to-[#C7C8CC] hover:h-72 duration-300">
+        <div ref={hoverRef} className="flex flex-col w-96 h-64 p-5 m-2 rounded border border-slate-100 overflow-hidden shadow gap-2 bg-sky-100/50 hover:h-72 duration-300">
             <section className="flex justify-between gap-2">
                 <div className='w-[85%] flex items-center'>
                     <img src={vote.owner.picture} alt="프로필 사진" className="w-8 h-8 mr-3 rounded-full" />

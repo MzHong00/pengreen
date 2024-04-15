@@ -1,4 +1,4 @@
-import { splitVotes, useResizeConfig } from "../model/explore";
+import { sliceVotes, useFetchSortByVotes, useVisibleVoteCount } from "../model/explore";
 import { VoteDto } from "widgets/vote";
 import { VoteList } from "widgets/voteList";
 import { IoIosArrowBack } from "react-icons/io";
@@ -7,14 +7,15 @@ import { IoIosArrowForward } from "react-icons/io";
 import styles from './explore.module.css';
 import { useSlider } from "shared/hooks/useSlider";
 import { SortByButton } from 'features/vote/sortBy';
-import { useReadVoteListSortedLikes } from "features/vote/sortBy/model/queries";
+
+const widthOfVote = 400
 
 export function Explore() {
-    const { data: votes } = useReadVoteListSortedLikes();
-    const splitInterval = useResizeConfig(400);
-    const { splitedVote } = splitVotes(votes as VoteDto[], splitInterval * 2);
-    const { pointer, ref, handler } = useSlider(splitedVote?.length as number, 400 * splitInterval);
-    
+    const votes = useFetchSortByVotes();
+    const visibleVoteCount = useVisibleVoteCount(widthOfVote);
+    const splitedVotes = sliceVotes(votes, visibleVoteCount * 2);
+    const { pointer, ref, handler } = useSlider(splitedVotes?.length as number, widthOfVote * visibleVoteCount);
+
     return (
         <section className='relative'>
             <div className='flex items-center justify-center p-1'>
@@ -22,16 +23,22 @@ export function Explore() {
             </div>
             <div ref={ref.containerRef} className={styles.slider}>
                 <nav className='flex items-center pl-3'>
-                    <div ref={ref.leftArrowRef} className={`${styles.sliderLeftBtn} ${styles.sliderBtn}`}>
+                    <div
+                        ref={ref.leftArrowRef}
+                        className={`${styles.sliderLeftBtn} ${styles.sliderBtn}`}
+                        onClick={handler.leftArrowHandler}>
                         <IoIosArrowBack color="white" size={30} />
                     </div>
-                    <div ref={ref.rightArrowRef} className={`${styles.sliderRightBtn} ${styles.sliderBtn}`}>
+                    <div
+                        ref={ref.rightArrowRef}
+                        className={`${styles.sliderRightBtn} ${styles.sliderBtn}`}
+                        onClick={handler.rightArrowHandler}>
                         <IoIosArrowForward color="white" size={30} />
                     </div>
                 </nav>
                 <div>
                     {
-                        splitedVote?.map((votes, idx) => (
+                        splitedVotes?.map((votes, idx) => (
                             <VoteList
                                 key={idx}
                                 votes={votes}

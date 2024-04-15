@@ -10,7 +10,7 @@ export default function Main() {
         const getMessage = (e: MessageEvent ) => {
             console.log(e);
             
-            if (e.origin !== process.env.REACT_APP_API_ROOT) {
+            if (e.origin !== process.env.REACT_APP_HOME_URL) {
                 return
             } else {
                 if (e.data === "login") {
