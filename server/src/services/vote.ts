@@ -69,6 +69,8 @@ export const readVoteSortedParticipants = async (req: Request, res: Response): P
         }
         const votes = await mongodbFind('vote', {}, sort);
 
+        console.log(votes);
+        
         res.send(votes)
     } catch (error) {
         throw error
