@@ -17,7 +17,7 @@ export const useUpdateLike = (userId: string, voteId: string) => {
     const { mutate } = useMutation({
         mutationFn: fetchLikeUpdate,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['like', userId, voteId] })
+            queryClient.invalidateQueries({ queryKey: ['vote', voteId] })
         }
     })
 

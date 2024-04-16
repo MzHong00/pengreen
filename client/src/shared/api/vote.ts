@@ -9,6 +9,30 @@ export const createVote = async (vote: VoteDto): Promise<void> => {
     }
 }
 
+export const fetchSortedVoteList = async (queryString: string): Promise<VoteDto[] | undefined> => {
+    try {
+        const votes = await axios.get(`${process.env.REACT_APP_API_ROOT}/api/vote/read?${queryString}`);
+        
+        return votes.data;
+    } catch (error) {
+        console.log("투표 리스트 가져오기 에러");
+    }
+}
+
+export const fetchVoteById= async (voteId: string): Promise<VoteDto | undefined> => {
+    try {
+        const votes = await axios.post(`${process.env.REACT_APP_API_ROOT}/api/vote/read-id`, {
+            voteId: voteId
+        });
+        
+        console.log("투표 Fetch");
+        
+        return votes.data[0];
+    } catch (error) {
+        console.log("투표 가져오기 에러");
+    }
+}
+
 export const readVoteParticipants = async (vote_id: string): Promise<string | undefined> => {
     try {
         const vote_data = await axios.post(`${process.env.REACT_APP_API_ROOT}/api/vote/read-participant`, {
@@ -33,25 +57,5 @@ export const readVoteListByOwnerId = async (own_id: string): Promise<VoteDto[] |
         return vote_data.data;
     } catch (error) {
         console.log("내 투표 가져오기 에러");
-    }
-}
-
-export const readVoteListSortedLikes = async (): Promise<VoteDto[] | undefined> => {
-    try {
-        const votes = await axios.get(`${process.env.REACT_APP_API_ROOT}/api/vote/read-sorted-like`);
-        
-        return votes.data;
-    } catch (error) {
-        console.log("좋아요 순서로 투표 가져오기 에러");
-    }
-}
-
-export const readVoteListSortedParticipants = async (): Promise<VoteDto[] | undefined> => {
-    try {
-        const votes = await axios.get(`${process.env.REACT_APP_API_ROOT}/api/vote/read-sorted-participant`);
-
-        return votes.data;
-    } catch (error) {
-        console.log("참여자 순서로 투표 가져오기 에러");
     }
 }

@@ -1,16 +1,17 @@
 import { useQuery } from "@tanstack/react-query"
-import { readVoteListSortedLikes, readVoteListSortedParticipants } from "shared/api"
+import { fetchSortedVoteList } from "shared/api"
+import { fetchVoteById } from "shared/api/vote"
 
-export const useReadVoteListSortedLikes = () => {
+export const useFetchSortedVoteList = (queryString: string) => {
     return useQuery({
-        queryKey: ['sortedVotesByLikes'],
-        queryFn: () => readVoteListSortedLikes()
+        queryKey: ['vote'],
+        queryFn: () => fetchSortedVoteList(queryString)
     })
 }
 
-export const useReadVoteListSortedParticipants = () => {
+export const useFetchVoteById = (voteId: string) => {
     return useQuery({
-        queryKey: ['sortedVotesByParticipants'],
-        queryFn: () => readVoteListSortedParticipants()
+        queryKey: ['vote', voteId],
+        queryFn: () => fetchVoteById(voteId)
     })
 }

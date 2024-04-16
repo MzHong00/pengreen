@@ -35,7 +35,7 @@ export const useUpdateChoice = (userId:string , voteId:string) => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['choice', voteId] });
             queryClient.invalidateQueries({ queryKey: ['isParticipant', voteId] });
-            queryClient.invalidateQueries({ queryKey: ['participant', voteId] });
+            queryClient.invalidateQueries({ queryKey: ['vote', voteId] });
         }
     })
 }

@@ -20,7 +20,7 @@ export const Choice = ({
     const { data: user } = useUserFetch();
     const { data: choiceData } = useReadEachChoiceCount(voteId, choice);
     const { data: myPick } = useReadMyPick(user?._id, voteId);
-    const { state: toggleState, handler: toggleHandler } = useToggle({});
+    const { state: toggleState, handler: toggleHandler } = useToggle();
     const submitHandler = useSubmitChoice(user?._id, voteId);
 
     return (

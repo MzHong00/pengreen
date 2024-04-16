@@ -5,12 +5,12 @@ import { Button } from "shared/ui"
 import { sortTypes } from "../model/sortTypes"
 
 export const SelectSortBy = () => {
-    let [searchParams, setSearchParams] = useSearchParams();
+    let [, setSearchParams] = useSearchParams();
 
     const sortSelection = (event: MouseEvent<HTMLElement>) => {
         setSearchParams({ sort: event.currentTarget.innerText })
     }
-
+    
     return (
         <div className="w-52 flex flex-col bg-white rounded font-thin text-xs border border-slate-300">
             <span className="p-2 px-2 font-semibold">Select order</span>

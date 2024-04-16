@@ -24,8 +24,8 @@ export default function VoteForm() {
                 max_choice: 1,
                 start_time: new Date().toISOString(),
                 deadline: new Date().toISOString(),
-                like: 0,
-                participant: 0
+                like: [],
+                participant: []
             })
         }
 

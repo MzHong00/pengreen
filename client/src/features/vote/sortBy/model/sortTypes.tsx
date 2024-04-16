@@ -1,7 +1,7 @@
 import { IoMdHeart } from "react-icons/io";
 import { FaUser } from "react-icons/fa"
 
-export type SortType = "likes" | "participant"
+export type SortType = "like" | "participant"
 
 interface SortTypes {
     text: SortType
@@ -10,7 +10,7 @@ interface SortTypes {
 
 export const sortTypes: SortTypes[] = [
     {
-        text: 'likes',
+        text: 'like',
         img: <IoMdHeart color='red' />
     },
     {

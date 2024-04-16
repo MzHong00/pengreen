@@ -1,26 +1,28 @@
-import { useReadLike, useUpdateLike } from "../model/queries"
+import { useLikerCheck } from "../model/likerCheck";
+import { useUpdateLike } from "../model/queries"
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 
-interface Liker {
-    _id?: string;
+interface Props {
     userId: string;
     voteId: string;
+    likeMember: Array<string> | undefined
 }
 
 export function UpdateLike({
-    userId, voteId
-}: Liker) {
-    const { data } = useReadLike(userId, voteId);
-    const updateHandler = useUpdateLike(userId, voteId);
+    userId, voteId, likeMember = []
+}: Props) {
+    
+    const isLiker= useLikerCheck(userId, likeMember);
+    const updateHandler = useUpdateLike(userId, voteId);  
     
     return (
         <div className='flex items-center'>
             {
-                data?.isLiker ?
+                isLiker ?
                     <IoMdHeart onClick={updateHandler} className='cursor-pointer' color="red"/> :
                     <IoMdHeartEmpty onClick={updateHandler} className='cursor-pointer' />
             }
-            <span className='text-base'>{data?.likesCount}</span>
+            <span className='text-base'>{likeMember.length}</span>
         </div>
     )
 }

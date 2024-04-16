@@ -3,4 +3,4 @@ export { fetchGoogleForm, fetchToken } from './google-oauth';
 
 export { updateChoice } from './choice';
 export { fetchLikesRead, fetchLikeUpdate } from './likes';
-export { createVote, readVoteParticipants, readVoteListByOwnerId, readVoteListSortedLikes, readVoteListSortedParticipants } from './vote';
+export { createVote, readVoteParticipants, readVoteListByOwnerId, fetchSortedVoteList } from './vote';

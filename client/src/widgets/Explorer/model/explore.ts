@@ -2,28 +2,19 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { VoteDto } from "widgets/vote";
-import { SortType } from "features/vote/sortBy";
-import { useReadVoteListSortedLikes, useReadVoteListSortedParticipants } from "features/vote/sortBy/model/queries";
+import { useFetchSortedVoteList } from "features/vote/sortBy/model/queries";
 
 //Sort 쿼리 스트링에 따른 Vote Data Fetching
-export const useFetchSortByVotes = () => {
-    const [votes, setVotes] = useState<VoteDto[]>();
+export const useFetchVotes = () => {
     const [sortParams] = useSearchParams();
-
-    const { data: sortedLikesVotes } = useReadVoteListSortedLikes();
-    const { data: sortedParticipantsVotes } = useReadVoteListSortedParticipants();
-
+    
+    const { data: sortedVotes, refetch } = useFetchSortedVoteList(sortParams.toString());
+    
     useEffect(() => {
-        const sortType = sortParams.get('sort') as SortType;
-        
-        if (sortType === "likes") {
-            setVotes(sortedLikesVotes);
-        } else {
-            setVotes(sortedParticipantsVotes);
-        }
-    }, [sortParams, sortedLikesVotes, sortedParticipantsVotes]);
+        refetch()
+    }, [sortParams, refetch]);
 
-    return votes;
+    return sortedVotes;
 }
 
 //창의 크기에 따라 Vote가 보일 수 있는 개수

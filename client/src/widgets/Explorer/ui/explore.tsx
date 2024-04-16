@@ -1,5 +1,4 @@
-import { sliceVotes, useFetchSortByVotes, useVisibleVoteCount } from "../model/explore";
-import { VoteDto } from "widgets/vote";
+import { sliceVotes, useFetchVotes, useVisibleVoteCount } from "../model/explore";
 import { VoteList } from "widgets/voteList";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
@@ -11,11 +10,13 @@ import { SortByButton } from 'features/vote/sortBy';
 const widthOfVote = 400
 
 export function Explore() {
-    const votes = useFetchSortByVotes();
+    const votes = useFetchVotes();
     const visibleVoteCount = useVisibleVoteCount(widthOfVote);
     const splitedVotes = sliceVotes(votes, visibleVoteCount * 2);
     const { pointer, ref, handler } = useSlider(splitedVotes?.length as number, widthOfVote * visibleVoteCount);
 
+    console.log(votes);
+    
     return (
         <section className='relative'>
             <div className='flex items-center justify-center p-1'>

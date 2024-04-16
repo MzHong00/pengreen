@@ -1,14 +1,12 @@
 import { FaUser } from "react-icons/fa"
-import { useReadVoteParticipants } from "../model/queries"
 
 interface Props {
-    voteId: string
+    participant: number | undefined;
 }
 
 export const Participant = ({
-    voteId
+    participant = 0
 }: Props) => {
-    const { data : participant } = useReadVoteParticipants(voteId);
     
     return (
         <div className="flex items-center gap-3">

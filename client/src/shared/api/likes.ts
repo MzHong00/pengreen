@@ -13,7 +13,7 @@ export const fetchLikeUpdate = async ({
             user_id: user_id,
             vote_id: vote_id
         })
-
+        
         const { likesCount, isLiker } = fetchLike.data;
 
         console.log("좋아요 업데이트 Fetch");
@@ -32,7 +32,7 @@ export const fetchLikesRead = async ({
             user_id: user_id,
             vote_id: vote_id
         })
-
+        
         const { likesCount, isLiker } = fetchLike.data;
 
         console.log("좋아요 읽기 Fetch");

@@ -8,7 +8,7 @@ interface Props {
 export const useHover = ({
     trueState,
     falseState
-}: Props) => {
+}: Props = {}) => {
     const ref = useRef<HTMLDivElement>(null); // useRef 제네릭으로 DOM 요소의 타입을 지정
     const [hover, setHover] = useState(false);
 
