@@ -1,7 +1,8 @@
 import { type Request, Response } from "express"
 
-import { mongodbFind, mongodbFindOne, mongodbInsert, mongodbRemove } from "../data-access/mongodb";
+import { mongodbFind, mongodbFindOne, mongodbInsert, mongodbRemove, mongodbUpdate } from "../data-access/mongodb";
 import { Participant } from "../models/participant";
+import { ObjectId } from "mongodb";
 
 //투표 선택 수
 export const readEachChoiceCount = async (req: Request, res: Response) => {
@@ -52,6 +53,7 @@ export const readMyPick = async (req: Request, res: Response) => {
     }
 }
 
+//투표를 했을 떄
 export const updateChoice = async (req: Request, res: Response) => {
     const collection = 'vote_participants';
     
@@ -67,6 +69,12 @@ export const updateChoice = async (req: Request, res: Response) => {
 
         if (prevPick) {
             await mongodbRemove(collection, prevPick);
+        } else {
+            await mongodbUpdate(
+                'vote',
+                { _id: ObjectId.createFromHexString(vote_id) },
+                { $push: { participant: user_id }}
+            )
         }
 
         const newPickQuery: Participant = {

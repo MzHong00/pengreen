@@ -19,6 +19,8 @@ export const toVoteFormat = (data: any): Vote => {
         max_choice: data.max_choice,
         start_time: data.start_time,
         deadline: data.deadline,
-        choice: data.choice
+        choice: data.choice,
+        like: data.like,
+        participant: data.participant
     }
 }

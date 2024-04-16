@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { createVote, readVoteByOwnerId, readVoteParticipants, readVoteSortedLikes, readVoteSortedParticipants } from "../../../services/vote";
+import { createVote, readVoteList, readVoteByOwnerId, readVoteParticipants, readVoteById } from "../../../services/vote";
 import { updateLikeInfo, readLikeInfo } from '../../../services/likes'
 import { readEachChoiceCount, readMyPick, updateChoice } from "../../../services/choice";
 
@@ -8,10 +8,10 @@ import { readEachChoiceCount, readMyPick, updateChoice } from "../../../services
 const router = Router();
 
 router.post('/create', createVote);
+router.get('/read', readVoteList);
+router.post('/read-id', readVoteById);
 router.post('/read-owner', readVoteByOwnerId);
 router.post('/read-participant', readVoteParticipants);
-router.get('/read-sorted-like', readVoteSortedLikes);
-router.get('/read-sorted-participant', readVoteSortedParticipants);
 
 router.put('/update-like', updateLikeInfo);
 router.post('/read-like', readLikeInfo);

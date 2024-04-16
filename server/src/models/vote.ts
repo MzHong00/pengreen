@@ -9,5 +9,9 @@ export interface Vote {
     start_time: Date;
     deadline: Date;
     max_choice: number;
+    like: Array<string>;
+    participant: Array<string>;
     choice: Array<string>;
 }
+
+export type SortType = "like" | "participant"
