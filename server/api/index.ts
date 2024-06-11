@@ -1,29 +1,13 @@
-import express from 'express';
-import config from '../src/config/index'
+import { expressLoader } from '../src/loaders/express';
+import { client } from '../src/loaders/mongodb';
 
-import loaders from '../src/loaders/index';
-import { client } from '../src/data-access/mongodb/index';
-
-async function startServer() {
-    const app = express();
-
-    const server = app.listen(config.port, () => {
-        console.log(`http://localhost:${config.port}`);
-        
-    });
+async function server() {
+    const express = expressLoader();
     
-    app.get('/', (req, res) => {
-        res.send("hello");
-    })
-
-    await loaders({
-        expressApp: app
-    })
-    
-    return server;
+    return express;
 }
 
-startServer().then((server) => {
+server().then((server) => {
     process.on('SIGINT', () => {
         server.close(() => {
             client.close();

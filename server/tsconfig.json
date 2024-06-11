@@ -1,6 +1,5 @@
 {
   "ts-node": {
-    // Do not forget to `npm i -D tsconfig-paths`
     "require": ["tsconfig-paths/register"]
 },
   "compilerOptions": {
@@ -10,9 +9,6 @@
       "dom.iterable",
       "esnext"
     ],
-    "paths": {
-      "@/*": ["./*"]
-    },
     "allowJs": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,

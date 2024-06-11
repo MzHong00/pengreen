@@ -9,11 +9,9 @@ interface Config {
     refresh_secret_key: string | undefined;
 }
 
-const config: Config = {
+export const config: Config = {
     port: process.env.PORT,
     mongodb_password: process.env.MONGODB_ADMIN_PASSWORD,
     access_secret_key: process.env.ACCESS_SECRET_KEY,
     refresh_secret_key: process.env.REFRESH_SECRET_KEY
 }
-
-export default config
