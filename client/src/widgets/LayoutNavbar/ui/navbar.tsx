@@ -1,32 +1,38 @@
-import { useLocation } from 'react-router-dom';
-import { Button } from 'shared/ui';
-import { useNavSidebar } from '../model/sidebar';
+import { useLocation } from "react-router-dom";
+import { Button } from "shared/ui/Button/Button";
+import { useNavSidebar } from "../model/sideBarItems";
 import { BsList } from "react-icons/bs";
 
-import styles from './navbar.module.css';
+import styles from "./navbar.module.css";
 
 export function Navbar() {
-    const location = useLocation();
-    const sideList = useNavSidebar();
+  const location = useLocation();
+  const navList = useNavSidebar();
 
-    return (
-        <aside className={`${styles.navbarContainer}`}>
-            <nav className={`${styles.nav}`}>
-                <div className={`${styles.menuIcon}`}>
-                    <BsList />
-                </div>
-                <div className={`${styles.buttonContainer}`}>
-                    {
-                        sideList.map((path, idx) =>
-                            <Button
-                                key={idx}
-                                componentImg={path.icon}
-                                handler={path.handler}
-                                btnStyles={styles.button}
-                                contentStyles={`${styles.buttonContent} ${location.pathname === path.path && styles.activeButton}`} />)
-                    }
-                </div>
-            </nav>
-        </aside>
-    )
+  return (
+    <aside className={`${styles.navbarContainer}`}>
+      <nav className={`${styles.navbar}`}>
+        <div className={`${styles.menuIcon}`}>
+          <BsList />
+        </div>
+        <div className={`${styles.buttonContainer}`}>
+          {navList.map((item, idx) => {
+            const Icon = item.icon;
+
+            return (
+                <Button
+                  key={idx}
+                  onClick={item.handler}
+                  className={`${styles.button} ${
+                    location.pathname === item.path && styles.activeButton
+                  }`}
+                >
+                  <Icon/>
+                </Button>
+              )
+          })}
+        </div>
+      </nav>
+    </aside>
+  );
 }

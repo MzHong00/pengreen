@@ -1,0 +1,17 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.sortItem {
+    display: flex;
+    align-items: center;
+}
+
+.sortButton {
+    justify-content: center;
+    font-size: 12px;
+    font-weight: normal;
+    border-top-width: 2px;
+}

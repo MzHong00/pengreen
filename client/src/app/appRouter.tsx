@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
-import Main from "../pages/main";
-import Dashboard from "../pages/main/dashboard";
-import Home from "../pages/main/home";
+
+import Main from "pages/main";
+import Home from "pages/main/home";
+import Dashboard from "pages/main/dashboard";
 import { Redirect } from "pages/redirect/googleRedirect";
 
 const appRouter = createBrowserRouter([

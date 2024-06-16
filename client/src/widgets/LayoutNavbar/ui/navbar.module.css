@@ -8,7 +8,7 @@
     transition-duration: 500ms;
 }
 
-.nav {
+.navbar {
     padding: 0.25rem;
     display: flex;
     border: 1px solid #E3E1D9;
@@ -28,20 +28,26 @@
 }
 
 .buttonContainer {
+    display: flex;
     background-color: #F2EFE5;
     border-radius: 0.5rem;
+    overflow: hidden;
 }
 
 .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 2.5rem;
-    height: 2.5rem;
-}
-
-.buttonContent {
     height: 2.5rem;
     color: #757575;
     cursor: pointer;
     gap: 0.5rem;
+}
+
+.button:hover {
+    border: 1px solid white;
+    border-radius: 10px;
 }
 
 .activeButton {

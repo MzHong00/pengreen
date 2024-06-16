@@ -1,0 +1,33 @@
+.container {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 10rem;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #cbd5e0;
+    border-radius: 0.25rem;
+    font-weight: 200;
+    font-size: 0.75rem;
+    z-index: 50;
+    overflow: hidden;
+    transform: translateX(-50%);
+}
+
+.title {
+    margin-inline: 2px;
+    padding-left: 0.4rem;
+    font-weight: 600;
+    border-bottom: 0.5px solid silver;
+}
+
+.sortButton {
+    padding: 0.25rem;
+    padding-left: 1rem;
+    justify-content: start;
+}
+
+.sortButton:hover {
+    background-color: #edf2f7;
+}
