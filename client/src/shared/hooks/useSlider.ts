@@ -25,7 +25,6 @@ export const useSlider = (maxSlideCount: number, distance: number) => {
         ShowRightArrow();
     }, [pointer, maxSlideCount]);
 
-    //
     const leftArrowHandler = () => {
         containerRef.current.scrollLeft -= distance;
         setPointer(prev => prev - 1);

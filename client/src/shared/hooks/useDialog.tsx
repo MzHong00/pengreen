@@ -1,4 +1,4 @@
-import { useRef, type ReactNode, type MouseEvent } from 'react';
+import { useRef, type ReactNode, type MouseEvent } from "react";
 import { IoMdClose } from "react-icons/io";
 
 /*
@@ -14,24 +14,29 @@ import { IoMdClose } from "react-icons/io";
 */
 
 export const useDialog = (
-    children: ReactNode,
-    tailwindColor?: string
+  children: ReactNode,
+  tailwindColor?: string
 ): [ReactNode, () => void] => {
-    const dialogRef = useRef<any>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
-    const openHandler = () => dialogRef.current.showModal();
-    const closeHandler = (e: MouseEvent<HTMLElement>) => e.target === e.currentTarget && dialogRef.current.close();
+  const openHandler = () => dialogRef.current?.showModal();
+  const closeHandler = (e: MouseEvent<HTMLElement>) =>
+    e.target === e.currentTarget && dialogRef.current?.close();
 
-    const JsxElement = (
-        <dialog ref={dialogRef} onClick={closeHandler} className={`rounded-2xl ${tailwindColor}`}>
-            <div className='p-4'>
-                <div className='flex flex-row-reverse'>
-                    <IoMdClose onClick={closeHandler as any} className='cursor-pointer'/>
-                </div>
-                {children}
-            </div>
-        </dialog>
-    )
+  const JsxElement = (
+    <dialog
+      ref={dialogRef}
+      onClick={closeHandler}
+      className={`rounded-2xl ${tailwindColor}`}
+    >
+      <div className="p-4">
+        <div className="flex flex-row-reverse">
+          <IoMdClose onClick={closeHandler as any} className="cursor-pointer" />
+        </div>
+        {children}
+      </div>
+    </dialog>
+  );
 
-    return [JsxElement, openHandler]
-}
+  return [JsxElement, openHandler];
+};
