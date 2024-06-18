@@ -1,2 +1,2 @@
-export { Vote } from './ui/vote'
+export { VoteCard } from './ui/voteCard'
 export { type VoteDto } from './model/types'

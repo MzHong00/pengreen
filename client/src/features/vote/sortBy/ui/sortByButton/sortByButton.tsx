@@ -1,14 +1,16 @@
-import { sortTypes } from "../../model/sortTypes";
-import { Button } from "shared/ui/Button/Button";
 import { IoIosArrowDown } from "react-icons/io";
+
+import { Button } from "shared/ui/Button/Button";
 import { SelectSortBy } from "../selectSortBy/selectSorBy";
+import { useStore } from "shared/stores/useStore";
 
 import styles from "./sortByButton.module.css";
-import { useStoreModalOpen } from "../../../../../shared/stores/useStoreModalOpen";
+import { useSearchParams } from "react-router-dom";
 
 export const SortByButton = () => {
-  const { isModalOpen, setModalOpen } = useStoreModalOpen();
-
+  let [sortQs] = useSearchParams();
+  const { isModalOpen, setModalOpen } = useStore();
+  
   const setModalOpenHandler = (e: React.MouseEvent) => {
     e.stopPropagation();
     setModalOpen();
@@ -16,9 +18,8 @@ export const SortByButton = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.sortItem}>
-        {sortTypes[0].img}
-        <span>Likes</span>
+      <div className={styles.sortText}>
+        <span>{sortQs.get('sort')}</span>
       </div>
 
       <Button onClick={setModalOpenHandler} className={styles.sortButton}>

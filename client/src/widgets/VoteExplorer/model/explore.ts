@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { VoteDto } from "widgets/vote";
+import { VoteDto } from "widgets/voteCard";
 import { useFetchSortedVoteList } from "features/vote/sortBy/model/queries";
 
 //Sort 쿼리 스트링에 따른 Vote Data Fetching

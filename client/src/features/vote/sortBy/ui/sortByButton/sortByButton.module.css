@@ -2,14 +2,21 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding: 0.25rem;
 }
 
-.sortItem {
+.sortText {
     display: flex;
+    justify-content: center;
     align-items: center;
+    color: #35cdff;
+    font-weight: 100;
+    font-family: fantasy;
 }
 
 .sortButton {
+    height: 15px;
     justify-content: center;
     font-size: 12px;
     font-weight: normal;

@@ -1,12 +1,21 @@
-.slider {
-    width: 100%;
+.voteExplorerContainer {
+    position: relative;
+}
+
+.sliderCotainer {
+    width: 100vw;
     scroll-behavior: smooth;
     overflow: hidden;
 }
 
-.slider > div {
+.sliderCotainer > div {
     display: flex;
     transform: translateX(5rem);
+}
+
+.arrowButtonContainer {
+    display: flex;
+    align-items: center;
 }
 
 .sliderBtn {

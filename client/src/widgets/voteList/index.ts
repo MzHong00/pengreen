@@ -1,1 +1,1 @@
-export { VoteList } from "./ui/voteList";
+export { VoteCardList } from "./ui/voteCardList";

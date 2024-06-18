@@ -1,20 +1,21 @@
-import { IoMdHeart } from "react-icons/io";
-import { FaUser } from "react-icons/fa"
-
-export type SortType = "like" | "participant"
+export type SortType = "Most liked" | "Most Participants" | 'Latest';
 
 interface SortTypes {
-    text: SortType
-    img: React.JSX.Element
+    sortType: SortType
+    queryString: string
 }
 
 export const sortTypes: SortTypes[] = [
     {
-        text: 'like',
-        img: <IoMdHeart color='red' />
+        sortType: 'Most liked',
+        queryString: 'like'
     },
     {
-        text: 'participant',
-        img: <FaUser/>
+        sortType: 'Most Participants',
+        queryString: 'participant'
+    },
+    {
+        sortType: 'Latest',
+        queryString: 'latest'
     },
 ]

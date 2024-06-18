@@ -1,12 +1,17 @@
-import { create } from "zustand";
+import { StateCreator } from "zustand";
 
-interface ToggleState {
+export interface ToggleSlice {
   isModalOpen: boolean | undefined;
   setModalOpen: () => void;
 }
 
-export const useStoreModalOpen = create<ToggleState>()((set) => ({
+export const createModalOpenSlice: StateCreator<
+  ToggleSlice,
+  [],
+  [],
+  ToggleSlice
+> = (set) => ({
   isModalOpen: false,
   setModalOpen: () =>
     set((state) => ({ isModalOpen: state.isModalOpen ? false : true })),
-}));
+});
