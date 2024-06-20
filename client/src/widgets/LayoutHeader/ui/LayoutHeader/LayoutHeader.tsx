@@ -15,7 +15,7 @@ export function LayoutHeader() {
     <header className="w-full flex justify-between py-6 px-14 ">
       <Logo />
       {user ? (
-        <ProfilesCard onClick={openProfiles} icon={user.picture} />
+        <ProfilesCard onClick={openProfiles} picture={user.picture} />
       ) : (
         <ProfilesCard onClick={openLoginForm} />
       )}

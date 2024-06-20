@@ -1,7 +1,8 @@
 import { useLocation } from "react-router-dom";
-import { Button } from "shared/ui/Button/Button";
-import { useNavSidebar } from "../model/sideBarItems";
 import { BsList } from "react-icons/bs";
+
+import { useNavSidebar } from "../model/sideBarItems";
+import { Button } from "shared/ui/Button";
 
 import styles from "./navbar.module.css";
 

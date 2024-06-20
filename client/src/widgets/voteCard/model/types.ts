@@ -1,4 +1,4 @@
-import { type User } from "features/profiles/modifyInfo/model/types";
+import { User } from "entities/user";
 
 export interface VoteDto {
     _id: string;

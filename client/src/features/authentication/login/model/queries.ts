@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
-import { fetchUser } from "shared/api"
+import { fetchLogin } from "entities/login"
 
 export const useUserFetch = () => {
     return useQuery({
         queryKey: ['user'],
-        queryFn: () => fetchUser()
+        queryFn: () => fetchLogin()
     })
 }

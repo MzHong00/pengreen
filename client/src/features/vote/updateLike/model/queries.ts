@@ -1,32 +1,39 @@
 import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
-import { fetchLikesRead, fetchLikeUpdate } from "shared/api";
+import { VoteActionDto } from "entities/vote";
 
-export const useReadLike = (userId: string, voteId: string) => {
-    return useQuery({
-        queryKey: ['like', userId, voteId],
-        queryFn: () => fetchLikesRead({
-            user_id: userId,
-            vote_id: voteId
-        }),
-    })
-}
+import { readLikes, updateLikes } from "entities/voteLikes";
 
-export const useUpdateLike = (userId: string, voteId: string) => {
-    const queryClient = useQueryClient();
+export const useReadLike = ({
+  user_id,
+  vote_id,
+}: Omit<VoteActionDto, "choiceList">) => {
+  return useQuery({
+    queryKey: ["like", user_id, vote_id],
+    queryFn: () =>
+      readLikes({
+        user_id: user_id,
+        vote_id: vote_id,
+      }),
+  });
+};
 
-    const { mutate } = useMutation({
-        mutationFn: fetchLikeUpdate,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['vote', voteId] })
-        }
-    })
+export const useUpdateLike = ({
+  user_id,
+  vote_id,
+}: Omit<VoteActionDto, "choiceList">) => {
+  const queryClient = useQueryClient();
 
-    const updateLike = () => {
-        mutate({
-            user_id: userId,
-            vote_id: voteId
-        });
-    };
+  const { mutate } = useMutation({
+    mutationFn: updateLikes,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["vote", vote_id] });
+    },
+  });
 
-    return updateLike;
-}
+  return () => {
+    mutate({
+      user_id: user_id,
+      vote_id: vote_id,
+    });
+  };
+};

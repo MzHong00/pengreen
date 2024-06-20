@@ -1,41 +1,58 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { updateChoice } from "shared/api"
-import { readEachChoiceCount, readMyPick } from "shared/api/choice"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export const useReadEachChoiceCount = (voteId: string, choiceList: Array<string>) => {
-    return useQuery({
-        queryKey: ['choice', voteId],
-        queryFn: () => readEachChoiceCount({
-            vote_id: voteId,
-            choiceList: choiceList
-        }),
-        enabled: !!choiceList
-    })
-}
+import { type VoteActionDto } from "entities/vote";
+import {
+  readChoiceCount,
+  readUserPick,
+  updateUserPick,
+} from "entities/voteChoice";
 
-export const useReadMyPick = (userId: string, voteId: string) => {
-    return useQuery({
-        queryKey: ['isParticipant', voteId],
-        queryFn: () => readMyPick({
-            user_id: userId,
-            vote_id: voteId,
-        }),
-        enabled: !!userId
-    })
-}
+export const useReadEachChoiceCount = ({
+  vote_id,
+  choiceList,
+}: Omit<VoteActionDto, "user_id">) => {
+  return useQuery({
+    queryKey: ["choice", vote_id],
+    queryFn: () =>
+      readChoiceCount({
+        vote_id: vote_id,
+        choiceList: choiceList,
+      }),
+    enabled: !!choiceList,
+  });
+};
 
-export const useUpdateChoice = (userId:string , voteId:string) => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (selected: Array<string>) => updateChoice({
-            user_id: userId,
-            vote_id: voteId,
-            selected: selected
-        }),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['choice', voteId] });
-            queryClient.invalidateQueries({ queryKey: ['isParticipant', voteId] });
-            queryClient.invalidateQueries({ queryKey: ['vote', voteId] });
-        }
-    })
-}
+export const useReadMyPick = ({
+  user_id,
+  vote_id,
+}: Omit<VoteActionDto, "choiceList">) => {
+  return useQuery({
+    queryKey: ["isParticipant", vote_id],
+    queryFn: () =>
+      readUserPick({
+        user_id: user_id,
+        vote_id: vote_id,
+      }),
+    enabled: !!user_id,
+  });
+};
+
+export const useUpdateChoice = ({
+  user_id,
+  vote_id,
+}: Omit<VoteActionDto, "choiceList">) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (selected: Array<string>) =>
+      updateUserPick({
+        user_id: user_id,
+        vote_id: vote_id,
+        choiceList: selected,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["choice", vote_id] });
+      queryClient.invalidateQueries({ queryKey: ["isParticipant", vote_id] });
+      queryClient.invalidateQueries({ queryKey: ["vote", vote_id] });
+    },
+  });
+};

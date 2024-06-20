@@ -1,4 +1,4 @@
-import { createVote } from "shared/api";
+import { createVote } from "entities/vote";
 
 export default function PublicButton({ vote }) {
     const submitHandler = () => {

@@ -1,7 +1,7 @@
-import { type VoteDto } from "widgets/voteCard/model/types";
+import { VoteAdditionalInfo } from "features/vote/additionalInfo";
 import { Choice } from "features/vote/submitChoice";
+import { type VoteDto } from "widgets/voteCard/model/types";
 import { useHover } from "shared/hooks/useHover";
-import { BottomSection } from "./BottomSection";
 
 import styles from "./voteCard.module.css";
 
@@ -31,7 +31,7 @@ export function VoteCard({ vote }: Props) {
           maxChoice={vote.max_choice}
         />
       </section>
-      <BottomSection vote={vote} isVisible={hover} />
+      <VoteAdditionalInfo vote={vote} isVisible={hover} />
     </div>
   );
 }

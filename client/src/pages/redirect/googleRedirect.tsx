@@ -1,23 +1,20 @@
-import { useEffect } from "react"
-import { fetchToken } from "shared/api";
+import { useEffect } from "react";
+
+import { fetchOuathToken } from "entities/oauth";
 
 export function Redirect() {
-    useEffect(() => {
-        const getToken = async () => {
-            const params = new URLSearchParams(window.location.search);
-            const name = params.get("code");
+  useEffect(() => {
+    const getToken = async () => {
+      const params = new URLSearchParams(window.location.search);
+      const name = params.get("code");
 
-            await fetchToken(name)
-            window.opener.postMessage('login');
-            window.close();
-        }
+      await fetchOuathToken(name);
+      window.opener.postMessage("login");
+      window.close();
+    };
 
-        getToken();
-    }, []);
+    getToken();
+  }, []);
 
-    return (
-        <div>
-            로그인중....
-        </div>
-    )
+  return <div>로그인중....</div>;
 }

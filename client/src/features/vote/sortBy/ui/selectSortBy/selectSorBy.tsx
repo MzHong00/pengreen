@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { sortTypes } from "../../model/sortTypes";
 import styles from "./selectSorBy.module.css";
 import { useModalClose } from "shared/hooks/useModalClose";
-import { Button } from "shared/ui/Button/Button";
+import { Button } from "shared/ui/Button";
 import { useStore } from "shared/stores/useStore";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}

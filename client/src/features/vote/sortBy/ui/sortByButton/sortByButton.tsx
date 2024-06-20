@@ -1,25 +1,30 @@
 import { IoIosArrowDown } from "react-icons/io";
+import { useSearchParams } from "react-router-dom";
 
-import { Button } from "shared/ui/Button/Button";
 import { SelectSortBy } from "../selectSortBy/selectSorBy";
 import { useStore } from "shared/stores/useStore";
+import { Button } from "shared/ui/Button";
 
 import styles from "./sortByButton.module.css";
-import { useSearchParams } from "react-router-dom";
+import { sortTypes } from "../../model/sortTypes";
 
 export const SortByButton = () => {
   let [sortQs] = useSearchParams();
   const { isModalOpen, setModalOpen } = useStore();
-  
+
   const setModalOpenHandler = (e: React.MouseEvent) => {
     e.stopPropagation();
     setModalOpen();
-  }
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.sortText}>
-        <span>{sortQs.get('sort')}</span>
+        <span>
+          {sortTypes.some((sort) => sortQs.get("sort") === sort.queryString)
+            ? sortQs.get("sort")
+            : "latest"}
+        </span>
       </div>
 
       <Button onClick={setModalOpenHandler} className={styles.sortButton}>

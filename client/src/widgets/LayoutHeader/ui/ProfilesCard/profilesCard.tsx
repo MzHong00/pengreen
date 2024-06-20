@@ -1,24 +1,21 @@
-import { IoIosArrowDown } from "react-icons/io";
+import styles from "./profilesCard.module.css";
 
 interface Props {
   onClick?: any;
-  icon?: string;
+  picture?: string;
 }
 
-export function ProfilesCard({ onClick, icon }: Props) {
+export function ProfilesCard({ onClick, picture }: Props) {
   return (
-    <div
-      className={`flex justify-center rounded-3xl hover:bg-zinc-200 hover:outline outline-zinc-200`}
-    >
-      <button
-        className={`flex justify-center items-center rounded-3xl gap-2`}
-        onClick={onClick}
-      >
-        {icon ? (
-          <>
-            <img src={icon} alt="" className="w-8 h-8 rounded-full" />
-            <IoIosArrowDown />
-          </>
+    <div className={styles.container}>
+      <button className={styles.button} onClick={onClick}>
+        {picture ? (
+            <img
+              src={picture}
+              alt=""
+              className={styles.picture}
+              referrerPolicy="no-referrer"
+            />
         ) : (
           <span>로그인</span>
         )}

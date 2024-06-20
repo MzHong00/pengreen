@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa6";
 import VoteForm from "features/voteForm/generateVote/ui/voteForm/voteForm";
 import { useUserFetch } from "features/authentication/login";
 import { useDialog } from "shared/hooks/useDialog";
-import { useReadVoteListByOwnerId } from "entities/vote/participant";
+import { useReadVoteListByOwnerId } from "features/vote/readParticipants";
 
 export default function Dashboard() {
   const { data: user } = useUserFetch();

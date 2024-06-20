@@ -1,8 +1,8 @@
 
-import BarChart from 'entities/chart/barChart'
-import PieChart from 'entities/chart/pieChart';
-import { NumChart } from 'entities/chart/numChart';
-import { Button } from 'shared/ui';
+import BarChart from 'shared/ui/Chart/barChart'
+import PieChart from 'shared/ui/Chart/pieChart';
+import { NumChart } from 'shared/ui/Chart/numChart';
+import { Button } from 'shared/ui/Button';
 import { useGetChoiceData } from '../model/queries';
 import { useChartTypeState } from '../model/voteDetail';
 
@@ -27,11 +27,15 @@ export function VoteDetail({
                 </div>
             </section>
             <section >
-                <Button
+                {/* <Button
                     text={chartType}
                     btnStyles='h-7 px-2 bg-blue-300 shadow hover:shadow-inner'
                     contentStyles='text-xs text-white font-light'
-                    handler={chartTypeHandler} />
+                    handler={chartTypeHandler} /> */}
+                <Button onClick={chartTypeHandler}>
+                    {chartType}
+                </Button>
+                
                 <div className='h-5/6 m-2'>
                     {chartType === '기본' && <NumChart data={choice} />}
                     {chartType === '막대' && <BarChart data={choice} />}

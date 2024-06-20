@@ -67,7 +67,7 @@ export const updateChoice = async (req: Request, res: Response) => {
   const collection = "vote_participants";
 
   try {
-    const { user_id, vote_id, selected } = req.body;
+    const { user_id, vote_id, choiceList } = req.body;
 
     const participantQuery = {
       user_id: user_id,
@@ -92,7 +92,7 @@ export const updateChoice = async (req: Request, res: Response) => {
     const newPickQuery: Participant = {
       user_id: user_id,
       vote_id: vote_id,
-      pick: selected,
+      pick: choiceList,
     };
     await mongodbInsert<Participant>(collection, newPickQuery);
 

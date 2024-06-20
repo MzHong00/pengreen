@@ -2,16 +2,17 @@ import { useLocation } from 'react-router-dom';
 
 import { LuArrowBigLeftDash } from "react-icons/lu";
 import { LuArrowBigRightDash } from "react-icons/lu";
+import { useNavSidebar } from '../model/sidebar';
 
 import { Logo } from 'widgets/LayoutHeader';
-import { Button } from 'shared/ui';
+import { Button } from 'shared/ui/Button';
 import { useToggle } from 'shared/hooks/useToggle';
 
-import { useNavSidebar } from '../model/sidebar';
 
 export function Sidebar() {
     const location = useLocation();
     const sideList = useNavSidebar();
+
     const {state: arrowState, value: arrowDir, handler: arrowDirHandler} = useToggle({
         trueState: () => <LuArrowBigLeftDash color='white' />,
         falseState: () => <LuArrowBigRightDash color='white' />
@@ -26,19 +27,23 @@ export function Sidebar() {
                 {
                     sideList.map((path, idx) =>
                         <div className='w-full' key={idx}>
-                            <Button
+                            {/* <Button
                                 text={arrowState ? path.name : ""}
                                 componentImg={path.icon}
                                 handler={path.handler}
                                 btnStyles="w-full hover:border-r-2 hover:border-solid hover:border-blue-300 !rounded-none"
-                                contentStyles={`!justify-start w-full h-10 px-5 hover:text-blue-400 gap-2 ${location.pathname === path.path && '!text-blue-400'}`} />
+                                contentStyles={`!justify-start w-full h-10 px-5 hover:text-blue-400 gap-2 ${location.pathname === path.path && '!text-blue-400'}`} /> */}
+                                <Button onClick={path.handler}>
+                                    {path.icon}
+                                    {arrowState ? path.name : ''}
+                                </Button>
                         </div>)
                 }
             </nav>
-            <Button
+            {/* <Button
                 componentImg={arrowDir}
                 btnStyles='absolute left-full bg-slate-300 !rounded-none'
-                handler={arrowDirHandler} />
+                handler={arrowDirHandler} /> */}
         </aside>
     )
 }
