@@ -1,7 +1,16 @@
 import axios from "axios";
-import { type VoteDto } from "widgets/voteCard";
+import { useQuery } from "@tanstack/react-query";
 
-export const readVoteById = async (
+import { type VoteDto } from "entities/vote";
+
+export const useReadVoteById = (voteId: string) => {
+  return useQuery({
+    queryKey: ["vote", voteId],
+    queryFn: () => readVoteById(voteId),
+  });
+};
+
+const readVoteById = async (
   voteId: string
 ): Promise<VoteDto | undefined> => {
   try {

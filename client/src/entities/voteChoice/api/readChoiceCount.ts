@@ -1,11 +1,27 @@
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 import { VoteActionDto } from "entities/vote";
 
-export const readChoiceCount = async ({
+export const useReadChoiceCount = ({
   vote_id,
   choiceList,
-}: Omit<VoteActionDto, 'user_id'>) => {
+}: Omit<VoteActionDto, "user_id">) => {
+  return useQuery({
+    queryKey: ["choice", vote_id],
+    queryFn: () =>
+      readChoiceCount({
+        vote_id: vote_id,
+        choiceList: choiceList,
+      }),
+    enabled: !!choiceList,
+  });
+};
+
+const readChoiceCount = async ({
+  vote_id,
+  choiceList,
+}: Omit<VoteActionDto, "user_id">) => {
   console.log("Pick 개수 Fetch");
   try {
     const choiceCount = await axios.put(

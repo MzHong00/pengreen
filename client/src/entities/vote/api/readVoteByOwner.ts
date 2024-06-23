@@ -1,7 +1,17 @@
 import axios from "axios";
-import { type VoteDto } from "widgets/voteCard";
+import { useQuery } from "@tanstack/react-query";
 
-export const readVoteByOwner = async (
+import { type VoteDto } from "entities/vote";
+
+export const useReadVoteListByOwner = (ownId: string) => {
+  return useQuery({
+    queryKey: ["vote", ownId],
+    queryFn: () => readVoteByOwner(ownId),
+    enabled: !!ownId,
+  });
+};
+
+const readVoteByOwner = async (
   own_id: string
 ): Promise<VoteDto[] | undefined> => {
   try {

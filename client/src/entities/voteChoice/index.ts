@@ -1,3 +1,3 @@
-export { readChoiceCount } from "./api/readChoiceCount";
-export { readUserPick } from "./api/readUserPick";
-export { updateUserPick } from "./api/updateUserPick";
+export { useReadChoiceCount } from "./api/readChoiceCount";
+export { useReadUserPick } from "./api/readUserPick";
+export { useUpdateUserPick } from "./api/updateUserPick";

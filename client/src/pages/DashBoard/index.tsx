@@ -1,14 +1,15 @@
-import { VoteCard, type VoteDto } from "widgets/voteCard";
+import { type VoteDto } from "entities/vote";
 import { FaPlus } from "react-icons/fa6";
 
+import { useReadVoteListByOwner } from "entities/vote";
+import { useUserFetch } from "entities/login";
 import VoteForm from "features/voteForm/generateVote/ui/voteForm/voteForm";
-import { useUserFetch } from "features/authentication/login";
+import { VoteCard } from "widgets/voteCard";
 import { useDialog } from "shared/hooks/useDialog";
-import { useReadVoteListByOwnerId } from "features/vote/readParticipants";
 
 export default function Dashboard() {
   const { data: user } = useUserFetch();
-  const { data: votes } = useReadVoteListByOwnerId(user?._id);
+  const { data: votes } = useReadVoteListByOwner(user?._id);
   const [voteForm, openVoteForm] = useDialog(<VoteForm />);
 
   return (

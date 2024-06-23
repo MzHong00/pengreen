@@ -1,1 +1,1 @@
-export { readVoteParticipants } from "./api/readParticipants";
+export { useReadVoteParticipants } from "./api/readParticipants";

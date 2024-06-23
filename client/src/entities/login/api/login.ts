@@ -1,11 +1,20 @@
 import axios from "axios";
 import { Cookies } from "react-cookie";
+import { useQuery } from "@tanstack/react-query"
+
 import { reissueAccessToken } from "./reissueAccessToken";
 
 const cookies = new Cookies();
 
+export const useUserFetch = () => {
+    return useQuery({
+        queryKey: ['user'],
+        queryFn: () => fetchLogin()
+    })
+}
+
 //브라우저에 쿠키를 갖고 서버에 요청하여 계정 정보를 가져옴
-export const fetchLogin = async () => {
+const fetchLogin = async () => {
   try {
     const accessToken = cookies.get("access_token");
 

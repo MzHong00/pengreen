@@ -1,5 +1,5 @@
 import axios from "axios";
-import { type VoteDto } from "widgets/voteCard";
+import { type VoteDto } from "entities/vote";
 
 export const createVote = async (vote: VoteDto): Promise<void> => {
   try {

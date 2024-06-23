@@ -1,8 +1,24 @@
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 import { VoteActionDto } from "entities/vote";
 
-export const readUserPick = async ({
+export const useReadUserPick = ({
+  user_id,
+  vote_id,
+}: Omit<VoteActionDto, "choiceList">) => {
+  return useQuery({
+    queryKey: ["isParticipant", vote_id],
+    queryFn: () =>
+      readUserPick({
+        user_id: user_id,
+        vote_id: vote_id,
+      }),
+    enabled: !!user_id,
+  });
+};
+
+const readUserPick = async ({
   user_id,
   vote_id,
 }: Omit<VoteActionDto, "choiceList">) => {

@@ -1,6 +1,14 @@
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
-export const readVoteParticipants = async (
+export const useReadVoteParticipants = (voteId: string) => {
+  return useQuery({
+    queryKey: ["participant", voteId],
+    queryFn: () => readVoteParticipants(voteId),
+  });
+};
+
+const readVoteParticipants = async (
   vote_id: string
 ): Promise<string | undefined> => {
   try {

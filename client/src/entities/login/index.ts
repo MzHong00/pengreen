@@ -1,2 +1,2 @@
-export { fetchLogin } from "./api/login";
+export { useUserFetch } from "./api/login";
 export { reissueAccessToken } from "./api/reissueAccessToken";
