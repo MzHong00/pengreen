@@ -1,36 +1,35 @@
-import { HTMLAttributes, type MouseEvent } from "react";
+import { forwardRef, HTMLAttributes, type MouseEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { sortTypes } from "../../consts/sortTypes";
-import styles from "./selectSorBy.module.css";
-import { useModalClose } from "shared/hooks/useModalClose";
 import { Button } from "shared/ui/Button";
-import { useStore } from "shared/stores/useStore";
+
+import styles from "./selectSorBy.module.css";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
-export const SelectSortBy = ({ className, ...props }: Props) => {
-  let [, setSearchParams] = useSearchParams();
-  const { setModalOpen } = useStore();
-  const ref = useModalClose(setModalOpen);
+export const SelectSortBy = forwardRef<HTMLDivElement, Props>(
+  ({ className, ...props }, ref) => {
+    let [, setSearchParams] = useSearchParams();
 
-  const selectSortBy = (event: MouseEvent<HTMLElement>) => {
-    setSearchParams({ sort: `${event.currentTarget.dataset.sortType}` });
-  };
+    const selectSortBy = (event: MouseEvent<HTMLElement>) => {
+      setSearchParams({ sort: `${event.currentTarget.dataset.sortType}` });
+    };
 
-  return (
-    <div ref={ref} className={`${styles.container} ${className}`} {...props}>
-      <label className={styles.title}>Select order</label>
-      {sortTypes.map((type, idx) => (
-        <Button
-          key={idx}
-          onClick={selectSortBy}
-          className={`${styles.sortButton}`}
-          data-sort-type={type.queryString}
-        >
-          {type.sortType}
-        </Button>
-      ))}
-    </div>
-  );
-};
+    return (
+      <div ref={ref} className={`${styles.container} ${className}`} {...props}>
+        <label className={styles.title}>Select order</label>
+        {sortTypes.map((type, idx) => (
+          <Button
+            key={idx}
+            onClick={selectSortBy}
+            className={`${styles.sortButton}`}
+            data-sort-type={type.queryString}
+          >
+            {type.sortType}
+          </Button>
+        ))}
+      </div>
+    );
+  }
+);

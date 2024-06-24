@@ -15,7 +15,6 @@ import { IoMdClose } from "react-icons/io";
 
 export const useDialog = (
   children: ReactNode,
-  tailwindColor?: string
 ): [ReactNode, () => void] => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -27,7 +26,7 @@ export const useDialog = (
     <dialog
       ref={dialogRef}
       onClick={closeHandler}
-      className={`rounded-2xl ${tailwindColor}`}
+      className={`rounded-2xl`}
     >
       <div className="p-4">
         <div className="flex flex-row-reverse">

@@ -2,20 +2,15 @@ import { IoIosArrowDown } from "react-icons/io";
 import { useSearchParams } from "react-router-dom";
 
 import { SelectSortBy } from "../selectSortBy/selectSorBy";
-import { useStore } from "shared/stores/useStore";
 import { Button } from "shared/ui/Button";
 
 import styles from "./sortByButton.module.css";
 import { sortTypes } from "../../consts/sortTypes";
+import { useModal } from "shared/hooks/useModal";
 
 export const SortByButton = () => {
   let [sortQs] = useSearchParams();
-  const { isModalOpen, setModalOpen } = useStore();
-
-  const setModalOpenHandler = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setModalOpen();
-  };
+  const { ref, isOpen, toggleModal } = useModal();
 
   return (
     <div className={styles.container}>
@@ -27,12 +22,12 @@ export const SortByButton = () => {
         </span>
       </div>
 
-      <Button onClick={setModalOpenHandler} className={styles.sortButton}>
+      <Button onClick={toggleModal} className={styles.sortButton}>
         <IoIosArrowDown size={12} />
         Sort By
       </Button>
 
-      {isModalOpen && <SelectSortBy />}
+      {isOpen && <SelectSortBy ref={ref} />}
     </div>
   );
 };
