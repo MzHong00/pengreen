@@ -24,3 +24,7 @@
 - google-oauth-library
 - dotenv
 - cors
+
+#### hard point
+01. 투표 데이터 결정 (like와 choice를 vote에 붙힐지 말지)
+02. 프로젝트 아키텍처 (프로젝트를 까먹으면 컴포넌트들을 일일히 다 찾아다녀야 하는 문제)
