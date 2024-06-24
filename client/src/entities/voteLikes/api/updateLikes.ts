@@ -1,7 +1,29 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { VoteActionDto } from "entities/vote";
 
-export const updateLikes = async ({
+export const useUpdateLikes = ({
+  user_id,
+  vote_id,
+}: Omit<VoteActionDto, "choiceList">) => {
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: updateLikes,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["vote", vote_id] });
+    },
+  });
+
+  return () => {
+    mutate({
+      user_id: user_id,
+      vote_id: vote_id,
+    });
+  };
+};
+
+const updateLikes = async ({
   user_id,
   vote_id,
 }: Omit<VoteActionDto, "choiceList">) => {

@@ -1,1 +1,1 @@
-export { Choice } from "./ui/choice";
+export { SubmitChoiceContainer } from "./ui/submitChoiceContainer";

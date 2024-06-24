@@ -1,7 +1,24 @@
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+
 import { VoteActionDto } from "entities/vote";
 
-export const readLikes = async ({
+//미사용 중
+export const useReadLikes = ({
+  user_id,
+  vote_id,
+}: Omit<VoteActionDto, "choiceList">) => {
+  return useQuery({
+    queryKey: ["like", user_id, vote_id],
+    queryFn: () =>
+      readLikes({
+        user_id: user_id,
+        vote_id: vote_id,
+      }),
+  });
+};
+
+const readLikes = async ({
   user_id,
   vote_id,
 }: Omit<VoteActionDto, "choiceList">) => {

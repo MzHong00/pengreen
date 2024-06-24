@@ -1,2 +1,2 @@
 export { LoginForm } from "./ui/loginForm";
-export { useUserFetch } from "./model/queries";
+export { oauthType } from "./consts/oauthType";

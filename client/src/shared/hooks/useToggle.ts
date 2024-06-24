@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 /*
+    default: false,
     arg:
     {
         trueState: ture일 때, 보여질 값 또는 컴포넌트 등
@@ -16,24 +17,15 @@ import { useState } from "react";
     ]
 */
 
-interface Props {
-    trueState?: any;
-    falseState?: any;
-}
+export const useToggle = (
+  ifTrue: any = undefined,
+  ifFalse: any = undefined
+) => {
+  const [toggleState, setToggleState] = useState(false);
 
-export const useToggle = ({
-    trueState,
-    falseState
-}: Props = {}) => {
-    const [toggle, setToggle] = useState(false);
+  const setToggleHandler = (state?: boolean) => {
+    !state ? setToggleState(!toggleState) : setToggleState(state);
+  };
 
-    const changeState = () => {
-        setToggle(!toggle);
-    }
-
-    return ({
-        state: toggle,
-        value: toggle ? trueState : falseState,
-        handler: changeState
-    })
-}
+  return [toggleState, setToggleHandler, toggleState ? ifTrue : ifFalse];
+};

@@ -1,11 +1,11 @@
 import { LuLogOut } from "react-icons/lu";
 
-import { fetchLogout } from "entities/login/api/logout";
+import { logoutActions } from "..";
 import { Button } from "shared/ui/Button";
 
 export const LogoutButton = () => {
   return (
-    <Button onClick={fetchLogout}>
+    <Button onClick={logoutActions}>
       <LuLogOut size={22} />
       로그아웃
     </Button>

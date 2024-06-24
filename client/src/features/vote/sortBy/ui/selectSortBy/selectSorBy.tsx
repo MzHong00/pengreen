@@ -1,7 +1,7 @@
 import { HTMLAttributes, type MouseEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { sortTypes } from "../../model/sortTypes";
+import { sortTypes } from "../../consts/sortTypes";
 import styles from "./selectSorBy.module.css";
 import { useModalClose } from "shared/hooks/useModalClose";
 import { Button } from "shared/ui/Button";

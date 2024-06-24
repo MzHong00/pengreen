@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { VoteDto } from "widgets/voteCard";
-import { useFetchSortedVoteList } from "features/vote/sortBy/model/queries";
+import { VoteDto, useReadVote } from "entities/vote";
 
 //Sort 쿼리 스트링에 따른 Vote Data Fetching
 export const useFetchVotes = () => {
     const [sortParams] = useSearchParams();
     
-    const { data: sortedVotes, refetch } = useFetchSortedVoteList(sortParams.toString());
+    const { data: sortedVotes, refetch } = useReadVote(sortParams.toString());
     
     useEffect(() => {
         refetch()

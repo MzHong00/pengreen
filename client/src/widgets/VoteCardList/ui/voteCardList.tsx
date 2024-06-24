@@ -1,6 +1,7 @@
 import { HTMLAttributes } from "react";
+
+import { type VoteDto } from "entities/vote";
 import { VoteCard } from "widgets/voteCard";
-import { VoteDto } from "widgets/voteCard/model/types";
 
 import styles from "./voteCardList.module.css";
 

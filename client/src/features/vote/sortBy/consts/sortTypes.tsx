@@ -1,7 +1,5 @@
-export type SortType = "Most liked" | "Most Participants" | 'Latest';
-
 interface SortTypes {
-    sortType: SortType
+    sortType: "Most liked" | "Most Participants" | 'Latest'
     queryString: string
 }
 

@@ -6,7 +6,7 @@ import { useStore } from "shared/stores/useStore";
 import { Button } from "shared/ui/Button";
 
 import styles from "./sortByButton.module.css";
-import { sortTypes } from "../../model/sortTypes";
+import { sortTypes } from "../../consts/sortTypes";
 
 export const SortByButton = () => {
   let [sortQs] = useSearchParams();

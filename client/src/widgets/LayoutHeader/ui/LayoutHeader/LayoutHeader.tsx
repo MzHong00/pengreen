@@ -1,9 +1,9 @@
+import { Logo } from "../Logo/logo";
+import { ProfilesCard } from "../ProfilesCard/profilesCard";
+import { useUserFetch } from "entities/login";
 import { LoginForm } from "features/authentication/login";
-import { useUserFetch } from "features/authentication/login";
 import { useDialog } from "shared/hooks/useDialog";
 import { ProfilesDetail } from "widgets/profilesDetail";
-import { ProfilesCard } from "../ProfilesCard/profilesCard";
-import { Logo } from "../Logo/logo";
 
 export function LayoutHeader() {
   const { data: user } = useUserFetch();

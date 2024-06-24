@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 
-import { useUserFetch } from "features/authentication/login";
-
+import { useUserFetch } from "entities/login";
 import AddChoice from "features/voteForm/addToChoice/addChoice";
 import PublicButton from "features/voteForm/generateVote/ui/votePostButton/publicButton";
 import Choice from "features/voteForm/setChoice/choice";

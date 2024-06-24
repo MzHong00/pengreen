@@ -1,24 +1,18 @@
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 
 import { useLikerCheck } from "../model/likerCheck";
-import { useUpdateLike } from "../model/queries";
+import { type VoteActionLikesDto, useUpdateLikes } from "entities/voteLikes";
 import { LoginForm } from "features/authentication/login";
 import { useDialog } from "shared/hooks/useDialog";
 
-interface Props {
-  userId: string;
-  voteId: string;
-  likeMember: Array<string> | undefined;
-}
-
-export function UpdateLike({ userId, voteId, likeMember = [] }: Props) {
-  const isLiker = useLikerCheck(userId, likeMember);
-  const updateHandler = useUpdateLike({ user_id: userId, vote_id: voteId });
+export function UpdateLike({ user_id, vote_id, liker = [] }: VoteActionLikesDto) {
+  const updateHandler = useUpdateLikes({ user_id: user_id, vote_id: vote_id });
+  const isAlreadyLiker = useLikerCheck(user_id, liker);
   const [loginForm, openLoginForm] = useDialog(<LoginForm />);
 
   return (
     <div className="flex items-center">
-      {isLiker ? (
+      {isAlreadyLiker ? (
         <IoMdHeart
           onClick={updateHandler}
           className="cursor-pointer"
@@ -26,11 +20,11 @@ export function UpdateLike({ userId, voteId, likeMember = [] }: Props) {
         />
       ) : (
         <IoMdHeartEmpty
-          onClick={userId ? updateHandler : openLoginForm}
+          onClick={user_id ? updateHandler : openLoginForm}
           className="cursor-pointer"
         />
       )}
-      <span className="text-base">{likeMember.length}</span>
+      <span>{liker.length}</span>
       {loginForm}
     </div>
   );

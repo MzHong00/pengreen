@@ -1,6 +1,6 @@
+import { type VoteDto } from "entities/vote";
 import { VoteAdditionalInfo } from "features/vote/additionalInfo";
-import { Choice } from "features/vote/submitChoice";
-import { type VoteDto } from "widgets/voteCard/model/types";
+import { SubmitChoiceContainer } from "features/vote/submitChoice";
 import { useHover } from "shared/hooks/useHover";
 
 import styles from "./voteCard.module.css";
@@ -25,10 +25,10 @@ export function VoteCard({ vote }: Props) {
         </div>
       </section>
       <section>
-        <Choice
-          voteId={vote._id}
+        <SubmitChoiceContainer
+          _id={vote._id}
           choice={vote.choice}
-          maxChoice={vote.max_choice}
+          max_choice={vote.max_choice}
         />
       </section>
       <VoteAdditionalInfo vote={vote} isVisible={hover} />

@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { VoteActionDto } from "entities/vote";
+import { type VoteActionChoiceDto } from "..";
+import { type VoteActionDto } from "entities/vote";
 
 export const useUpdateUserPick = ({
   user_id,
   vote_id,
-}: Omit<VoteActionDto, "choiceList">) => {
+}: VoteActionDto) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (selected: Array<string>) =>
@@ -27,7 +28,7 @@ const updateUserPick = async ({
   user_id,
   vote_id,
   choiceList,
-}: VoteActionDto) => {
+}: VoteActionChoiceDto) => {
   console.log("Pick Update Fetch");
   try {
     const fetchPick = await axios.post(

@@ -1,2 +1,4 @@
-export { readLikes } from "./api/readLikes";
-export { updateLikes } from "./api/updateLikes";
+export { useReadLikes } from "./api/readLikes";
+export { useUpdateLikes } from "./api/updateLikes";
+
+export { type VoteActionLikesDto } from "./model/types";
