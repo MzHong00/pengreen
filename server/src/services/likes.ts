@@ -6,9 +6,10 @@ import { mongodbFind, mongodbFindOne } from "../data-access/mongodb/find";
 
 //좋아요 버튼 Count DB에 반영
 export const updateLikeInfo = async (req: Request, res: Response) => {
+  const { user_id, vote_id } = req.body;
   const collection = "vote";
+
   try {
-    const { user_id, vote_id } = req.body;
     //_id는 ObjectId 타입이기 때문에 vote_id를 ObjectId로 바꾸고 비교해야 함
     const voteId = ObjectId.createFromHexString(vote_id);
 
@@ -39,9 +40,10 @@ export const updateLikeInfo = async (req: Request, res: Response) => {
 };
 
 export const readLikeInfo = async (req: Request, res: Response) => {
+  const { user_id, vote_id } = req.body;
   const collection = "vote";
+  
   try {
-    const { user_id, vote_id } = req.body;
     const voteId = ObjectId.createFromHexString(vote_id);
 
     // 사용자가 좋아요를 누른 사람인지 확인
