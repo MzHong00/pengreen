@@ -1,6 +1,6 @@
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 
-import { useLikerCheck } from "../model/likerCheck";
+import { useLikerCheck } from "../lib/likerCheck";
 import { type VoteActionLikesDto, useUpdateLikes } from "entities/voteLikes";
 import { LoginForm } from "features/authentication/login";
 import { useDialog } from "shared/hooks/useDialog";

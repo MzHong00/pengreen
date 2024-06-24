@@ -46,7 +46,7 @@ export const VoteListSlider = () => {
             <VoteCardList
               key={idx}
               votes={votes}
-              className={`${idx !== pointer && "opacity-20"}`}
+              className={`${idx !== pointer && "opacity-20"} ${styles.voteList}`}
               onClick={handler.translateElePosHandler}
               onMouseEnter={handler.arrowActiveHandler}
               onMouseLeave={handler.arrowInActiveHandler}

@@ -42,3 +42,15 @@
 .whiteSpace {
     min-width: 50rem;
 }
+
+.voteList {
+    height: 40rem;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    transition: opacity 0.5s;
+}
+
+.voteList:hover {
+    opacity: 1;
+}
