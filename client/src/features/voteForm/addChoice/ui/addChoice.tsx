@@ -28,7 +28,7 @@ export const AddChoice = () => {
 
   return (
     <div
-      className={`flex w-[90%] h-10 items-center text-sm gap-3 focus:text-blue-400`}
+      className={`flex h-10 items-center text-sm gap-3 focus:text-blue-400`}
     >
       <FaPlus
         className="cursor-pointer"

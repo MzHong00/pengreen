@@ -1,27 +1,23 @@
-import { useEffect, useState } from "react"
+import { type ChangeEvent } from "react";
 import { useGlobalStore } from "shared/stores/useStore";
 
-export const SetDeadline=()=> {
-    const {formData, setFormData} =useGlobalStore();
+export const SetDeadline = () => {
+  const { formData, setFormData } = useGlobalStore();
 
-    // const [deadline, setDeadline] = useState(vote.deadline);
-    // useEffect(() => {
-    //     setVote(prev => ({
-    //         ...prev,
-    //         deadline: new Date(deadline).toISOString()
-    //     }))
-    // }, [deadline, setVote])
+  console.log(formData);
+  
+  const dateHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setFormData({ deadline: new Date(event.target.value) });
+  };
 
-    // const dateHandler = (e) => {
-    //     setDeadline(e.target.value)
-    // }
-
-    return (
-        <div className="flex flex-col w-1/2">
-            <label htmlFor="deadline" className="text-base font-semibold">기간</label>
-            {/* <div>
-                <input type="datetime-local" id="deadline" value={deadline} className="text-sm hover:cursor-pointer" onChange={dateHandler} />
-            </div> */}
-        </div>
-    )
-}
+  return (
+    <div className="flex flex-col w-1/2">
+      <label className="text-base font-semibold">기간</label>
+      <input
+        type="datetime-local"
+        className="text-sm hover:cursor-pointer"
+        onChange={dateHandler}
+      />
+    </div>
+  );
+};

@@ -1,24 +1,19 @@
-import { PublicVoteFormButton } from "./publicVoteFormButton";
-
 import { useUserFetch } from "entities/user";
+import { PublicVoteForm } from "features/voteForm/publicForm";
 import { SetTitleBar } from "features/voteForm/setTitleBar";
 import { SelectFormPage } from "features/voteForm/selectFormPage";
-import { AddChoice } from "features/voteForm/addChoice";
+
+import styles from "./voteForm.module.css";
 
 export const VoteForm = () => {
   const { data: user } = useUserFetch();
 
   return (
-    <form className="w-144 h-full flex flex-col font-medium">
-      <div className="h-full flex flex-col justify-between gap-5">
+    <form className={styles.form}>
+      <div className={styles.innerContainer}>
         <SetTitleBar picture={user?.picture} />
         <SelectFormPage />
-        <div className={`flex`}>
-          <div className={`flex items-center w-full h-full`}>
-            <AddChoice />
-            <PublicVoteFormButton user={user} />
-          </div>
-        </div>
+        <PublicVoteForm user={user} />
       </div>
     </form>
   );

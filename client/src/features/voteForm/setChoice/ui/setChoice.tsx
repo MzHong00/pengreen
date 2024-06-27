@@ -5,6 +5,7 @@ import { useGlobalStore } from "shared/stores/useStore";
 import { ChoiceInput } from "./choiceInput";
 
 import styles from "./setChoice.module.css";
+import { AddChoice } from "features/voteForm/addChoice";
 
 export const SetChoice = () => {
   const choiceData = useGlobalStore((state) => state.formData.choice);
@@ -30,6 +31,7 @@ export const SetChoice = () => {
           />
         </div>
       ))}
+      <AddChoice />
     </>
   );
 };

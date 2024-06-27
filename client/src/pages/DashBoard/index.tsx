@@ -1,7 +1,7 @@
 import { useUserFetch } from "entities/user";
 import { useReadVoteListByOwner } from "entities/vote";
+import { OpenVoteForm } from "features/voteForm/openForm";
 import { VoteCardList } from "widgets/VoteCardList";
-import { OpenVoteFormButton } from "widgets/VoteForm";
 
 export default function Dashboard() {
   const { data: user } = useUserFetch();
@@ -10,7 +10,7 @@ export default function Dashboard() {
   return (
     <div className="text-xl font-sans font-semibold">
       <section className="h-160">
-        <OpenVoteFormButton />
+        <OpenVoteForm />
         <VoteCardList votes={votes} className="flex"/>
       </section>
       <h2>
