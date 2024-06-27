@@ -1,26 +1,14 @@
 import { Request, Response } from "express";
 import { ObjectId } from "mongodb";
 
-import { mongodbFind, mongodbInsert } from "../loaders/mongodb";
-import { mongodbAggregate } from "../data-access/mongodb/aggregate";
-import { type SortType, type Vote } from "../models/vote";
-import { toVoteFormat } from "../utils/formatUtils";
+import { mongodbFind } from "../../loaders/mongodb";
+import { mongodbAggregate } from "../../data-access/mongodb/aggregate";
+import { type SortType } from "../../models/vote";
 
-export const createVote = async (req: Request) => {
-  const data = req.body;
-  const collection = "vote";
+const collection = "vote";
 
-  try {
-    const vote = toVoteFormat(data);
-    mongodbInsert<Vote>(collection, vote);
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const readVoteList = async (req: Request, res: Response) => {
+export const readVote = async (req: Request, res: Response) => {
   const { sort } = req.query;
-  const collection = "vote";
 
   try {
     const sortType: SortType[] = ["like", "participant"];
@@ -49,7 +37,6 @@ export const readVoteList = async (req: Request, res: Response) => {
 
 export const readVoteById = async (req: Request, res: Response) => {
   const { voteId } = req.body;
-  const collection = "vote";
 
   try {
     const votes = await mongodbFind(collection, {
@@ -62,29 +49,8 @@ export const readVoteById = async (req: Request, res: Response) => {
   }
 };
 
-export const readVoteParticipants = async (req: Request, res: Response) => {
-  const { vote_id } = req.body;
-  const collection = "vote_participants";
-
-  try {
-    //투표 참여자 수
-    const choiceListQuery = {
-      vote_id: vote_id,
-    };
-    const participant = await mongodbFind(collection, choiceListQuery);
-    const participantCount: number = participant.length;
-
-    res.send({
-      participantCount: participantCount,
-    });
-  } catch (error) {
-    throw error;
-  }
-};
-
 export const readVoteByOwnerId = async (req: Request, res: Response) => {
   const { own_id } = req.body;
-  const collection = "vote";
 
   try {
     const query = {
