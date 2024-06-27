@@ -1,0 +1,18 @@
+.choiceContainer {
+    display: flex;
+    align-items: center;
+    border-radius: 24px;
+    font-size: 0.875rem;
+    color: #4a4a4a;
+    gap: 0.75rem;
+}
+
+.choiceInput {
+    width: 100%;
+    background-color: inherit;
+    outline: none;
+}
+
+.choiceInput:focus {
+    color: #0099FF;
+}

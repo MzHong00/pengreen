@@ -1,4 +1,4 @@
-import { useUserFetch } from "entities/login";
+import { useUserFetch } from "entities/user";
 import { useReadVoteById, type VoteDto } from "entities/vote";
 import { Participant } from "features/vote/readParticipants";
 import { UpdateLike } from "features/vote/updateLike";

@@ -16,12 +16,18 @@ import { useState } from "react";
         },
     ]
 */
+interface Props {
+  ifTrue: any;
+  ifFalse: any;
+  default: boolean;
+}
 
-export const useToggle = (
-  ifTrue: any = undefined,
-  ifFalse: any = undefined
-) => {
-  const [toggleState, setToggleState] = useState(false);
+export const useToggle = ({
+  ifTrue,
+  ifFalse,
+  default: defaultState = false,
+}: Partial<Props> = {}) => {
+  const [toggleState, setToggleState] = useState<boolean>(defaultState);
 
   const setToggleHandler = (state?: boolean) => {
     !state ? setToggleState(!toggleState) : setToggleState(state);

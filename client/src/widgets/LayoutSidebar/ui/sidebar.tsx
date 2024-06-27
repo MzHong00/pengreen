@@ -12,10 +12,10 @@ export function Sidebar() {
   const location = useLocation();
   const sideList = useNavSidebar();
 
-  const [arrowState, arrowDirHandler, arrowDir] = useToggle(
-    () => <LuArrowBigLeftDash color="white" />,
-    () => <LuArrowBigRightDash color="white" />
-  );
+  const [arrowState, arrowDirHandler, arrowDir] = useToggle({
+    ifTrue: () => <LuArrowBigLeftDash color="white" />,
+    ifFalse: () => <LuArrowBigRightDash color="white" />,
+  });
 
   return (
     <aside

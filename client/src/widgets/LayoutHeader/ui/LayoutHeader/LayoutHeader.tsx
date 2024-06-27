@@ -1,6 +1,6 @@
 import { Logo } from "../Logo/logo";
 import { ProfilesCard } from "../ProfilesCard/profilesCard";
-import { useUserFetch } from "entities/login";
+import { useUserFetch } from "entities/user";
 import { LoginForm } from "features/authentication/login";
 import { useDialog } from "shared/hooks/useDialog";
 import { ProfilesDetail } from "widgets/profilesDetail";

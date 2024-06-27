@@ -1,6 +1,6 @@
 import { type MouseEvent } from "react";
 
-import { useUserFetch } from "entities/login";
+import { useUserFetch } from "entities/user";
 import { type VoteDto } from "entities/vote";
 import {
   useReadChoiceCount,

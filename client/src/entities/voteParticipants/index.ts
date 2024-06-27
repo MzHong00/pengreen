@@ -1,1 +1,0 @@
-export { useReadVoteParticipants } from "./api/readParticipants";

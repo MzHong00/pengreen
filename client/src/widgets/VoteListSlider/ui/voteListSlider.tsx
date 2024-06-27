@@ -14,7 +14,6 @@ import styles from './voteListSlider.module.css'
 const widthOfVote = 400;
 
 export const VoteListSlider = () => {
-
     const votes = useFetchVotes();
     const visibleVoteCount = useVisibleVoteCount(widthOfVote);
     const splitedVoteGroup = sliceVotes(votes, visibleVoteCount * 2);
@@ -22,7 +21,7 @@ export const VoteListSlider = () => {
       splitedVoteGroup?.length as number,
       widthOfVote * visibleVoteCount
     );
-
+    
     return (
         <div ref={ref.containerRef} className={styles.sliderCotainer}>
         <nav className={styles.arrowButtonContainer}>

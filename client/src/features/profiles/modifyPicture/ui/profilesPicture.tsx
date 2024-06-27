@@ -1,4 +1,4 @@
-import { useUserFetch } from "entities/login";
+import { useUserFetch } from "entities/user";
 
 export function ProfilesPicture() {
   const { data: user } = useUserFetch();

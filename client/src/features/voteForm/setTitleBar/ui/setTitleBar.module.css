@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.userImgBox {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.625rem;
+    border-radius: 100%;
+}
+
+.titleInput {
+    width: 83%;
+    font-weight: 600;
+    background-color: inherit;
+    outline: none;
+}
