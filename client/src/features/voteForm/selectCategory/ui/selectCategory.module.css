@@ -1,0 +1,38 @@
+
+.categoriesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.categoryItem {
+    font-size: small;
+    padding-inline: 10px;
+    padding-block: 5px;
+    border: 1px solid rgb(117, 117, 117);
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.categoryItem:hover {
+    background-color: whitesmoke;
+}
+
+.categorySelect::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+}
+
+.categorySelect::-webkit-scrollbar-track {
+    background: rgb(231, 242, 255);
+    border-radius: 5px;
+}
+
+.categorySelect::-webkit-scrollbar-thumb {
+    background: rgb(54, 54, 54);
+    border-radius: 5px;
+}
+
+.categorySelect::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

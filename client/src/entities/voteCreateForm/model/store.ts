@@ -1,4 +1,5 @@
 import { VoteData } from "entities/vote/model/types";
+import { formatToLocalISO8601 } from "shared/utils/formatToLocalISO8601";
 import { StateCreator } from "zustand";
 
 export interface CreateFormDataSlice {
@@ -17,12 +18,11 @@ export const createFormDataSlice: StateCreator<
     title: "",
     choice: [],
     max_choice: 1,
-    start_time: new Date(),
-    deadline: new Date(),
+    start_time: formatToLocalISO8601(new Date()),
     like: [],
     participant: [],
     category: [],
-    hashtag: [],
+    description: "",
   },
   setFormData: (props) =>
     set((state) => ({

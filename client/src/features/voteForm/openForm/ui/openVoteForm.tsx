@@ -3,9 +3,14 @@ import { FaPlus } from "react-icons/fa6";
 import { VoteForm } from "widgets/VoteForm";
 import { useDialog } from "shared/hooks/useDialog";
 import { Button } from "shared/ui/Button";
+import { useUserFetch } from "entities/user";
+import { LoginForm } from "features/authentication/login";
 
 export const OpenVoteForm = () => {
-  const [voteForm, openVoteForm] = useDialog(<VoteForm />);
+  const { data: user } = useUserFetch();
+  const [voteForm, openVoteForm] = useDialog(
+    user ? <VoteForm /> : <LoginForm />
+  );
 
   return (
     <>

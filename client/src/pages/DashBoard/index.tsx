@@ -8,7 +8,7 @@ export default function Dashboard() {
   const { data: votes } = useReadVoteListByOwner(user?._id);
 
   return (
-    <div className="text-xl font-sans font-semibold">
+    <div>
       <section className="h-160">
         <OpenVoteForm />
         <VoteCardList votes={votes} className="flex"/>

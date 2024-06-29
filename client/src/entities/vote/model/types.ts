@@ -18,11 +18,10 @@ export interface VoteData extends VoteOption {
 }
 
 export interface VoteOption {
-  start_time: Date;
-  deadline: Date;
+  start_time: string;
   max_choice: number;
   category: string[];
-  hashtag: string[];
+  description: string;
 }
 
 export interface VoteParticipant {
