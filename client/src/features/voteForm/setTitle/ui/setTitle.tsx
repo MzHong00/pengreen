@@ -3,13 +3,14 @@ import { useGlobalStore } from "shared/stores/useStore";
 
 import styles from "./setTitleBar.module.css";
 
-export const SetTitleBar = ({
+export const SetTitle = ({
     picture
 }: Pick<User, 'picture'>) => {
   const title = useGlobalStore((state) => state.formData.title);
   const setFormData = useGlobalStore((state) => state.setFormData);
 
   const titleHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
     setFormData({ title: event.currentTarget.value });
   };
 

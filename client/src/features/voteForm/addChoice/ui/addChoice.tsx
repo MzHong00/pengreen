@@ -1,9 +1,11 @@
-import { useState, ChangeEvent, KeyboardEvent } from "react";
+import { useState, type ChangeEvent, type KeyboardEvent } from "react";
 
 import { FaPlus } from "react-icons/fa6";
 import { useGlobalStore } from "shared/stores/useStore";
+import { Button } from "shared/ui/Button";
 
 export const AddChoice = () => {
+  const choiceData = useGlobalStore((state) => state.formData.choice);
   const addFormChoice = useGlobalStore((state) => state.addFormChoice);
   const [choice, setChoice] = useState("");
 
@@ -13,8 +15,8 @@ export const AddChoice = () => {
   };
 
   const addItem = () => {
-    //빈칸이면 choice를 추가하지 않음
-    if (!choice) return;
+    //빈칸 or 중복이라면 choice를 추가하지 않음
+    if (!choice || choiceData.includes(choice)) return;
 
     addFormChoice(choice);
     setChoice("");
@@ -27,15 +29,15 @@ export const AddChoice = () => {
   };
 
   return (
-    <div
-      className={`flex h-10 items-center text-sm gap-3 focus:text-blue-400`}
-    >
-      <FaPlus
-        className="cursor-pointer"
-        color="#0099FF"
-        size="18"
-        onClick={addItem}
-      />
+    <div className={`flex h-10 items-center text-sm gap-3 focus:text-blue-400`}>
+      <Button>
+        <FaPlus
+          className="cursor-pointer"
+          color="#0099FF"
+          size="18"
+          onClick={addItem}
+        />
+      </Button>
       <input
         value={choice}
         onChange={changeHandler}

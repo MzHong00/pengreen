@@ -1,6 +1,6 @@
 import { useUserFetch } from "entities/user";
 import { PublicVoteForm } from "features/voteForm/publicForm";
-import { SetTitleBar } from "features/voteForm/setTitleBar";
+import { SetTitle } from "features/voteForm/setTitle";
 import { SelectFormPage } from "features/voteForm/selectFormPage";
 
 import styles from "./voteForm.module.css";
@@ -12,7 +12,7 @@ export const VoteForm = () => {
   return (
     <form className={styles.form}>
       <div className={styles.innerContainer}>
-        <SetTitleBar picture={user?.picture} />
+        <SetTitle picture={user?.picture} />
         <SelectCategory />
         <SelectFormPage />
         <PublicVoteForm user={user} />

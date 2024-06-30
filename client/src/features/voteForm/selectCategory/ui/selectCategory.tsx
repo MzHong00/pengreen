@@ -1,47 +1,35 @@
-import { MouseEvent } from "react";
+import { FiPlus } from "react-icons/fi";
 
-import { type Category, categories } from "entities/vote/vote";
-import { useGlobalStore } from "shared/stores/useStore";
+import { CategoryBox } from "./categoryBox";
 import { Button } from "shared/ui/Button";
+import { useGlobalStore } from "shared/stores/useStore";
 
 import styles from "./selectCategory.module.css";
+import { useToggle } from "shared/hooks/useToggle";
 
 export const SelectCategory = () => {
   const selectedCategories = useGlobalStore((state) => state.formData.category);
-  const setFormData = useGlobalStore((state) => state.setFormData);
-
-  const selectCategoryHandler = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    const targetText = event.currentTarget.innerText as Category;
-
-    if (selectedCategories.includes(targetText)) {
-      setFormData({
-        category: selectedCategories.filter((item) => item !== targetText),
-      });
-    } else {
-      if (selectedCategories.length >= 3) selectedCategories.shift();
-
-      setFormData({
-        category: [...selectedCategories, targetText],
-      });
-    }
-  };
+  const [isTrue, setIsTrue] = useToggle();
 
   return (
-    <ul className={styles.categoriesContainer}>
-      {categories.map((category) => (
-        <li key={category}>
+    <div>
+      <ul className={styles.categoriesContainer}>
+        <li>
           <Button
-            className={`${styles.categoryItem} ${
-              selectedCategories.includes(category) &&
-              styles.categoryItemSelected
-            }`}
-            onClick={selectCategoryHandler}
+            className={`${styles.categoryItem} ${styles.hoverItem}`}
+            onClick={() => setIsTrue()}
           >
-            {category}
+            카테고리
+            <FiPlus />
           </Button>
         </li>
-      ))}
-    </ul>
+        {selectedCategories.map((category) => (
+          <li key={category} className={styles.categoryItem}>
+            {category}
+          </li>
+        ))}
+      </ul>
+      {isTrue && <CategoryBox />}
+    </div>
   );
 };

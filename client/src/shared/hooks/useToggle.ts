@@ -33,5 +33,5 @@ export const useToggle = ({
     !state ? setToggleState(!toggleState) : setToggleState(state);
   };
 
-  return [toggleState, setToggleHandler, toggleState ? ifTrue : ifFalse];
+  return [toggleState, setToggleHandler, toggleState ? ifTrue : ifFalse] as const;
 };
