@@ -1,4 +1,4 @@
-import { VoteActionDto } from "entities/vote";
+import { VoteActionDto } from "entities/vote/vote";
 
 export interface VoteActionChoiceDto extends VoteActionDto {
   choiceList: Array<string>;

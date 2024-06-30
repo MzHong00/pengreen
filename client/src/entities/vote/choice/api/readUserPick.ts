@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
-import { VoteActionDto } from "entities/vote";
+import { VoteActionDto } from "entities/vote/vote";
 
 export const useReadUserPick = ({
   user_id,

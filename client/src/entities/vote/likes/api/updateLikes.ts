@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { VoteActionDto } from "entities/vote";
+import { VoteActionDto } from "entities/vote/vote";
 
 export const useUpdateLikes = ({
   user_id,

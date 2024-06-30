@@ -1,4 +1,4 @@
-import { type VoteDto } from "entities/vote";
+import { type VoteDto } from "entities/vote/vote";
 import { VoteAdditionalInfo } from "features/vote/additionalInfo";
 import { SubmitChoiceContainer } from "features/vote/submitChoice";
 import { useHover } from "shared/hooks/useHover";

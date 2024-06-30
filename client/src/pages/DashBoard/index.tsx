@@ -1,5 +1,5 @@
 import { useUserFetch } from "entities/user";
-import { useReadVoteListByOwner } from "entities/vote";
+import { useReadVoteListByOwner } from "entities/vote/vote";
 import { OpenVoteForm } from "features/voteForm/openForm";
 import { VoteCardList } from "widgets/VoteCardList";
 

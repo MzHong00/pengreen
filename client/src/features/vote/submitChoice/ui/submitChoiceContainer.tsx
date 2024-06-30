@@ -1,12 +1,12 @@
 import { type MouseEvent } from "react";
 
 import { useUserFetch } from "entities/user";
-import { type VoteDto } from "entities/vote";
+import { type VoteDto } from "entities/vote/vote";
 import {
   useReadChoiceCount,
   useReadUserPick,
   useUpdateUserPick,
-} from "entities/voteChoice";
+} from "entities/vote/choice";
 import { SelectChoice } from "features/vote/selectChoice";
 import { NumChart } from "shared/ui/Chart/numChart";
 import { useToggle } from "shared/hooks/useToggle";

@@ -24,4 +24,4 @@ export const categories = [
   "역사",
   "인물",
   "장소",
-];
+] as const;

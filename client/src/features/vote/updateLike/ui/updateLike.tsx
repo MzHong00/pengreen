@@ -1,7 +1,7 @@
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 
 import { useLikerCheck } from "../lib/likerCheck";
-import { type VoteActionLikesDto, useUpdateLikes } from "entities/voteLikes";
+import { type VoteActionLikesDto, useUpdateLikes } from "entities/vote/likes";
 import { LoginForm } from "features/authentication/login";
 import { useDialog } from "shared/hooks/useDialog";
 

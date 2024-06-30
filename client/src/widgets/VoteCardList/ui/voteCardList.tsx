@@ -1,6 +1,6 @@
 import { HTMLAttributes } from "react";
 
-import { type VoteDto } from "entities/vote";
+import { type VoteDto } from "entities/vote/vote";
 import { VoteCard } from "widgets/voteCard";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
-import { type VoteDto } from "entities/vote";
+import { type VoteDto } from "entities/vote/vote";
 
 export const useReadVoteListByOwner = (ownId: string) => {
   return useQuery({

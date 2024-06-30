@@ -1,7 +1,7 @@
 import { HTMLAttributes } from "react";
 
 import { type User } from "entities/user";
-import { type VoteDto, createVote } from "entities/vote";
+import { type VoteDto, createVote } from "entities/vote/vote";
 import { useGlobalStore } from "shared/stores/useStore";
 
 import styles from "./publicVoteForm.module.css";

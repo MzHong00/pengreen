@@ -12,27 +12,14 @@
     border: 1px solid rgb(117, 117, 117);
     border-radius: 12px;
     cursor: pointer;
+    transition-duration: 0.2s;
 }
 
 .categoryItem:hover {
-    background-color: whitesmoke;
+    background-color: rgb(216, 214, 214);
 }
 
-.categorySelect::-webkit-scrollbar {
-    width: 2px;
-    height: 2px;
-}
-
-.categorySelect::-webkit-scrollbar-track {
-    background: rgb(231, 242, 255);
-    border-radius: 5px;
-}
-
-.categorySelect::-webkit-scrollbar-thumb {
-    background: rgb(54, 54, 54);
-    border-radius: 5px;
-}
-
-.categorySelect::-webkit-scrollbar-thumb:hover {
-    background: #555;
+.categoryItemSelected {
+    background-color: rgb(216, 214, 214);
+    transform: scale(1.05);
 }

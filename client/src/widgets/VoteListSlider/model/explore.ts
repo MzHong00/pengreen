@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { VoteDto, useReadVote } from "entities/vote";
+import { VoteDto, useReadVote } from "entities/vote/vote";
 
 //Sort 쿼리 스트링에 따른 Vote Data Fetching
 export const useFetchVotes = () => {

@@ -1,5 +1,5 @@
 import { useUserFetch } from "entities/user";
-import { useReadVoteById, type VoteDto } from "entities/vote";
+import { useReadVoteById, type VoteDto } from "entities/vote/vote";
 import { Participant } from "features/vote/readParticipants";
 import { UpdateLike } from "features/vote/updateLike";
 import { Button } from "shared/ui/Button";

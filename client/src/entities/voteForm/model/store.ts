@@ -1,18 +1,19 @@
-import { VoteData } from "entities/vote/model/types";
-import { formatToLocalISO8601 } from "shared/utils/formatToLocalISO8601";
 import { StateCreator } from "zustand";
 
-export interface CreateFormDataSlice {
-  formData: VoteData;
-  setFormData: (props: Partial<VoteData>) => void;
+import { formatToLocalISO8601 } from "shared/utils/formatToLocalISO8601";
+import { VoteForm } from "./types";
+
+export interface VoteFormSlice {
+  formData: VoteForm;
+  setFormData: (props: Partial<VoteForm>) => void;
   addFormChoice: (props: string) => void;
 }
 
 export const createFormDataSlice: StateCreator<
-  CreateFormDataSlice,
+  VoteFormSlice,
   [],
   [],
-  CreateFormDataSlice
+  VoteFormSlice
 > = (set) => ({
   formData: {
     title: "",

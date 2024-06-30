@@ -2,7 +2,7 @@ import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { type VoteActionChoiceDto } from "..";
-import { type VoteActionDto } from "entities/vote";
+import { type VoteActionDto } from "entities/vote/vote";
 
 export const useUpdateUserPick = ({
   user_id,

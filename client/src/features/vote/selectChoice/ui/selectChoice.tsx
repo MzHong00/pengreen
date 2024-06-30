@@ -1,7 +1,7 @@
 import { useState, type MouseEvent } from "react";
 
 import styles from "./selectChoice.module.css";
-import { VoteDto } from "entities/vote";
+import { VoteDto } from "entities/vote/vote";
 
 interface Props extends Pick<VoteDto, "choice" | "max_choice"> {}
 
