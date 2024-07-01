@@ -2,8 +2,11 @@ import { Logo } from "../Logo/logo";
 import { ProfilesCard } from "../ProfilesCard/profilesCard";
 import { useUserFetch } from "entities/user";
 import { LoginForm } from "features/authentication/login";
-import { useDialog } from "shared/hooks/useDialog";
+import { OpenFormButton } from "features/voteForm/openForm";
 import { ProfilesDetail } from "widgets/profilesDetail";
+import { useDialog } from "shared/hooks/useDialog";
+
+import styles from './LayoutHeader.module.css'
 
 export function LayoutHeader() {
   const { data: user } = useUserFetch();
@@ -12,15 +15,22 @@ export function LayoutHeader() {
   const [profiles, openProfiles] = useDialog(<ProfilesDetail />);
 
   return (
-    <header className="w-full flex justify-between py-6 px-14 ">
+    <header className={styles.layoutHeader}>
       <Logo />
-      {user ? (
-        <ProfilesCard onClick={openProfiles} picture={user.picture} />
-      ) : (
-        <ProfilesCard onClick={openLoginForm} />
-      )}
-      {loginForm}
-      {profiles}
+      <div className={styles.headerRightSection}>
+        {user ? (
+          <>
+            <OpenFormButton />
+            <ProfilesCard onClick={openProfiles} picture={user.picture} />
+            {profiles}
+          </>
+        ) : (
+          <>
+            <ProfilesCard onClick={openLoginForm} />
+            {loginForm}
+          </>
+        )}
+      </div>
     </header>
   );
 }

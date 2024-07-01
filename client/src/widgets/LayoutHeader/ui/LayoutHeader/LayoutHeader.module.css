@@ -1,0 +1,12 @@
+.layoutHeader{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 3.5rem;
+    padding-block: 1.5rem;
+}
+
+.headerRightSection {
+    display: flex;
+    gap: 1.5rem;
+}

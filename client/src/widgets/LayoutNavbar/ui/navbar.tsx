@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { BsList } from "react-icons/bs";
+import { FaSearch } from "@react-icons/all-files/fa/FaSearch";
 
 import { useNavSidebar } from "../model/sideBarItems";
 import { Button } from "shared/ui/Button";
@@ -13,24 +13,25 @@ export function Navbar() {
   return (
     <aside className={`${styles.navbarContainer}`}>
       <nav className={`${styles.navbar}`}>
-        <div className={`${styles.menuIcon}`}>
-          <BsList />
-        </div>
+        <Button className={`${styles.searchButton}`}>
+          <FaSearch size={18} className={styles.buttonIcon}/>
+        </Button>
+
         <div className={`${styles.buttonContainer}`}>
-          {navList.map((item, idx) => {
+          {navList.map((item) => {
             const Icon = item.icon;
 
             return (
-                <Button
-                  key={idx}
-                  onClick={item.handler}
-                  className={`${styles.button} ${
-                    location.pathname === item.path && styles.activeButton
-                  }`}
-                >
-                  <Icon/>
-                </Button>
-              )
+              <Button
+                key={item.name}
+                onClick={item.handler}
+                className={`${styles.button} ${
+                  location.pathname === item.path && "bg-white"
+                }`}
+              >
+                <Icon color="black" className={styles.buttonIcon} />
+              </Button>
+            );
           })}
         </div>
       </nav>

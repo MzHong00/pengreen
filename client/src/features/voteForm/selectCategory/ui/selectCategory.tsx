@@ -1,11 +1,11 @@
-import { FiPlus } from "react-icons/fi";
+import { FiPlus } from "@react-icons/all-files/fi/FiPlus";
 
 import { CategoryBox } from "./categoryBox";
-import { Button } from "shared/ui/Button";
 import { useGlobalStore } from "shared/stores/useStore";
 
 import styles from "./selectCategory.module.css";
 import { useToggle } from "shared/hooks/useToggle";
+import { RoundButton } from "shared/ui/RoundButton";
 
 export const SelectCategory = () => {
   const selectedCategories = useGlobalStore((state) => state.formData.category);
@@ -15,21 +15,25 @@ export const SelectCategory = () => {
     <div>
       <ul className={styles.categoriesContainer}>
         <li>
-          <Button
-            className={`${styles.categoryItem} ${styles.hoverItem}`}
+          <RoundButton
+            className={`hover:bg-gray-200 ${styles.categoryItem}`}
             onClick={() => setIsTrue()}
           >
             카테고리
             <FiPlus />
-          </Button>
+          </RoundButton>
         </li>
         {selectedCategories.map((category) => (
-          <li key={category} className={styles.categoryItem}>
-            {category}
+          <li key={category}>
+            <RoundButton className={`${styles.categoryItem} cursor-default`}>
+              {category}
+            </RoundButton>
           </li>
         ))}
       </ul>
-      {isTrue && <CategoryBox />}
+      {isTrue && (
+        <CategoryBox className={`${styles.categoriesContainer} mt-3`} />
+      )}
     </div>
   );
 };

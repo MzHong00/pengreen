@@ -1,1 +1,1 @@
-export { OpenVoteForm } from "./ui/openVoteForm";
+export { OpenFormButton } from "./ui/openFormButton";

@@ -1,4 +1,4 @@
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown } from "@react-icons/all-files/io/IoIosArrowDown";
 import { useSearchParams } from "react-router-dom";
 
 import { SelectSortBy } from "../selectSortBy/selectSorBy";

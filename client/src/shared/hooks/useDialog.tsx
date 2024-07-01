@@ -1,5 +1,5 @@
 import { useRef, type ReactNode, type MouseEvent } from "react";
-import { IoMdClose } from "react-icons/io";
+import { IoMdClose } from "@react-icons/all-files/io/IoMdClose";
 
 /*
     arg:

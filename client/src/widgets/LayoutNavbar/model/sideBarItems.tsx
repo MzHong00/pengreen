@@ -1,7 +1,8 @@
+import { SVGAttributes } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { MdHome } from "react-icons/md";
-import { MdOutlineSpaceDashboard } from "react-icons/md";
+import { MdHome } from "@react-icons/all-files/md/MdHome";
+import { FaUser } from "@react-icons/all-files/fa/FaUser";
 
 export const useNavSidebar = () => {
   const navigate = useNavigate();
@@ -10,7 +11,9 @@ export const useNavSidebar = () => {
     {
       name: "Home",
       path: "/",
-      icon: () => <MdHome size="20" />,
+      icon: (props: SVGAttributes<SVGElement>) => (
+        <MdHome {...props} size="20" />
+      ),
       handler: () => {
         navigate("/");
       },
@@ -18,7 +21,9 @@ export const useNavSidebar = () => {
     {
       name: "Dashboard",
       path: "/dashboard",
-      icon: () => <MdOutlineSpaceDashboard size="20" />,
+      icon: (props: SVGAttributes<SVGElement>) => (
+        <FaUser {...props} size="15" />
+      ),
       handler: () => {
         navigate("/dashboard");
       },

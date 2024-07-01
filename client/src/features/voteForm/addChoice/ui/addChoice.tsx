@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent, type KeyboardEvent } from "react";
 
-import { FaPlus } from "react-icons/fa6";
+import { FaPlus } from "@react-icons/all-files/fa/FaPlus";
 import { useGlobalStore } from "shared/stores/useStore";
 import { Button } from "shared/ui/Button";
 

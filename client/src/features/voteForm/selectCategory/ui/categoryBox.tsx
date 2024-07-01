@@ -1,12 +1,14 @@
-import { MouseEvent } from "react";
+import { HTMLAttributes, MouseEvent } from "react";
 
 import { type Category, categories } from "entities/vote/vote";
 import { useGlobalStore } from "shared/stores/useStore";
-import { Button } from "shared/ui/Button";
+import { RoundButton } from "shared/ui/RoundButton";
 
 import styles from "./selectCategory.module.css";
 
-export const CategoryBox = () => {
+interface Props extends HTMLAttributes<HTMLUListElement> {}
+
+export const CategoryBox = (props: Props) => {
   const selectedCategories = useGlobalStore((state) => state.formData.category);
   const setFormData = useGlobalStore((state) => state.setFormData);
 
@@ -27,18 +29,17 @@ export const CategoryBox = () => {
   };
 
   return (
-    <ul className={`${styles.categoriesContainer} mt-3`}>
+    <ul {...props}>
       {categories.map((category) => (
         <li key={category}>
-          <Button
-            className={`${styles.categoryItem} ${styles.hoverItem} ${
-              selectedCategories.includes(category) &&
-              styles.categoryItemSelected
+          <RoundButton
+            className={`hover:bg-gray-200 ${styles.categoryItem} ${
+              selectedCategories.includes(category) && `bg-gray-200`
             }`}
             onClick={selectCategoryHandler}
           >
             {category}
-          </Button>
+          </RoundButton>
         </li>
       ))}
     </ul>

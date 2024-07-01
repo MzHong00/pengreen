@@ -1,5 +1,11 @@
-import { VoteExplorer } from "widgets/VoteExplorer";
+import { SortByButton } from "features/vote/sortBy";
+import { VoteListSlider } from "widgets/VoteListSlider";
 
 export default function Home() {
-  return <VoteExplorer />;
+  return (
+    <section>
+      <SortByButton />
+      <VoteListSlider />
+    </section>
+  )
 }

@@ -1,5 +1,5 @@
 import { type FocusEvent, type MouseEvent } from "react";
-import { IoMdClose } from "react-icons/io";
+import { IoMdClose } from "@react-icons/all-files/io/IoMdClose";
 
 import { ChoiceInput } from "./choiceInput";
 import { AddChoice } from "features/voteForm/addChoice";
@@ -24,7 +24,7 @@ export const SetChoice = () => {
     choiceData.splice(selectedInputIndex, 1, event.currentTarget.value);
 
     setFormData({ choice: choiceData.filter((item) => !!item) });
-  }
+  };
 
   return (
     <>

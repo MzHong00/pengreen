@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
-import { FcGoogle } from "react-icons/fc";
-import { SiNaver } from "react-icons/si";
-import { RiKakaoTalkFill } from "react-icons/ri";
+import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
+import { RiKakaoTalkFill } from "@react-icons/all-files/ri/RiKakaoTalkFill";
 
 import { fetchGoogleForm } from "entities/oauth";
 
@@ -26,12 +25,6 @@ export const oauthType = (): OauthType[] => {
         );
       },
       tailwind: "border",
-    },
-    {
-      name: "네이버",
-      componentImg: <SiNaver />,
-      handler: async () => {},
-      tailwind: "bg-[#03c75a] text-white",
     },
     {
       name: "카카오",

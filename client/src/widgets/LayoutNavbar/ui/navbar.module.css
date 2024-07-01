@@ -5,7 +5,6 @@
     position: absolute;
     left: 0;
     bottom: 30px;
-    transition-duration: 500ms;
 }
 
 .navbar {
@@ -17,12 +16,11 @@
     gap: 0.5rem;
 }
 
-.menuIcon {
+.searchButton {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
-    background-color: #bfbfbf;
     border-radius: 0.5rem;
     cursor: pointer;
 }
@@ -45,11 +43,10 @@
     gap: 0.5rem;
 }
 
-.button:hover {
-    border: 1px solid white;
-    border-radius: 10px;
+.buttonIcon {
+    transition-duration: 0.2s;
 }
 
-.activeButton {
-    color: #000;
+.buttonIcon:hover {
+    transform: scale(1.1);
 }

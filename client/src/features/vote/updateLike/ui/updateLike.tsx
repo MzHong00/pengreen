@@ -1,4 +1,5 @@
-import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart } from "@react-icons/all-files/io/IoMdHeart";
+import { IoMdHeartEmpty } from "@react-icons/all-files/io/IoMdHeartEmpty";
 
 import { useLikerCheck } from "../lib/likerCheck";
 import { type VoteActionLikesDto, useUpdateLikes } from "entities/vote/likes";
