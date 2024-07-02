@@ -1,9 +1,9 @@
 import { Logo } from "../Logo/logo";
-import { ProfilesCard } from "../ProfilesCard/profilesCard";
 import { useUserFetch } from "entities/user";
 import { LoginForm } from "features/authentication/login";
 import { OpenFormButton } from "features/voteForm/openForm";
 import { ProfilesDetail } from "widgets/profilesDetail";
+import { ProfilesCard } from "widgets/ProfilesCard";
 import { useDialog } from "shared/hooks/useDialog";
 
 import styles from './LayoutHeader.module.css'

@@ -7,6 +7,7 @@ import { Button } from "shared/ui/Button";
 import styles from "./sortByButton.module.css";
 import { sortTypes } from "../../consts/sortTypes";
 import { useModal } from "shared/hooks/useModal";
+import { firstLetterUpperCase } from "shared/utils/firstLetterUpperCase";
 
 export const SortByButton = () => {
   let [sortQs] = useSearchParams();
@@ -16,9 +17,11 @@ export const SortByButton = () => {
     <div className={styles.container}>
       <div className={styles.sortText}>
         <span>
-          {sortTypes.some((sort) => sortQs.get("sort") === sort.queryString)
-            ? sortQs.get("sort")
-            : "latest"}
+          {firstLetterUpperCase(
+            sortTypes.some((sort) => sortQs.get("sort") === sort.queryString)
+              ? sortQs.get("sort")
+              : "latest"
+          )}
         </span>
       </div>
 

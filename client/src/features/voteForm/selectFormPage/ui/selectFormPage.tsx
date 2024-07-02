@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { pageTypes } from "../consts/voteFormPageTypes";
 import { LimitChoiceCount } from "features/voteForm/limitChoiceCount";
-import { SetChoice } from "features/voteForm/setChoice";
+import { UpdateChoice } from "features/voteForm/updateChoice";
 import { SetDescription } from "features/voteForm/setDescription";
 import { Button } from "shared/ui/Button";
 
@@ -30,7 +30,7 @@ export const SelectFormPage = () => {
       <div className={styles.page}>
         {page === pageTypes[0] && (
           <div className={styles.pageInner}>
-            <SetChoice />
+            <UpdateChoice />
           </div>
         )}
         {page === pageTypes[1] && (

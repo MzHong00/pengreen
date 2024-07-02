@@ -18,6 +18,7 @@ export const PublicVoteForm = ({ user, ...props }: Props) => {
       owner: user,
       ...voteData,
     } as VoteDto);
+    window.location.reload();
   };
 
   return (

@@ -1,0 +1,9 @@
+.categoryCotainer {
+    padding-inline: 5.5rem;
+}
+
+.category {
+    overflow-x: hidden;
+    display: flex;
+    gap: 0.6rem;
+}

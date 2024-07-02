@@ -1,0 +1,6 @@
+.categoryItem {
+    text-wrap: nowrap;
+    font-size: small;
+    padding-inline: 13px;
+    padding-block: 5px;
+}

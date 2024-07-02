@@ -5,16 +5,20 @@ import { useNavSidebar } from "../model/sideBarItems";
 import { Button } from "shared/ui/Button";
 
 import styles from "./navbar.module.css";
+import { SearchBox } from "widgets/SearchBox";
+import { useModal } from "shared/hooks/useModal";
 
 export function Navbar() {
   const location = useLocation();
   const navList = useNavSidebar();
+  const { ref, isOpen, toggleModal } = useModal();
 
   return (
     <aside className={`${styles.navbarContainer}`}>
+      {isOpen && <SearchBox ref={ref} />}
       <nav className={`${styles.navbar}`}>
-        <Button className={`${styles.searchButton}`}>
-          <FaSearch size={18} className={styles.buttonIcon}/>
+        <Button className={`${styles.searchButton}`} onClick={toggleModal}>
+          <FaSearch size={17} className={styles.buttonIcon} />
         </Button>
 
         <div className={`${styles.buttonContainer}`}>

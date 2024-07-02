@@ -22,8 +22,8 @@ export const VoteAdditionalInfo = ({ vote, isVisible }: Props) => {
       {isVisible && (
         <div className="flex justify-between">
           <UpdateLike
-            user_id={user._id}
-            vote_id={vote._id}
+            user_id={user?._id}
+            vote_id={vote?._id}
             liker={data?.like ? data.like : []}
           />
           <Participant participant={data?.participant.length} />

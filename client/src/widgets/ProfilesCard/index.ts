@@ -1,0 +1,1 @@
+export { ProfilesCard } from "./ui/profilesCard";
