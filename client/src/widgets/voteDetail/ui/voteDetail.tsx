@@ -5,6 +5,7 @@ import { NumChart } from 'shared/ui/Chart/numChart';
 import { Button } from 'shared/ui/Button';
 import { useGetChoiceData } from '../model/queries';
 import { useChartTypeState } from '../model/voteDetail';
+import { ChoiceDto } from 'entities/vote/choice';
 
 interface Props {
     ownPicture: string;
@@ -15,7 +16,7 @@ interface Props {
 export function VoteDetail({
     ownPicture, title, voteId
 }: Props) {
-    const choice = useGetChoiceData(voteId);
+    const choice = useGetChoiceData<ChoiceDto[]>(voteId);
     const { chartType, chartTypeHandler } = useChartTypeState();
 
     return (

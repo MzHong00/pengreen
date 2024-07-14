@@ -6,7 +6,7 @@ import { VoteActionChoiceDto } from "..";
 export const useReadChoiceCount = ({
   vote_id,
   choiceList,
-}: Omit<VoteActionChoiceDto, "user_id">) => {
+}: Pick<VoteActionChoiceDto, "vote_id" | "choiceList">) => {
   return useQuery({
     queryKey: ["choice", vote_id],
     queryFn: () =>
@@ -21,7 +21,7 @@ export const useReadChoiceCount = ({
 const readChoiceCount = async ({
   vote_id,
   choiceList,
-}: Omit<VoteActionChoiceDto, "user_id">) => {
+}: Pick<VoteActionChoiceDto, "vote_id" | "choiceList">) => {
   console.log("Pick 개수 Fetch");
   try {
     const choiceCount = await axios.put(

@@ -1,8 +1,9 @@
 import { FaUser } from "@react-icons/all-files/fa/FaUser";
+
 import styles from "./participant.module.css";
 
 interface Props {
-  participant: number | undefined;
+  participant?: number;
 }
 
 export const Participant = ({ participant = 0 }: Props) => {

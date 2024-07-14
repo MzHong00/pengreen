@@ -2,8 +2,9 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
 import { type VoteDto } from "entities/vote/vote";
+import { User } from "entities/user";
 
-export const useReadVoteListByOwner = (ownId: string) => {
+export const useReadVoteListByOwner = (ownId: User["_id"]) => {
   return useQuery({
     queryKey: ["vote", ownId],
     queryFn: () => readVoteByOwner(ownId),
@@ -12,11 +13,11 @@ export const useReadVoteListByOwner = (ownId: string) => {
 };
 
 const readVoteByOwner = async (
-  own_id: string
+  own_id: User["_id"]
 ): Promise<VoteDto[] | undefined> => {
-  try {
-    if (!own_id) return;
+  if (!own_id) return;
 
+  try {
     const vote_data = await axios.post(
       `${process.env.REACT_APP_API_ROOT}/api/vote/read-owner`,
       {

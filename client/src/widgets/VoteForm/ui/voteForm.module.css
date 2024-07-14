@@ -1,17 +1,41 @@
-.form {
+.formContainer {
     width: 36rem;
-    height: 100%;
+    height: 36rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-weight: 500;
 }
 
-.innerContainer {
+.formContent {
     width: 100%;
     height: 100%;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 1rem;
+}
+
+.vaildationContent {
+    padding: 1rem;
+    position: absolute;
+    background-color: white;
+    transition-duration: 0.3s;
+    transform: translateX(100%);
+}
+
+.leftTransform {
+    transform: translateX(0%);
+}
+
+.toConfirmPageButton {
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom right, #eafdff, #d7e7fc) !important;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
 }

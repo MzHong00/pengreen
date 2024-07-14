@@ -1,5 +1,4 @@
 import { useRef, type ReactNode, type MouseEvent } from "react";
-import { IoMdClose } from "@react-icons/all-files/io/IoMdClose";
 
 /*
     arg:
@@ -26,14 +25,12 @@ export const useDialog = (
     <dialog
       ref={dialogRef}
       onClick={closeHandler}
-      className={`rounded-2xl`}
+      className={`rounded-2xl overflow-hidden`}
     >
-      <div className="p-4">
-        <div className="flex flex-row-reverse">
+        {/* <div className="flex flex-row-reverse">
           <IoMdClose onClick={closeHandler as any} className="cursor-pointer" />
-        </div>
+        </div> */}
         {children}
-      </div>
     </dialog>
   );
 

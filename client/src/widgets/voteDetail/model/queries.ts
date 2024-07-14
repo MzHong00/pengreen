@@ -1,7 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query';
+import { VoteDto } from 'entities/vote/vote';
 
-export const useGetChoiceData = (voteId: string ): Array<Object> => {
+export const useGetChoiceData = <T>(voteId: VoteDto['_id'] ): T => {
     const queryClient = useQueryClient();
 
-    return queryClient.getQueryData(['choice', voteId]) as Array<Object>
+    return queryClient.getQueryData(['choice', voteId]) as T;
 }

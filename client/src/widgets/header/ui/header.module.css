@@ -1,0 +1,19 @@
+.layoutHeader{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 5.5rem;
+    padding-block: 1.5rem;
+}
+
+.headerRightSection {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.openFormButton {
+    font-weight: bold;
+    border-color: black;
+    padding-block: 0.25rem;
+    padding-inline: 1rem;
+}

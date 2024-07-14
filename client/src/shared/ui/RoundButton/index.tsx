@@ -8,8 +8,8 @@ export const RoundButton = ({ children, className, ...props }: Props) => {
     return (
       <button
         type="button"
+        className={`${styles.round} ${className}`}
         {...props}
-        className={`${styles.button} ${className}`}
       >
         {children}
       </button>

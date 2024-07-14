@@ -1,11 +1,11 @@
 import { StateCreator } from "zustand";
 
 import { formatToLocalISO8601 } from "shared/utils/formatToLocalISO8601";
-import { VoteForm } from "./types";
+import { VoteFormDto } from "./types";
 
 export interface VoteFormSlice {
-  formData: VoteForm;
-  setFormData: (props: Partial<VoteForm>) => void;
+  formData: VoteFormDto;
+  setFormData: (props: Partial<VoteFormDto>) => void;
   addFormChoice: (props: string) => void;
 }
 

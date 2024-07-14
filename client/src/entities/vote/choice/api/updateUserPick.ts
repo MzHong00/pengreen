@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { type VoteActionChoiceDto } from "..";
 import { type VoteActionDto } from "entities/vote/vote";
+import { type VoteFormDto } from "entities/voteForm";
 
 export const useUpdateUserPick = ({
   user_id,
@@ -10,7 +11,7 @@ export const useUpdateUserPick = ({
 }: VoteActionDto) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (selected: Array<string>) =>
+    mutationFn: (selected: VoteFormDto['choice']) =>
       updateUserPick({
         user_id: user_id,
         vote_id: vote_id,

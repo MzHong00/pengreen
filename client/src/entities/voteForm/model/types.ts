@@ -1,14 +1,8 @@
-import { Category, Participant } from "entities/vote/vote";
+import { Category } from "entities/vote/vote";
 
-export interface VoteForm extends VoteOption {
+export interface VoteFormDto {
   title: string;
-  like: Array<string>;
-  participant: Participant[];
-  choice: Array<string>;
-}
-
-interface VoteOption {
-  start_time: string;
+  choice: string[];
   max_choice: number;
   category: Category[];
   description: string;

@@ -1,7 +1,7 @@
 import axios from "axios";
-import { type VoteDto } from "entities/vote/vote";
+import { VoteFormDto } from "entities/voteForm";
 
-export const createVote = async (vote: VoteDto): Promise<void> => {
+export const createVote = async (vote: VoteFormDto): Promise<void> => {
   try {
     await axios.post(`${process.env.REACT_APP_API_ROOT}/api/vote/create`, vote);
   } catch (error) {

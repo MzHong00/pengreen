@@ -1,0 +1,18 @@
+.titleBar {
+    width: 85%;
+    display: flex;
+    align-items: center;
+}
+
+.titleText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.profilesPicture {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.75rem;
+    border-radius: 9999px;
+}

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
-import { LayoutHeader } from "widgets/LayoutHeader";
-import { Navbar } from "widgets/LayoutNavbar";
+import { LayoutHeader } from "widgets/header";
+import { Navbar } from "widgets/navbar";
 
 export default function Root() {
   // root경로에 "login"의 PostMessage가 전송되면 root 페이지를 새로고침하는 리스너 장착

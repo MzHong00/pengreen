@@ -1,5 +1,4 @@
 import { User } from "../models/user";
-import { Vote } from "../models/vote";
 
 export const toUserFormat = (userData: any): User => {
     return {

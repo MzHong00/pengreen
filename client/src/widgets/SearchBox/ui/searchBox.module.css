@@ -1,11 +1,10 @@
 .searchBox {
     width: 24rem;
     height: 60vh;
-    padding: 10px;
     position: absolute;
     bottom: 0;
-    background-color: #E3E1D9;
-    border-radius: 10px;
+    background-color: #e3e1d9;
+    border-radius: 5px;
     clip-path: circle(15% at 39% 96%);
     animation: clipPathShowing 1s ease forwards;
 }
@@ -16,12 +15,11 @@
     }
 }
 .searchBar {
-    padding: 0.5rem;
+    padding: 1rem;
     display: flex;
     align-items: center;
-    border-radius: 15px;
-    background-color: #F2EFE5;
     gap: 0.5rem;
+    border-bottom: 1px solid white;
 }
 
 .searchBar > input {

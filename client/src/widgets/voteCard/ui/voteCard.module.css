@@ -1,5 +1,5 @@
 /* Vote.module.css */
-.container {
+.cardContainer {
     display: flex;
     flex-direction: column;
     width: 24rem;
@@ -23,23 +23,4 @@
     display: flex;
     justify-content: space-between;
     gap: 0.5rem;
-}
-
-.titleContainer {
-    width: 85%;
-    display: flex;
-    align-items: center;
-}
-
-.ownerImage {
-    width: 2rem;
-    height: 2rem;
-    margin-right: 0.75rem;
-    border-radius: 9999px;
-}
-
-.title {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
