@@ -5,11 +5,12 @@ import { VoteFormDto } from "entities/voteForm";
 import { SetTitle } from "features/voteForm/setTitle";
 import { SelectFormPage } from "features/voteForm/selectOptionForm";
 import { SelectCategory } from "features/voteForm/selectCategory";
+import { VoteFormValidation } from "widgets/voteFormValidation";
+
 import {
-  SubmitAfterValidation,
   getFormData,
   getInvalidationItems,
-} from "features/voteForm/submitAfterValidation";
+} from "features/voteForm/submitForm";
 
 import styles from "./voteForm.module.css";
 
@@ -55,7 +56,7 @@ export const VoteForm = () => {
           onClick={setFormDataHandler}
         />
       </div>
-      <SubmitAfterValidation
+      <VoteFormValidation
         className={`${styles.vaildationContent} ${
           isOpenValidation && styles.leftTransform
         }`}
