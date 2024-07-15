@@ -2,17 +2,15 @@ import { HTMLAttributes } from "react";
 
 import { VoteDto } from "entities/vote/vote";
 
-import styles from 'shared/ui/RoundButton/index.module.css'
-
-interface Props extends HTMLAttributes<HTMLUListElement> {
+interface Props extends HTMLAttributes<HTMLDivElement> {
   list: VoteDto[];
 }
 
 export const OutputSearchList = ({ list, ...props }: Props) => {
   return (
-    <div>
+    <div  {...props}>
       <div >최근 검색어</div>
-      <ul {...props}>
+      <ul>
       {list.map((vote) => (
         <li key={vote?._id}>
           <img src={vote.owner.picture} referrerPolicy="no-referrer" />

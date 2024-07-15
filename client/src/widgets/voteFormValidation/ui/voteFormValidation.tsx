@@ -2,7 +2,7 @@ import { type MouseEventHandler } from "react";
 import { MdKeyboardArrowLeft } from "@react-icons/all-files/md/MdKeyboardArrowLeft";
 
 import { User } from "entities/user";
-import { ValidateCard } from "features/voteForm/submitForm/ui/validateCard";
+import { ValidateCard } from "features/voteForm/submitForm";
 import { VoteFormDto } from "entities/voteForm";
 import { VoteCardSkeleton } from "widgets/voteCard";
 import { Button } from "shared/ui/Button";

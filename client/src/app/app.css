@@ -10,7 +10,7 @@ div::-webkit-scrollbar {
 
 /* Track */
 div::-webkit-scrollbar-track {
-  background: rgb(231, 242, 255);
+  background: rgb(212, 212, 212);
   border-radius: 5px;
 }
 
