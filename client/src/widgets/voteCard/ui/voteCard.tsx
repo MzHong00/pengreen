@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { HTMLAttributes, useCallback, useMemo, useState } from "react";
 
 import {
   useReadChoiceCount,
@@ -16,20 +16,28 @@ import { ChoiceContentBox } from "features/vote/submitPick";
 import { LoginForm } from "features/authentication/login";
 import { TitleBar } from "features/vote/readTitle";
 import { useDialog } from "shared/hooks/useDialog";
-import { useHover } from "shared/hooks/useHover";
 import { Button } from "shared/ui/Button";
 
 import styles from "./voteCard.module.css";
 
-interface Props {
-  vote: VoteDto;
+interface Props extends HTMLAttributes<HTMLDivElement> {
+  voteList: VoteDto[] | undefined;
 }
 
-export function VoteCard({ vote }: Props) {
-  const [isOpenSubmit, setIsOpenSubmit] = useState<boolean>(false);
-  const { ref: hoverRef, state: isHover } = useHover();
-  const [loginForm, openLoginForm] = useDialog(<LoginForm />);
+export const VoteCardList = ({ voteList = [], className, ...props }: Props) => {
+  return (
+    <div {...props} className={`${className}`}>
+      {voteList.map((vote: VoteDto, idx: number) => (
+        <VoteCard key={idx} vote={vote} />
+      ))}
+    </div>
+  );
+};
 
+export function VoteCard({ vote }: { vote: VoteDto }) {
+  const [isOpenSubmit, setIsOpenSubmit] = useState<boolean>(false);
+
+  const [loginForm, openLoginForm] = useDialog(<LoginForm />);
   const { data: user } = useUserFetch();
   const { data: searchedVote } = useReadVoteById(vote._id);
 
@@ -50,12 +58,17 @@ export function VoteCard({ vote }: Props) {
     choiceList: vote.choice,
   });
   const isClickLike = useMemo(() => {
-    return user?._id ? vote.like.includes(user._id) : false;
+    if (user?._id) {
+      return vote.like.includes(user._id);
+    }
+
+    return false
   }, [user?._id, vote.like]);
 
   const mutatePickHandler = useCallback(
     (event: React.MouseEvent<HTMLInputElement>) => {
       event.preventDefault();
+
       if (!user) {
         openLoginForm();
         return;
@@ -84,37 +97,33 @@ export function VoteCard({ vote }: Props) {
   }, [user, openLoginForm, mutateLike]);
 
   return (
-    <div ref={hoverRef} className={styles.cardContainer}>
-      <section className={styles.topSection}>
-        <TitleBar picture={vote.owner.picture} title={vote.title}/>
+    <form className={styles.cardContainer}>
+      <TitleBar picture={vote.owner.picture} title={vote.title} />
+
+      <ChoiceSubmitBox
+        isOpenSubmit={isOpenSubmit}
+        name={user?.name}
+        choice={userPick}
+        max_choice={vote.max_choice}
+        onClickSubmit={mutatePickHandler}
+      />
+      <ChoiceContentBox
+        isOpenSubmit={isOpenSubmit}
+        choiceListIncludedCount={choiceCount}
+        choice={vote.choice}
+        max_choice={vote.max_choice}
+      />
+
+      <section className={styles.otherInfoBox}>
+        <UpdateLike
+          like={vote.like.length}
+          isUserLike={isClickLike}
+          onClick={mutateLikeHandler}
+        />
+        <Participant participant={searchedVote?.participant.length} />
+        <Button className={styles.openDetailButton}>자세히</Button>
       </section>
-      <form>
-        <ChoiceSubmitBox
-          isOpenSubmit={isOpenSubmit}
-          name={user?.name}
-          choice={userPick}
-          max_choice={vote.max_choice}
-          onClickSubmit={mutatePickHandler}
-        />
-        <ChoiceContentBox
-          isOpenSubmit={isOpenSubmit}
-          choiceListIncludedCount={choiceCount}
-          choice={vote.choice}
-          max_choice={vote.max_choice}
-        />
-      </form>
-      {isHover && (
-        <section className="flex justify-between">
-          <UpdateLike
-            like={vote.like.length}
-            isUserLike={isClickLike}
-            onClick={mutateLikeHandler}
-          />
-          <Participant participant={searchedVote?.participant.length} />
-          <Button className={styles.openDetailButton}>통계</Button>
-        </section>
-      )}
       {loginForm}
-    </div>
+    </form>
   );
 }

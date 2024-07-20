@@ -14,26 +14,16 @@ export const VoteCardSkeleton = ({
   max_choice,
 }: Partial<VoteDto>) => {
   return (
-    <div className={styles.cardContainer}>
+    <div className={`${styles.cardContainer} h-[16.5rem]`}>
       <section className={styles.topSection}>
         <TitleBar picture={owner?.picture} title={title} />
       </section>
-      <div>
-        <ChoiceSubmitBox
-          name={owner?.name}
-          max_choice={max_choice}
-          disabled
-        />
-        <ChoiceContentBox
-          choice={choice}
-          max_choice={max_choice}
-          isOpenSubmit
-        />
-      </div>
-      <section className="flex justify-between">
+      <ChoiceSubmitBox name={owner?.name} max_choice={max_choice} disabled />
+      <ChoiceContentBox choice={choice} max_choice={max_choice} isOpenSubmit />
+      <section className={styles.otherInfoBox}>
         <UpdateLike />
         <Participant />
-        <Button className={styles.openDetailButton}>통계</Button>
+        <Button className={styles.openDetailButton}>자세히</Button>
       </section>
     </div>
   );

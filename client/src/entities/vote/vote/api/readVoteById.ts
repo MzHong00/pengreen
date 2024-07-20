@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { type VoteDto } from "entities/vote/vote";
 
-export const useReadVoteById = (voteId: string) => {
+export const useReadVoteById = (voteId: VoteDto['_id']) => {
   return useQuery({
     queryKey: ["vote", voteId],
     queryFn: () => readVoteById(voteId),
@@ -11,7 +11,7 @@ export const useReadVoteById = (voteId: string) => {
 };
 
 const readVoteById = async (
-  voteId: string
+  voteId: VoteDto['_id']
 ): Promise<VoteDto | undefined> => {
   try {
     const votes = await axios.post(

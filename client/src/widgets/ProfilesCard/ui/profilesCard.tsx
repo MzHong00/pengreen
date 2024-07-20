@@ -10,12 +10,7 @@ export function ProfilesCard({ onClick, picture }: Props) {
     <div className={styles.container}>
       <button className={styles.button} onClick={onClick}>
         {picture ? (
-            <img
-              src={picture}
-              alt=""
-              className={styles.picture}
-              referrerPolicy="no-referrer"
-            />
+          <img src={picture} alt="" className={styles.picture} />
         ) : (
           <span>로그인</span>
         )}

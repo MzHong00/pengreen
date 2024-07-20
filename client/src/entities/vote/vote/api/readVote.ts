@@ -1,14 +1,17 @@
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 import { type VoteDto } from "entities/vote/vote";
 
-export const useReadVote = (queryString: string) => {
+export const useReadVote = () => {
+  const [sortOptionParams] = useSearchParams();
+
   return useQuery({
     queryKey: ["vote"],
-    queryFn: () => readVote(queryString),
+    queryFn: () => readVote(sortOptionParams.toString()),
   });
-}
+};
 
 const readVote = async (
   queryString: string

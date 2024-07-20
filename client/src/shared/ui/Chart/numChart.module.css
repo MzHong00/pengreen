@@ -1,0 +1,9 @@
+.numChartItemBox {
+    width: fit-content;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: small;
+    text-overflow: ellipsis;
+}

@@ -1,34 +1,31 @@
-import { HTMLAttributes, type MouseEvent } from "react";
-
-import { type Category, categories } from "entities/vote/vote";
+import React, { forwardRef, HTMLAttributes, MouseEvent } from "react";
+import { Category, categories } from "entities/vote/vote";
 import { RoundButton } from "shared/ui/RoundButton";
-
 import styles from "./categoryBox.module.css";
 
 interface Props extends HTMLAttributes<HTMLUListElement> {
-  selectedCategories: Category[];
-  buttonHandler: (props: MouseEvent<HTMLButtonElement>) => void;
+  selectedCategories?: Category[];
+  buttonHandler?: (props: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const CategoryBox = ({
-  selectedCategories,
-  buttonHandler,
-  ...props
-}: Partial<Props>) => {
-  return (
-    <ul {...props}>
-      {categories.map((category) => (
-        <li key={category}>
-          <RoundButton
-            className={`hover:bg-gray-200 ${styles.categoryItem} ${
-              selectedCategories?.includes(category) && `bg-gray-200`
-            }`}
-            onClick={buttonHandler}
-          >
-            {category}
-          </RoundButton>
-        </li>
-      ))}
-    </ul>
-  );
-};
+export const CategoryBox = forwardRef<HTMLUListElement, Props>(
+  ({ selectedCategories, buttonHandler, ...props }, ref) => {
+    return (
+      <ul {...props} ref={ref}>
+        {categories.map((category) => (
+            <RoundButton
+            key={category}
+              className={`${styles.categoryButton} ${
+                selectedCategories?.includes(category) && styles.selectedButton
+              }`}
+              onClick={buttonHandler}
+            >
+              {category}
+            </RoundButton>
+        ))}
+      </ul>
+    );
+  }
+);
+
+CategoryBox.displayName = "CategoryBox";

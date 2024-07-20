@@ -1,6 +1,7 @@
 import { VoteFormDto } from "entities/voteForm";
-import styles from "./titleBar.module.css";
 import { User } from "entities/user";
+
+import styles from "./titleBar.module.css";
 
 interface Props extends Pick<VoteFormDto, "title">, Pick<User, "picture"> {}
 
@@ -11,11 +12,11 @@ export const TitleBar = ({
   return (
     <div className={styles.titleBar}>
       <img
-        className={styles.profilesPicture}
-        src={profilesPicture}
         alt="사진"
+        src={profilesPicture}
+        className={styles.profilesPicture}
       />
-      <h1 className={styles.titleText}>{title}</h1>
+      <h1 title={title} className={styles.titleText}>{title}</h1>
     </div>
   );
 };

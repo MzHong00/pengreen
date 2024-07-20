@@ -21,7 +21,6 @@
     display: flex;
     height: 1rem;
     gap: 0.5rem;
-    margin-bottom: 0.5rem;
 }
 
 .actionButton {
@@ -56,13 +55,19 @@
 
 /* ContentBox */
 .contentBox {
-    height: 100%;
+    height: 7.75rem;
+    display: flex;
+    flex-direction: column;;
+    flex-shrink: 0;
+    margin-bottom: 0.75rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    gap: 0.5rem;
 }
 
 .contentItem {
-    height: 10rem;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 0.75rem;
     overflow-y: auto;
     overflow-x: hidden;

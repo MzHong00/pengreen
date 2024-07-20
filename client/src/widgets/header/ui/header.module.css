@@ -1,4 +1,10 @@
-.layoutHeader{
+.logoTitle {
+    color: rgb(107 114 128);
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.layoutHeader {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -14,6 +20,11 @@
 .openFormButton {
     font-weight: bold;
     border-color: black;
+    border: 1px solid silver;
     padding-block: 0.25rem;
     padding-inline: 1rem;
+}
+
+.openFormButton:hover {
+    background-color: rgb(209 213 219);
 }

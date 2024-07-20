@@ -35,26 +35,24 @@ export const ChoiceContentBox = ({
   };
 
   return (
-    <section className={styles.contentBox}>
+    <div className={styles.contentBox}>
       {isOpenSubmit ? (
-        <div className={styles.contentItem}>
-          {choiceList.map((choice, idx) => (
-            <div key={idx} className="w-fit flex items-center gap-2">
+          choiceList.map((choice) => (
+            <div key={choice} className={styles.contentItem}>
               <input
                 type="checkbox"
-                value={choice}
                 name="choice"
+                value={choice}
                 className={styles.choiceInput}
                 checked={selectedChoices.includes(choice)}
                 onChange={() => limitCheckHandler(choice)}
               />
               <label className={styles.contentItemLabel}>{choice}</label>
             </div>
-          ))}
-        </div>
+          ))
       ) : (
         <NumChart data={choiceListIncludedCount} />
       )}
-    </section>
+    </div>
   );
 };

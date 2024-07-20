@@ -10,12 +10,12 @@ interface Props extends User, Pick<VoteFormDto, "choice" | "max_choice"> {
 }
 
 export const ChoiceSubmitBox = ({
+  disabled = false,
   isOpenSubmit = false,
   onClickSubmit,
   name: userName,
   choice: userPick,
   max_choice: maxChoice = 0,
-  disabled = true,
 }: Partial<Props>) => {
   return (
     <section className={styles.choiceSubmitBox}>
@@ -28,10 +28,10 @@ export const ChoiceSubmitBox = ({
           type="submit"
           value={`${isOpenSubmit ? "참여" : "제출"}`}
           onClick={onClickSubmit}
+          disabled={disabled}
           className={`${styles.actionButton} ${
             userPick ? "bg-green-300" : "bg-sky-300"
           } `}
-          disabled={disabled}
         />
       </span>
       <div className={styles.maxChoiceButton}>

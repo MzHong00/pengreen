@@ -1,61 +1,47 @@
-import { useState, type MouseEvent } from "react";
+import { Dispatch, useState, type MouseEvent } from "react";
 import { FiPlus } from "@react-icons/all-files/fi/FiPlus";
 
-import { Category } from "entities/vote/vote";
+import { type Category } from "entities/vote/vote";
 import { RoundButton } from "shared/ui/RoundButton";
 import { CategoryBox } from "shared/ui/CategoryBox/categoryBox";
+import { useModal } from "shared/hooks/useModal";
 
 import styles from "./selectCategory.module.css";
 
-export const SelectCategory = () => {
-  const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
-  const [isShowCategories, setIsShowCategories] = useState<boolean>(false);
+interface Props {
+  setInvalidationItems: Dispatch<React.SetStateAction<string[]>>;
+}
+
+export const SelectCategory = ({ setInvalidationItems }: Props) => {
+  const [selectedCategory, setSelectedCategory] = useState<Category>();
+  const { ref, isOpen, toggleModal } = useModal();
 
   const selectCategoryHandler = (event: MouseEvent<HTMLButtonElement>) => {
     const targetText = event.currentTarget.innerText as Category;
 
-    if (selectedCategories.includes(targetText)) {
-      setSelectedCategories(
-        selectedCategories.filter((item) => item !== targetText)
+    setSelectedCategory(targetText);
+    toggleModal(event);
+    if (setInvalidationItems)
+      setInvalidationItems((prev) =>
+        prev.filter((item) => item !== "카테고리")
       );
-    } else {
-      if (selectedCategories.length >= 3) selectedCategories.shift();
-      setSelectedCategories([...selectedCategories, targetText]);
-    }
   };
+
   return (
-    <div>
-      <ul className={styles.categoriesContainer}>
-        <li>
-          <RoundButton
-            className={`hover:bg-gray-200 ${styles.categoryItem}`}
-            onClick={() => setIsShowCategories((prev) => !prev)}
-          >
-            카테고리
-            <FiPlus />
-          </RoundButton>
-        </li>
-        {selectedCategories.map((category) => (
-          <li key={category}>
-            <RoundButton
-              className={`hover:bg-gray-200 ${styles.categoryItem}`}
-              onClick={() => setIsShowCategories((prev) => !prev)}
-            >
-              {category}
-            </RoundButton>
-            <input
-              type="hidden"
-              name="category"
-              value={category}
-              className={`${styles.categoryItem} cursor-default`}
-            />
-          </li>
-        ))}
-      </ul>
-      {isShowCategories && (
+    <div className={styles.categoryContainer}>
+      <RoundButton
+        className={`hover:bg-gray-200 ${styles.categoryItem}`}
+        onClick={toggleModal}
+      >
+        {selectedCategory || "카테고리"}
+        <FiPlus />
+      </RoundButton>
+      <input type="hidden" name="category" value={selectedCategory || ""} />
+      {isOpen && (
         <CategoryBox
-          className={`${styles.categoriesContainer} mt-3`}
-          selectedCategories={selectedCategories}
+          ref={ref}
+          className={`${styles.categoryContainer} ${styles.categoryBoxModal}`}
+          selectedCategories={selectedCategory && [selectedCategory]}
           buttonHandler={selectCategoryHandler}
         />
       )}

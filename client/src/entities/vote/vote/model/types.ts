@@ -1,13 +1,11 @@
 import { categories } from "..";
-import { User } from "entities/user";
 import { VoteFormDto } from "entities/voteForm";
 
 export interface VoteDto extends VoteFormDto {
   _id: string;
-  owner: User;
   like: Array<string>;
   participant: Participant[];
-  start_time: string;
+  start_time: Date;
 }
 
 export interface VoteActionDto {

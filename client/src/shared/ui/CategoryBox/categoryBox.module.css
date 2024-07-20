@@ -1,6 +1,16 @@
-.categoryItem {
+.categoryButton {
     text-wrap: nowrap;
     font-size: small;
-    padding-inline: 13px;
+    padding-inline: 12px;
     padding-block: 5px;
+    border: 1px solid silver;
+}
+
+.categoryButton:hover {
+    background-color: rgb(229 231 235);
+}
+
+.selectedButton {
+    background-color: rgb(229 231 235) !important;
+    border-width: 0px;
 }

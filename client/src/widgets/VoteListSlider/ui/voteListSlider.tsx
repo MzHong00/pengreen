@@ -1,58 +1,50 @@
-import { IoIosArrowBack } from "@react-icons/all-files/io/IoIosArrowBack";
-import { IoIosArrowForward } from "@react-icons/all-files/io/IoIosArrowForward";
+import { useRef } from "react";
 
-import {
-  sliceVotes,
-  useFetchVotes,
-  useVisibleVoteCount,
-} from "../model/explore";
-import { VoteCardList } from "widgets/VoteCardList";
-import { useSlider } from "shared/hooks/useSlider";
+import { useSplitVoteList } from "../model/useSplitVoteList";
+import { useReadVote } from "entities/vote/vote";
+import { usePagination, SliderPagination } from "features/vote/pagination";
+import { VoteCardList } from "widgets/voteCard";
 
-import styles from './voteListSlider.module.css'
+import styles from "./voteListSlider.module.css";
 
-const widthOfVote = 400;
+const VOTE_WIDTH = 400;
 
 export const VoteListSlider = () => {
-    const votes = useFetchVotes();
-    const visibleVoteCount = useVisibleVoteCount(widthOfVote);
-    const splitedVoteGroup = sliceVotes(votes, visibleVoteCount * 2);
-    const { pointer, ref, handler } = useSlider(
-      splitedVoteGroup?.length as number,
-      widthOfVote * visibleVoteCount
-    );
-    
-    return (
-        <div ref={ref.containerRef} className={styles.sliderCotainer}>
-        <nav className={styles.arrowButtonContainer}>
-          <div
-            ref={ref.leftArrowRef}
-            className={`${styles.sliderLeftBtn} ${styles.sliderBtn}`}
-            onClick={handler.leftArrowHandler}
-          >
-            <IoIosArrowBack color="white" size={30} />
-          </div>
-          <div
-            ref={ref.rightArrowRef}
-            className={`${styles.sliderRightBtn} ${styles.sliderBtn}`}
-            onClick={handler.rightArrowHandler}
-          >
-            <IoIosArrowForward color="white" size={30} />
-          </div>
-        </nav>
-        <div>
-          {splitedVoteGroup?.map((votes, idx) => (
-            <VoteCardList
-              key={idx}
-              votes={votes}
-              className={`${idx !== pointer && "opacity-20"} ${styles.voteList}`}
-              onClick={handler.translateElePosHandler}
-              onMouseEnter={handler.arrowActiveHandler}
-              onMouseLeave={handler.arrowInActiveHandler}
-            />
-          ))}
-          <div className={styles.whiteSpace} />
-        </div>
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  const { data: sortedVotes } = useReadVote();
+  const [pageNumber, setPageNumber] = usePagination();
+  const [splitedVoteList, votePerPage] = useSplitVoteList(
+    sortedVotes,
+    VOTE_WIDTH
+  );
+
+  const slideHandler = (e: React.MouseEvent<HTMLElement>) => {
+    const elePosX = e.currentTarget.offsetLeft;
+    setPageNumber(elePosX / ((VOTE_WIDTH * votePerPage) / 2));
+  };
+
+  if (sliderRef.current) {
+    const sliderWidth = VOTE_WIDTH * (votePerPage / 2);
+    sliderRef.current.scrollLeft = pageNumber * sliderWidth;
+  }
+
+  return (
+    <div ref={sliderRef} className={styles.sliderCotainer}>
+      <SliderPagination setPage={setPageNumber} />
+      <div>
+        {splitedVoteList?.map((voteList, idx) => (
+          <VoteCardList
+            key={idx}
+            voteList={voteList}
+            className={`${idx !== pageNumber && "opacity-20"} ${
+              styles.voteList
+            }`}
+            onClick={slideHandler}
+          />
+        ))}
+        <div className={styles.whiteSpace} />
       </div>
-    )
-}
+    </div>
+  );
+};

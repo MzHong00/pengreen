@@ -1,13 +1,11 @@
-import { SelectCategory } from "features/vote/selectCategory";
-import { SortByButton } from "features/vote/sortBy";
+import { VoteFilterBox } from "widgets/voteFilter";
 import { VoteListSlider } from "widgets/VoteListSlider";
 
 export default function Home() {
   return (
-    <section>
-      <SortByButton />
-      <SelectCategory />
+    <main>
+      <VoteFilterBox />
       <VoteListSlider />
-    </section>
+    </main>
   )
 }
