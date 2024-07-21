@@ -12,20 +12,20 @@ export const readChoiceCount = async (req: Request, res: Response) => {
 
   try {
     //각각의 투표 선택 항목의 수
-    let choiceCount: Array<Object> = [];
+    let choiceCount = [];
 
     for (const choice of choiceList) {
       const eachChoice: Participant[] = await mongodbFind(collection, {
         _id: ObjectId.createFromHexString(vote_id),
-        'participant.pick': choice,
+        'participant_member.pick': choice,
       },
       {
         projection: {
-          "participant.user_id": 1
+          "participant_member": 1
         }
       }
     );
-
+    
     choiceCount.push({
         content: choice,
         count: eachChoice.length,
@@ -34,32 +34,34 @@ export const readChoiceCount = async (req: Request, res: Response) => {
 
     res.send(choiceCount);
   } catch (error) {
+    console.log("readChoiceCount 에러");
     throw error;
   }
 };
 
-//내가 투표자인지
+//사용자가 투표자인지 확인
 export const readUserPick = async (req: Request, res: Response) => {
   const { user_id, vote_id } = req.body;
 
   try {
-    //내가 투표자인지
+    //사용자의 투표 가져오기
     const userPick = await mongodbFindOne(
       collection,
       {
         _id: ObjectId.createFromHexString(vote_id),
-        "participant.user_id": user_id,
+        "participant_member.user_id": user_id,
       },
       {
         projection: {
           _id: 0,
-          "participant.pick": 1,
+          "participant_member.pick": 1,
         },
       }
     );
 
-    res.send(userPick?.participant[0].pick);
+    res.send(userPick?.participant_member[0].pick);
   } catch (error) {
+    console.log("readUserPick 에러");
     throw error;
   }
 };

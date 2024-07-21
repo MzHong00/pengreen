@@ -1,13 +1,21 @@
-import { type Vote } from "../../models/vote";
+import { VoteForm, type Vote } from "../../models/vote";
 import { mongodbInsert } from "../../loaders/mongodb";
 
 export const createVote = async (req: Request) => {
-  const data = req.body;
+  const formData = req.body;
   const collection = "vote";
-  console.log(data);
-  
+
+  const vote: Vote = {
+    ...(formData as unknown as VoteForm),
+    like: 0,
+    like_member: [],
+    participant: 0,
+    participant_member: [],
+    start_time: new Date(),
+  };
+
   try {
-    mongodbInsert<Vote>(collection, data as any);
+    mongodbInsert<Vote>(collection, vote);
   } catch (error) {
     throw error;
   }

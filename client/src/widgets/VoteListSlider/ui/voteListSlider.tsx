@@ -31,7 +31,7 @@ export const VoteListSlider = () => {
 
   return (
     <div ref={sliderRef} className={styles.sliderCotainer}>
-      <SliderPagination setPage={setPageNumber} />
+      <SliderPagination pageNumber={pageNumber} setPageNumber={setPageNumber} />
       <div>
         {splitedVoteList?.map((voteList, idx) => (
           <VoteCardList

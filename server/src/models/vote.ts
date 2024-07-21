@@ -1,23 +1,25 @@
-import { User } from "./user";
 import { Participant } from "./participant";
 
 import { type ObjectId } from "mongodb";
 
-export interface Vote {
+export interface Vote extends VoteForm {
   _id?: ObjectId;
-  owner: User;
+  like: number;
+  like_member: Array<string>;
+  participant: number;
+  participant_member: Participant[];
+  start_time: Date;
+}
+
+export interface VoteForm {
   title: string;
-  like: Array<string>;
-  participant: Participant[];
-  choice: Array<string>;
-  
-  start_time: string;
+  choice: string[];
   max_choice: number;
-  category: Category[];
+  category: Category;
   description: string;
 }
 
-export type SortType = "like" | "participant" | 'latest';
+export type SortType = "like" | "participant" | "latest";
 export type Category =
   | "음식"
   | "영화"

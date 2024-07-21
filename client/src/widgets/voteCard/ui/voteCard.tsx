@@ -59,11 +59,11 @@ export function VoteCard({ vote }: { vote: VoteDto }) {
   });
   const isClickLike = useMemo(() => {
     if (user?._id) {
-      return vote.like.includes(user._id);
+      return vote.like_member.includes(user._id);
     }
 
     return false
-  }, [user?._id, vote.like]);
+  }, [user?._id, vote.like_member]);
 
   const mutatePickHandler = useCallback(
     (event: React.MouseEvent<HTMLInputElement>) => {
@@ -116,11 +116,11 @@ export function VoteCard({ vote }: { vote: VoteDto }) {
 
       <section className={styles.otherInfoBox}>
         <UpdateLike
-          like={vote.like.length}
+          like={vote.like}
           isUserLike={isClickLike}
           onClick={mutateLikeHandler}
         />
-        <Participant participant={searchedVote?.participant.length} />
+        <Participant participant={searchedVote?.participant} />
         <Button className={styles.openDetailButton}>자세히</Button>
       </section>
       {loginForm}

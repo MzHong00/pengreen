@@ -1,31 +1,35 @@
 import { IoIosArrowBack } from "@react-icons/all-files/io/IoIosArrowBack";
 import { IoIosArrowForward } from "@react-icons/all-files/io/IoIosArrowForward";
 
-import styles from "./votePagination.module.css";
+import styles from "./sliderPagination.module.css";
 
 interface Props {
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  pageNumber: number;
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const ARROW_SIZE = 30;
 
-export const SliderPagination = ({ setPage }: Props) => {
+export const SliderPagination = ({ pageNumber, setPageNumber }: Props) => {
   const leftArrowHandler = () => {
-    setPage((prev) => prev - 1);
+    if (pageNumber < 1) return;
+    setPageNumber((prev) => prev - 1);
   };
 
   const rightArrowHandler = () => {
-    setPage((prev) => prev + 1);
+    setPageNumber((prev) => prev + 1);
   };
 
   return (
     <nav className={styles.pageNavBox}>
-      <div
-        className={`${styles.sliderBtn} ${styles.sliderLeftBtn} `}
-        onClick={leftArrowHandler}
-      >
-        <IoIosArrowBack color="white" size={ARROW_SIZE} />
-      </div>
+      {pageNumber > 0 && (
+        <div
+          className={`${styles.sliderBtn} ${styles.sliderLeftBtn} `}
+          onClick={leftArrowHandler}
+        >
+          <IoIosArrowBack color="white" size={ARROW_SIZE} />
+        </div>
+      )}
       <div
         className={`${styles.sliderBtn} ${styles.sliderRightBtn} `}
         onClick={rightArrowHandler}

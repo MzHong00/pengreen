@@ -13,27 +13,38 @@ export const updateLike = async (req: Request, res: Response) => {
     const voteId = ObjectId.createFromHexString(vote_id);
 
     // 사용자가 좋아요를 누른 사람인지 확인
-    const isLiker = await mongodbFind(collection, {
-      _id: voteId,
-      like: {
-        $in: [user_id],
+    const isLiker = await mongodbFind(
+      collection,
+      {
+        _id: voteId,
+        like_member: {
+          $in: [user_id],
+        },
       },
-    });
+      {
+        projection: {
+          like_member: 1,
+        },
+      }
+    );
 
-    isLiker.length !== 0
-      ? await mongodbUpdate(
-          collection,
-          { _id: voteId },
-          { $pull: { like: user_id } }
-        )
-      : await mongodbUpdate(
-          collection,
-          { _id: voteId },
-          { $push: { like: user_id } }
-        );
+    if (isLiker.length === 0) {
+      await mongodbUpdate(
+        collection,
+        { _id: voteId },
+        { $push: { like_member: user_id }, $inc: { like: 1 } }
+      );
+    } else {
+      await mongodbUpdate(
+        collection,
+        { _id: voteId },
+        { $pull: { like_member: user_id }, $inc: { like: -1 } }
+      );
+    }
 
     res.send();
   } catch (error) {
+    console.log("updateLike 에러");
     throw error;
   }
 };
