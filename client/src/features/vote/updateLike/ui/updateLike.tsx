@@ -1,6 +1,10 @@
 import { IoMdHeart } from "@react-icons/all-files/io/IoMdHeart";
 import { IoMdHeartEmpty } from "@react-icons/all-files/io/IoMdHeartEmpty";
 
+import styles from './updateList.module.css';
+
+const HEART_SIZE = 20;
+
 interface Props extends React.HTMLAttributes<SVGElement> {
   isUserLike?: boolean;
   like?: number;
@@ -12,17 +16,19 @@ export function UpdateLike({
   ...props
 }: Partial<Props>) {
   return (
-    <div className="flex items-center">
+    <div className={styles.contentBox}>
       {isUserLike ? (
         <IoMdHeart
           className="cursor-pointer"
           color="red"
+          size={HEART_SIZE}
           {...props}
         />
       ) : (
         <IoMdHeartEmpty
           className="cursor-pointer"
           {...props}
+          size={HEART_SIZE}
         />
       )}
       <span>{like}</span>

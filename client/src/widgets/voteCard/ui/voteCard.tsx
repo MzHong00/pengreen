@@ -5,10 +5,10 @@ import {
   useReadUserPick,
   useUpdateUserPick,
 } from "entities/vote/choice";
-import { useReadVoteById, type VoteDto } from "entities/vote/vote";
+import { type VoteDto } from "entities/vote/vote";
 import { type VoteFormDto } from "entities/voteForm";
 import { useUserFetch } from "entities/user";
-import { useUpdateLikeQuery } from "entities/vote/likes";
+import { useUpdateLike } from "entities/vote/likes";
 import { UpdateLike } from "features/vote/updateLike";
 import { Participant } from "features/vote/readParticipants";
 import { ChoiceSubmitBox } from "features/vote/submitPick";
@@ -27,28 +27,20 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 export const VoteCardList = ({ voteList = [], className, ...props }: Props) => {
   return (
     <div {...props} className={`${className}`}>
-      {voteList.map((vote: VoteDto, idx: number) => (
-        <VoteCard key={idx} vote={vote} />
-      ))}
+      {voteList.map(
+        (vote: VoteDto, idx: number) =>
+          vote && <VoteCard key={idx} vote={vote} />
+      )}
     </div>
   );
 };
 
-export function VoteCard({ vote }: { vote: VoteDto }) {
+export const VoteCard = ({ vote }: { vote: VoteDto }) => {
   const [isOpenSubmit, setIsOpenSubmit] = useState<boolean>(false);
 
   const [loginForm, openLoginForm] = useDialog(<LoginForm />);
-  const { data: user } = useUserFetch();
-  const { data: searchedVote } = useReadVoteById(vote._id);
 
-  const { mutate: mutateLike } = useUpdateLikeQuery({
-    user_id: user?._id,
-    vote_id: vote._id,
-  });
-  const { mutate: mutatePick } = useUpdateUserPick({
-    user_id: user?._id,
-    vote_id: vote._id,
-  });
+  const { data: user } = useUserFetch();
   const { data: userPick } = useReadUserPick({
     user_id: user?._id,
     vote_id: vote._id,
@@ -57,12 +49,21 @@ export function VoteCard({ vote }: { vote: VoteDto }) {
     vote_id: vote._id,
     choiceList: vote.choice,
   });
+  const { mutate: mutateLike } = useUpdateLike({
+    user_id: user?._id,
+    vote_id: vote._id,
+  });
+  const { mutate: mutatePick } = useUpdateUserPick({
+    user_id: user?._id,
+    vote_id: vote._id,
+  });
+
   const isClickLike = useMemo(() => {
     if (user?._id) {
       return vote.like_member.includes(user._id);
     }
 
-    return false
+    return false;
   }, [user?._id, vote.like_member]);
 
   const mutatePickHandler = useCallback(
@@ -97,7 +98,7 @@ export function VoteCard({ vote }: { vote: VoteDto }) {
   }, [user, openLoginForm, mutateLike]);
 
   return (
-    <form className={styles.cardContainer}>
+    <form className={`${styles.cardContainer}`}>
       <TitleBar picture={vote.owner.picture} title={vote.title} />
 
       <ChoiceSubmitBox
@@ -120,10 +121,10 @@ export function VoteCard({ vote }: { vote: VoteDto }) {
           isUserLike={isClickLike}
           onClick={mutateLikeHandler}
         />
-        <Participant participant={searchedVote?.participant} />
+        <Participant participant={vote.participant} />
         <Button className={styles.openDetailButton}>자세히</Button>
       </section>
       {loginForm}
     </form>
   );
-}
+};

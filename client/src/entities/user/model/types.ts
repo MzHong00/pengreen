@@ -3,6 +3,6 @@ export interface User {
   name: string;
   email: string;
   picture?: string;
-  dateOfBirth?: string;
+  dateOfBirth?: Date;
   sex?: "female" | "male" | "남성" | "여성";
 }

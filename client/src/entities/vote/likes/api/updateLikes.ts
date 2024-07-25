@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { VoteActionDto } from "entities/vote/vote";
 
-export const useUpdateLikeQuery = ({
+export const useUpdateLike = ({
   user_id,
   vote_id,
 }: VoteActionDto) => {
@@ -16,7 +16,7 @@ export const useUpdateLikeQuery = ({
         vote_id: vote_id,
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["vote"] });
+      queryClient.invalidateQueries({ queryKey: ["voteList"] });
     },
   });
 };

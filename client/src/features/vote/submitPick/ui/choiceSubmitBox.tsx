@@ -15,7 +15,7 @@ export const ChoiceSubmitBox = ({
   onClickSubmit,
   name: userName,
   choice: userPick,
-  max_choice: maxChoice = 0,
+  max_choice = 0,
 }: Partial<Props>) => {
   return (
     <section className={styles.choiceSubmitBox}>
@@ -35,7 +35,7 @@ export const ChoiceSubmitBox = ({
         />
       </span>
       <div className={styles.maxChoiceButton}>
-        <span>{`선택: ${maxChoice}`}</span>
+        <span>{`선택: ${max_choice}`}</span>
       </div>
     </section>
   );

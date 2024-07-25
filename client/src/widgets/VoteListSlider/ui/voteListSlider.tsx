@@ -1,49 +1,53 @@
-import { useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
-import { useSplitVoteList } from "../model/useSplitVoteList";
 import { useReadVote } from "entities/vote/vote";
-import { usePagination, SliderPagination } from "features/vote/pagination";
+import { useCalcVotePerPage } from "../model/useCalcVotePerPage";
+import { splitVoteList } from "../model/splitVoteList";
+import { usePagination, PaginationSlider } from "features/vote/pagination";
 import { VoteCardList } from "widgets/voteCard";
 
 import styles from "./voteListSlider.module.css";
 
-const VOTE_WIDTH = 400;
+const VOTE_WIDTH = 550;
 
 export const VoteListSlider = () => {
-  const sliderRef = useRef<HTMLDivElement>(null);
-
-  const { data: sortedVotes } = useReadVote();
   const [pageNumber, setPageNumber] = usePagination();
-  const [splitedVoteList, votePerPage] = useSplitVoteList(
-    sortedVotes,
-    VOTE_WIDTH
-  );
+  const votePerPage = useCalcVotePerPage(VOTE_WIDTH);
+  const { data: voteList, refetch } = useReadVote(votePerPage);
 
-  const slideHandler = (e: React.MouseEvent<HTMLElement>) => {
-    const elePosX = e.currentTarget.offsetLeft;
-    setPageNumber(elePosX / ((VOTE_WIDTH * votePerPage) / 2));
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const splitedVoteList = useMemo(
+    () => splitVoteList(voteList, votePerPage),
+    [voteList, votePerPage]
+  );
+  
+  const leftArrowHandler = () => {
+    setPageNumber((prev) => prev - 1);
   };
 
-  if (sliderRef.current) {
-    const sliderWidth = VOTE_WIDTH * (votePerPage / 2);
-    sliderRef.current.scrollLeft = pageNumber * sliderWidth;
-  }
+  const rightArrowHandler = () => {
+    setPageNumber((prev) => prev + 1);
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [votePerPage, refetch]);
 
   return (
-    <div ref={sliderRef} className={styles.sliderCotainer}>
-      <SliderPagination pageNumber={pageNumber} setPageNumber={setPageNumber} />
-      <div>
+    <div>
+      <PaginationSlider
+        pageNumber={pageNumber}
+        leftSlideHandler={leftArrowHandler}
+        rightSlideHandler={rightArrowHandler}
+      />
+      <div ref={sliderRef} className={styles.sliderContent}>
         {splitedVoteList?.map((voteList, idx) => (
           <VoteCardList
             key={idx}
             voteList={voteList}
-            className={`${idx !== pageNumber && "opacity-20"} ${
-              styles.voteList
-            }`}
-            onClick={slideHandler}
+            className={`${styles.voteList} ${idx !== 1 && 'opacity-20'}`}
           />
         ))}
-        <div className={styles.whiteSpace} />
       </div>
     </div>
   );

@@ -1,1 +1,1 @@
-export { useUpdateLikeQuery } from "./api/updateLikes";
+export { useUpdateLike } from "./api/updateLikes";

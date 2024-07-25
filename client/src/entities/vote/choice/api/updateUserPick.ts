@@ -10,6 +10,7 @@ export const useUpdateUserPick = ({
   vote_id,
 }: VoteActionDto) => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (selected: VoteFormDto['choice']) =>
       updateUserPick({
@@ -20,7 +21,7 @@ export const useUpdateUserPick = ({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["choice", vote_id] });
       queryClient.invalidateQueries({ queryKey: ["isParticipant", vote_id] });
-      queryClient.invalidateQueries({ queryKey: ["vote", vote_id] });
+      queryClient.invalidateQueries({ queryKey: ["voteList"] });
     },
   });
 };

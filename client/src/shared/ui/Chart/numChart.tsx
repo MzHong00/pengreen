@@ -10,9 +10,9 @@ export const NumChart = ({ data = [], ...props }: Props) => {
   return (
     <>
       {data.map((value, idx) => (
-        <div key={idx} className={styles.numChartItemBox}>
-          <b>{value.count}</b>
-          <p title={value.content} className="truncate w-[21rem]">{value.content}</p>
+        <div key={idx} className={styles.itemBox}>
+          <b className={styles.itemCount}>{value.count}</b>
+          <p title={value.content} className={styles.itemText}>{value.content}</p>
         </div>
       ))}
     </>

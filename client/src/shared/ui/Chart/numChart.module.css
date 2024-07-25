@@ -1,9 +1,20 @@
-.numChartItemBox {
+.itemBox {
     width: fit-content;
     position: relative;
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    font-size: small;
     text-overflow: ellipsis;
+}
+
+.itemCount {
+    border-right: 2px solid #cef0ff;
+    padding-right: 0.75rem;
+}
+
+.itemText {
+    width: 21rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

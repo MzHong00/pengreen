@@ -1,0 +1,16 @@
+.home {
+    padding-inline: 10rem;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 550px) {
+    .home {
+        padding-inline: 0;
+    }
+  }
+
+  @media screen and (min-width: 550px) and (max-width: 700px) {
+    .home {
+        padding-inline: 5rem;
+    }
+}

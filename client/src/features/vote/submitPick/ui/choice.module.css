@@ -55,7 +55,7 @@
 
 /* ContentBox */
 .contentBox {
-    height: 7.75rem;
+    height: 11rem;
     display: flex;
     flex-direction: column;;
     flex-shrink: 0;

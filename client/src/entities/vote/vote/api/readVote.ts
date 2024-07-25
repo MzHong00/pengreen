@@ -4,22 +4,24 @@ import { useQuery } from "@tanstack/react-query";
 
 import { type VoteDto } from "entities/vote/vote";
 
-export const useReadVote = () => {
+// 그룹, 정렬, 페이지네이션 VoteList를 서버 요청
+export const useReadVote = (votePerPage: number) => {
   const [sortOptionParams] = useSearchParams();
+  const pageParams = sortOptionParams.get("page");
 
   return useQuery({
-    queryKey: ["vote"],
-    queryFn: () => readVote(sortOptionParams.toString()),
+    queryKey: ["voteList", pageParams],
+    queryFn: () => readVote(sortOptionParams.toString(), votePerPage),
   });
 };
 
 const readVote = async (
-  queryString: string
+  queryString: string,
+  votePerPage?: number
 ): Promise<VoteDto[] | undefined> => {
   try {
-    const votes = await axios.get(
-      `${process.env.REACT_APP_API_ROOT}/api/vote/read?${queryString}`
-    );
+    const postUrl = `${process.env.REACT_APP_API_ROOT}/api/vote/read?${queryString}`;
+    const votes = await axios.post(postUrl, { votePerPage: votePerPage });
 
     return votes.data;
   } catch (error) {

@@ -3,7 +3,7 @@ import { VoteFormDto } from "entities/voteForm";
 
 export interface VoteDto extends VoteFormDto {
   _id: string;
-  like: number
+  like: number;
   like_member: Array<string>;
   participant: number;
   participant_member: Participant[];
@@ -21,3 +21,9 @@ export interface Participant {
 }
 
 export type Category = (typeof categories)[number];
+
+export interface Pagination {
+  prevID?: string;
+  prevCount?: number;
+  votePerPage: number;
+}

@@ -1,10 +1,11 @@
-.container {
+.contentBox {
     display: flex;
     align-items: center;
     gap: 0.75rem;
 }
 
-.innerContainer {
+.content {
     display: flex;
     align-items: center;
+    gap: 0.25rem
 }
