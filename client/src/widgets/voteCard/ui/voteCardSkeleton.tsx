@@ -14,9 +14,13 @@ export const VoteCardSkeleton = ({
   max_choice,
 }: Partial<VoteDto>) => {
   return (
-    <div className={`${styles.cardContainer} h-[16.5rem]`}>
+    <div className={`${styles.cardContainer}`}>
       <section className={styles.topSection}>
-        <TitleBar picture={owner?.picture} title={title} />
+        <TitleBar
+          picture={owner?.picture}
+          title={title}
+          start_time={new Date()}
+        />
       </section>
       <ChoiceSubmitBox name={owner?.name} max_choice={max_choice} disabled />
       <ChoiceContentBox choice={choice} max_choice={max_choice} isOpenSubmit />

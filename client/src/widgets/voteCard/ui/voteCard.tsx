@@ -99,7 +99,11 @@ export const VoteCard = ({ vote }: { vote: VoteDto }) => {
 
   return (
     <form className={`${styles.cardContainer}`}>
-      <TitleBar picture={vote.owner.picture} title={vote.title} />
+      <TitleBar
+        picture={vote.owner.picture}
+        title={vote.title}
+        start_time={vote.start_time}
+      />
 
       <ChoiceSubmitBox
         isOpenSubmit={isOpenSubmit}

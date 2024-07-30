@@ -11,4 +11,5 @@ export {
   type Participant,
   type Category,
   type Pagination,
+  type VoteRequestBody
 } from "./model/types";

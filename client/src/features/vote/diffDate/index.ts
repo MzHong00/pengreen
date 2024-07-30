@@ -1,0 +1,1 @@
+export { DiffDate } from "./ui/diffDate";

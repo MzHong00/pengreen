@@ -1,36 +1,30 @@
 import { Request, Response } from "express";
 import { ObjectId } from "mongodb";
 
-import { mongodbFind } from "../../loaders/mongodb";
-import { mongodbAggregate } from "../../data-access/mongodb/aggregate";
-import { type SortType } from "../../models/vote";
+import { mongodbAggregate, mongodbFind } from "../../loaders/mongodb";
+import { Vote } from "../../models/vote";
 
 const collection = "vote";
 
 export const readVote = async (req: Request, res: Response) => {
-  const { page, sort, category } = req.query;
+  const page = parseInt(req.body.page as string) - 1;
+  const votePerPage = req.body.votePerPage === 0 ? 1 : req.body.votePerPage;
+  const category = req.query.category;
+  const sort = req.query.sort;
+
+  if (page < 0) {
+    res.status(200).send([]);
+    return;
+  }
 
   try {
-    const sortType: SortType[] = ["like", "participant"];
-    const verifyType = sortType.includes(sort as SortType);
+    const votes: Vote[] = await mongodbAggregate(collection, [
+      { $match: category ? { category: category } : {} },
+      { $sort: sort ? { [sort as string]: -1 } : { _id: -1 } },
+      { $skip: page * votePerPage },
+      { $limit: votePerPage },
+    ]);
 
-    //req.query에 like, participant를 제외하 나머지 값을 넣으면 pipeline에서 오류가 나기 때문에 검증 및 기본값 설정
-    const verifiedSort = verifyType ? sort : "participant";
-
-    // const pipeline = [
-    //   {
-    //     $addFields: {
-    //       arraySize: { $size: `$${verifiedSort}` },
-    //     },
-    //   },
-    //   {
-    //     $sort: { arraySize: -1 }, // arraySize 필드를 기준으로 내림차순 정렬
-    //   },
-    // ];
-    // const votes = await mongodbAggregate(collection, pipeline);
-
-    const votes = await mongodbFind(collection, {});
-    
     res.send(votes);
   } catch (error) {
     console.log("readVote 에러");

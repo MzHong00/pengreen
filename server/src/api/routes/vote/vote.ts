@@ -13,7 +13,7 @@ import { updateChoice } from "../../../services/vote/updateChoice";
 const router = Router();
 
 router.post("/create", createVote);
-router.get("/read", readVote);
+router.post("/read", readVote);
 router.post("/read-id", readVoteById);
 router.post("/read-owner", readVoteByOwnerId);
 

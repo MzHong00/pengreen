@@ -41,7 +41,7 @@ export const SelectCategory = ({ setInvalidationItems }: Props) => {
         <CategoryBox
           ref={ref}
           className={`${styles.categoryContainer} ${styles.categoryBoxModal}`}
-          selectedCategories={selectedCategory && [selectedCategory]}
+          selectedCategory={selectedCategory && selectedCategory}
           buttonHandler={selectCategoryHandler}
         />
       )}

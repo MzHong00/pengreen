@@ -1,7 +1,7 @@
 import { IoMdHeart } from "@react-icons/all-files/io/IoMdHeart";
 import { IoMdHeartEmpty } from "@react-icons/all-files/io/IoMdHeartEmpty";
 
-import styles from './updateList.module.css';
+import { IconBox } from "shared/ui/IconBox";
 
 const HEART_SIZE = 20;
 
@@ -16,7 +16,7 @@ export function UpdateLike({
   ...props
 }: Partial<Props>) {
   return (
-    <div className={styles.contentBox}>
+    <IconBox count={like}>
       {isUserLike ? (
         <IoMdHeart
           className="cursor-pointer"
@@ -31,7 +31,6 @@ export function UpdateLike({
           size={HEART_SIZE}
         />
       )}
-      <span>{like}</span>
-    </div>
+    </IconBox>
   );
 }

@@ -27,3 +27,8 @@ export interface Pagination {
   prevCount?: number;
   votePerPage: number;
 }
+
+export interface VoteRequestBody {
+  votePerPage: number;
+  page: number;
+}

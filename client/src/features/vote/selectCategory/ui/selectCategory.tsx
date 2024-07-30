@@ -1,25 +1,29 @@
-import { useRef, type MouseEvent } from "react";
-import { useSearchParams } from "react-router-dom";
+import { type MouseEventHandler, useRef } from "react";
 import { IoIosArrowBack } from "@react-icons/all-files/io/IoIosArrowBack";
 import { IoIosArrowForward } from "@react-icons/all-files/io/IoIosArrowForward";
 
 import { type Category } from "entities/vote/vote";
 import { CategoryBox } from "shared/ui/CategoryBox/categoryBox";
 import { Button } from "shared/ui/Button";
+import { RoundButton } from "shared/ui/RoundButton";
 
 import styles from "./selectCategory.module.css";
 
 const ARROW_SIZE = 20;
 const MOVE_DISTANCE = 250;
 
-export const SelectCategory = () => {
-  const boxRef = useRef<HTMLUListElement>(null);
-  let [searchParams, setSearchParams] = useSearchParams();
+interface Props {
+  selectedCategory: Category;
+  selectHandler: MouseEventHandler;
+  removeSelectHandler: MouseEventHandler;
+}
 
-  const setCateParamstHandler = (event: MouseEvent<HTMLElement>) => {
-    searchParams.set("category", event.currentTarget.innerHTML);
-    setSearchParams(searchParams);
-  };
+export const SelectCategory = ({
+  selectedCategory,
+  selectHandler,
+  removeSelectHandler,
+}: Props) => {
+  const boxRef = useRef<HTMLUListElement>(null);
 
   const leftArrowHandler = () => {
     boxRef.current?.scrollBy({ left: -MOVE_DISTANCE });
@@ -34,12 +38,22 @@ export const SelectCategory = () => {
       <Button className={styles.arrowButton} onClick={leftArrowHandler}>
         <IoIosArrowBack size={ARROW_SIZE} />
       </Button>
+
       <CategoryBox
         ref={boxRef}
         className={styles.category}
-        selectedCategories={searchParams.getAll("category") as Category[]}
-        buttonHandler={setCateParamstHandler}
-      />
+        selectedCategory={selectedCategory}
+        buttonHandler={selectHandler}
+      >
+        <RoundButton
+          className={`${styles.categoryButton} ${
+            !selectedCategory && styles.selectedButton
+          }`}
+          onClick={removeSelectHandler}
+        >
+          전체
+        </RoundButton>
+      </CategoryBox>
       <Button className={styles.arrowButton} onClick={rightArrowHandler}>
         <IoIosArrowForward size={ARROW_SIZE} />
       </Button>

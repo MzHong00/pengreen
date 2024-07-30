@@ -11,7 +11,7 @@
     border: 1px solid #f1f5f9;
     overflow: hidden;
     gap: 0.5rem;
-    background-color: rgba(224, 242, 254, 0.5);
+    background-color: var(--vote-card);
     transition: height 0.3s;
 }
 
@@ -20,19 +20,22 @@
 }
 
 .otherInfoBox {
+    padding-left: 0.5rem;
     display: flex;
     justify-content: space-between;
+    background: white;
+    border-radius: 1rem;
 }
 
 .openDetailButton {
-    padding: 0.25rem;
+    padding: 0.4rem;
     padding-inline: 0.5rem;
-    border-radius: 10px;
+    border-left: 5px solid var(--vote-card);
     font-size: small;
-    background-color: white !important;
     font-weight: normal;
+    border-radius: 0px 1rem 1rem 0px;
 }
 
 .openDetailButton:hover {
-    box-shadow: inset 0px 0px 3px rgb(185, 218, 231);
+    box-shadow: inset 30px 0px 30px rgba(224, 242, 254, 0.7);
 }

@@ -12,6 +12,12 @@
     padding-block: 1.5rem;
 }
 
+@media screen and (max-width: 500px) {
+    .layoutHeader {
+        padding-inline: 1rem;
+    }
+}
+
 .headerRightSection {
     display: flex;
     gap: 1.5rem;

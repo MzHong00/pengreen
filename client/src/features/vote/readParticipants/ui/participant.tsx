@@ -1,6 +1,6 @@
 import { FaUser } from "@react-icons/all-files/fa/FaUser";
 
-import styles from "./participant.module.css";
+import { IconBox } from "shared/ui/IconBox";
 
 const PARTICIPANT_ICON_SIZE = 16;
 
@@ -10,11 +10,8 @@ interface Props {
 
 export const Participant = ({ participant = 0 }: Props) => {
   return (
-    <div className={styles.contentBox}>
-      <div className={styles.content}>
+    <IconBox count={participant}>
         <FaUser size={PARTICIPANT_ICON_SIZE} />
-        <span>{participant}</span>
-      </div>
-    </div>
+    </IconBox>
   );
 };

@@ -1,7 +1,7 @@
 import { type Request, Response } from "express";
 import { ObjectId } from "mongodb";
 
-import { mongodbUpdate } from "../../loaders/mongodb";
+import { mongodbFind, mongodbUpdate } from "../../loaders/mongodb";
 
 //투표를 했을 떄
 export const updateChoice = async (req: Request, res: Response) => {
@@ -9,30 +9,41 @@ export const updateChoice = async (req: Request, res: Response) => {
   const { user_id, vote_id, choiceList } = req.body;
 
   try {
-    //기존의 선택을 제거
-    await mongodbUpdate(
+    const isParticipant = await mongodbFind(
       collection,
-      { _id: ObjectId.createFromHexString(vote_id) },
       {
-        $pull: { participant_member: { user_id: user_id } },
-        $inc: { participant: -1 },
+        _id: ObjectId.createFromHexString(vote_id),
+        "participant_member.user_id": user_id
+      },
+      {
+        projection: { participant: 1 },
       }
     );
 
-    //새로운 선택을 생성
-    await mongodbUpdate(
-      collection,
-      { _id: ObjectId.createFromHexString(vote_id) },
-      {
-        $push: {
-          participant_member: {
-            user_id: user_id,
-            pick: choiceList,
+    if (isParticipant.length === 0) {
+      await mongodbUpdate(
+        collection,
+        { _id: ObjectId.createFromHexString(vote_id) },
+        {
+          $push: {
+            participant_member: {
+              user_id: user_id,
+              pick: choiceList,
+            },
           },
+          $inc: { participant: 1 },
+        }
+      );
+    } else {
+      await mongodbUpdate(
+        collection,
+        {
+          _id: ObjectId.createFromHexString(vote_id),
+          "participant_member.user_id": user_id,
         },
-        $inc: { participant: 1 },
-      }
-    );
+        { $set: { "participant_member.$.pick": choiceList } }
+      );
+    }
 
     res.send();
   } catch (error) {

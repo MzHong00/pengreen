@@ -16,14 +16,73 @@
     z-index: 10;
     border-radius: 0.25rem;
     cursor: pointer;
-    /* pointer-events: none; */
     border: 1px solid white;
 }
 
+@media screen and (max-width: 670px) {
+    .sliderLeftBtn {
+        left: 1rem !important;
+    }
+
+    .sliderRightBtn {
+        right: 1rem !important;
+    }
+}
+
+.sliderBtn:hover .movePageContainer {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .sliderLeftBtn {
-    left: 2.5rem;
+    left: -3rem;
 }
 
 .sliderRightBtn {
-    right: 2.5rem;
+    right: -3rem;
+}
+
+.movePageContainer {
+    width: 1.5rem;
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 100%;
+    background-color: var(--select-page-button);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: 0.3s;
+    opacity: 0;
+    transform: translateY(150%);
+    visibility: visible;
+}
+
+.movePageInput {
+    width: 100%;
+    height: 1.5rem;
+    outline: none;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    background-color: inherit;
+    filter: brightness(1.05);
+}
+
+.movePageInput::placeholder {
+    color: white; /* Placeholder 색상 설정 */
+    opacity: 1; /* 색상 불투명도 조절, 기본값은 0.5 */
+}
+
+.movePageButton {
+    font-size: 0.6rem;
+    white-space: nowrap;
+    color: white;
+}
+
+.movePageButton:hover {
+    color: black;
 }

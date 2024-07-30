@@ -5,8 +5,8 @@ import { mongodbFind, mongodbUpdate } from "../../loaders/mongodb";
 
 //좋아요 버튼 Count DB에 반영
 export const updateLike = async (req: Request, res: Response) => {
-  const { user_id, vote_id } = req.body;
   const collection = "vote";
+  const { user_id, vote_id } = req.body;
 
   try {
     //_id는 ObjectId 타입이기 때문에 vote_id를 ObjectId로 바꾸고 비교해야 함
@@ -17,15 +17,9 @@ export const updateLike = async (req: Request, res: Response) => {
       collection,
       {
         _id: voteId,
-        like_member: {
-          $in: [user_id],
-        },
+        like_member: { $in: [user_id] },
       },
-      {
-        projection: {
-          like_member: 1,
-        },
-      }
+      { projection: { like_member: 1 } }
     );
 
     if (isLiker.length === 0) {

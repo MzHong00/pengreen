@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --base-color: #35cdff;
+  --vote-card: rgba(224, 242, 254, 0.5);
+  --select-page-button: #96f5b8;
+}
+
+ /* Chrome, Safari, Edge, Opera */
+ input[type=number]::-webkit-outer-spin-button,
+ input[type=number]::-webkit-inner-spin-button {
+     -webkit-appearance: none;
+     margin: 0;
+ }
+
+ /* Firefox */
+ input[type=number] {
+     -moz-appearance: textfield;
+ }
+ 
 /* width */
 div::-webkit-scrollbar {
   width: 2px;

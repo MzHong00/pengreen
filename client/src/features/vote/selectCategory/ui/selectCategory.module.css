@@ -1,5 +1,7 @@
 .categoryCotainer {
+    width: 100%;
     display: flex;
+    justify-content: center;
     gap: 0.5rem;
 }
 
@@ -12,4 +14,17 @@
 
 .arrowButton {
     border: none;
+}
+
+.categoryButton {
+    text-wrap: nowrap;
+    font-size: small;
+    padding-inline: 12px;
+    padding-block: 5px;
+    border: 1px solid silver;
+}
+
+.selectedButton {
+    background-color: rgb(229 231 235) !important;
+    border-width: 0px;
 }

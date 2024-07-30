@@ -1,12 +1,11 @@
 interface SortTypes {
     sortType: "Most liked" | "Most Participants" | 'Latest'
-    queryString: string
+    queryString?: string
 }
 
 export const sortTypes: SortTypes[] = [
     {
         sortType: 'Latest',
-        queryString: 'latest'
     },
     {
         sortType: 'Most liked',
