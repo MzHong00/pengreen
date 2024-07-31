@@ -19,6 +19,10 @@
     border: 1px solid white;
 }
 
+.arrowIcon {
+    height: 100%;
+}
+
 @media screen and (max-width: 670px) {
     .sliderLeftBtn {
         left: 1rem !important;
@@ -54,11 +58,12 @@
     bottom: 100%;
     background-color: var(--select-page-button);
     border-radius: 5px;
-    overflow: hidden;
     transition: 0.3s;
-    opacity: 0;
     transform: translateY(150%);
     visibility: visible;
+    overflow: hidden;
+    opacity: 0;
+    z-index: 0;
 }
 
 .movePageInput {
@@ -73,8 +78,8 @@
 }
 
 .movePageInput::placeholder {
-    color: white; /* Placeholder 색상 설정 */
-    opacity: 1; /* 색상 불투명도 조절, 기본값은 0.5 */
+    color: white;
+    opacity: 1;
 }
 
 .movePageButton {

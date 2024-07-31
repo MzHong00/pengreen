@@ -10,8 +10,8 @@ interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
   isShowLeftArrow: boolean;
   isShowRightArrow: boolean;
-  leftSlideHandler: () => void;
-  rightSlideHandler: () => void;
+  leftSlideHandler: React.MouseEventHandler;
+  rightSlideHandler: React.MouseEventHandler;
 }
 
 const ARROW_SIZE = 30;
@@ -19,8 +19,8 @@ const ARROW_SIZE = 30;
 export const PaginationSlider = ({
   page = 1,
   setPage,
-  isShowLeftArrow = true,
-  isShowRightArrow = true,
+  isShowLeftArrow = false,
+  isShowRightArrow = false,
   leftSlideHandler,
   rightSlideHandler,
 }: Partial<Props>) => {
@@ -32,11 +32,9 @@ export const PaginationSlider = ({
             color="white"
             size={ARROW_SIZE}
             onClick={leftSlideHandler}
+            className={styles.arrowIcon}
           />
-          <GoToPageButton
-            page={page - 1}
-            setPage={setPage}
-          />
+          <GoToPageButton page={page - 1} setPage={setPage} />
         </div>
       )}
 
@@ -46,11 +44,9 @@ export const PaginationSlider = ({
             color="white"
             size={ARROW_SIZE}
             onClick={rightSlideHandler}
+            className={styles.arrowIcon}
           />
-          <GoToPageButton
-            page={page + 1}
-            setPage={setPage}
-          />
+          <GoToPageButton page={page + 1} setPage={setPage} />
         </div>
       )}
     </nav>

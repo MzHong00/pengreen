@@ -31,7 +31,7 @@ const readVote = async (
     };
 
     const votes = await axios.post(postUrl, reqBody);
-    console.log(pageNumber, votes.data);
+    // console.log(pageNumber, votes.data);
 
     return votes.data;
   } catch (error) {

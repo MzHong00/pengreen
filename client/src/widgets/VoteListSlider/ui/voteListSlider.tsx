@@ -12,12 +12,21 @@ const VOTE_WIDTH = 550;
 export const VoteListSlider = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState<number>(1);
-  const voteCount = useCalcVotePerPage(VOTE_WIDTH);
+  const votePerPage = useCalcVotePerPage(VOTE_WIDTH);
 
-  const { data: preVote, refetch: preLoad } = useReadVote(voteCount, page - 1);
-  const { data: curVote, refetch: curLoad } = useReadVote(voteCount, page);
-  const { data: nxtVote, refetch: nxtLoad } = useReadVote(voteCount, page + 1);
-  
+  const { data: preVote = [], refetch: preLoad } = useReadVote(
+    votePerPage,
+    page - 1
+  );
+  const { data: curVote = [], refetch: curLoad } = useReadVote(
+    votePerPage,
+    page
+  );
+  const { data: nxtVote = [], refetch: nxtLoad } = useReadVote(
+    votePerPage,
+    page + 1
+  );
+
   const leftArrowHandler = () => {
     setPage((prev) => prev - 1);
   };
@@ -30,7 +39,7 @@ export const VoteListSlider = () => {
     preLoad();
     curLoad();
     nxtLoad();
-  }, [voteCount, preLoad, curLoad, nxtLoad]);
+  }, [votePerPage, preLoad, curLoad, nxtLoad]);
 
   useLayoutEffect(() => {
     if (page < 1) setPage(1);
@@ -46,6 +55,7 @@ export const VoteListSlider = () => {
         isShowLeftArrow={preVote?.length !== 0}
         isShowRightArrow={nxtVote?.length !== 0}
       />
+
       <div ref={sliderRef} className={styles.sliderContent}>
         {preVote?.length !== 0 && (
           <VoteCardList

@@ -24,7 +24,7 @@ export const GoToPageButton = ({ page, setPage }: Props) => {
   };
 
   return (
-    <div className={styles.movePageContainer}>
+    <div className={styles.movePageContainer} >
       <input
         type="number"
         title="페이지 이동"

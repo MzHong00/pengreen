@@ -1,6 +1,7 @@
 /* Vote.module.css */
 .cardContainer {
     width: auto;
+    max-width: 550px;
     height: 17rem;
     padding-inline: 1rem;
     padding-top: 1rem;
