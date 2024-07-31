@@ -18,7 +18,8 @@ const appRouter = createBrowserRouter([
                 path: "dashboard",
                 element: <Dashboard />
             }
-        ]
+        ],
+        errorElement: "Not Found Page..!!",
     },
     {
         path: "/auth/google",

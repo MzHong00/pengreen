@@ -19,18 +19,39 @@
 }
 
 .headerRightSection {
+    position: relative;
     display: flex;
     gap: 1.5rem;
 }
 
-.openFormButton {
-    font-weight: bold;
-    border-color: black;
-    border: 1px solid silver;
-    padding-block: 0.25rem;
-    padding-inline: 1rem;
-}
-
 .openFormButton:hover {
     background-color: rgb(209 213 219);
+}
+
+.profileMenuModal {
+    width: max-content;
+    position: absolute;
+    right: 0;
+    top: 120%;
+    padding: 0.25rem;
+    background-color: white;
+    box-shadow: 0px 0px 5px silver;
+    font-size: small;
+    z-index: 10;
+}
+
+.profileMenuModal>button {
+    width: 100%;
+    padding: 0.5rem;
+}
+
+.profileMenuModal>a:hover,
+.profileMenuModal>button:hover {
+    background-color: whitesmoke;
+}
+
+.profileMenuModal>a {
+    width: 100%;
+    padding: 0.5rem;
+    display: block;
 }

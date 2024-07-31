@@ -1,10 +1,9 @@
 import { useUserFetch } from "entities/user";
 import { LoginForm } from "features/authentication/login";
-import { ProfilesDetail } from "widgets/profilesDetail";
+import { ProfileMenu } from "widgets/profileMenu";
 import { ProfilesCard } from "widgets/profilesCard";
-import { VoteForm } from "widgets/VoteForm";
 import { useDialog } from "shared/hooks/useDialog";
-import { RoundButton } from "shared/ui/RoundButton";
+import { useModal } from "shared/hooks/useModal";
 
 import styles from "./header.module.css";
 
@@ -12,26 +11,29 @@ export function LayoutHeader() {
   const { data: user } = useUserFetch();
 
   const [loginForm, openLoginForm] = useDialog(<LoginForm />);
-  const [profiles, openProfiles] = useDialog(<ProfilesDetail />);
-  const [voteForm, openVoteForm] = useDialog(
-    user ? <VoteForm /> : <LoginForm />
-  );
+  const {
+    ref: voteFormRef,
+    isOpen: isOpenVote,
+    toggleModal: toggleVoteModal,
+  } = useModal();
 
   return (
     <header className={styles.layoutHeader}>
       <span className={styles.logoTitle}>pengreen</span>
+
       <div className={styles.headerRightSection}>
         {user ? (
           <>
-            <RoundButton
-              onClick={openVoteForm}
-              className={styles.openFormButton}
-            >
-              투표 생성
-            </RoundButton>
-            <ProfilesCard onClick={openProfiles} picture={user.picture} />
-            {voteForm}
-            {profiles}
+            <ProfilesCard onClick={toggleVoteModal} picture={user.picture} />
+            {isOpenVote && (
+              <ProfileMenu
+                ref={voteFormRef}
+                name={user?.name}
+                picture={user?.picture}
+                email={user?.email}
+                className={styles.profileMenuModal}
+              />
+            )}
           </>
         ) : (
           <>

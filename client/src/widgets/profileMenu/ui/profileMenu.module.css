@@ -1,0 +1,10 @@
+.profileMenuContainer {
+    display: flex !important;
+    align-items: center;
+    gap: 1rem;   
+}
+
+.profilePicture {
+    width: 3rem;
+    border-radius: 100%;
+}

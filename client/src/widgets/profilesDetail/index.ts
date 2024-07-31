@@ -1,1 +1,0 @@
-export { ProfilesDetail } from './ui/profilesDetail'

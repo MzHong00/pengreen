@@ -1,7 +1,8 @@
+import { MouseEventHandler } from "react";
 import styles from "./profilesCard.module.css";
 
 interface Props {
-  onClick?: any;
+  onClick?: MouseEventHandler;
   picture?: string;
 }
 
