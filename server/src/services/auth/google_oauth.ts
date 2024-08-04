@@ -1,6 +1,6 @@
+import axios from "axios";
 import { type Request, type Response } from "express";
 import { OAuth2Client } from "google-auth-library";
-import axios from "axios";
 
 import { keys } from "../../config/oauth2.keys";
 

@@ -2,8 +2,8 @@ import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 
 import { mongodbFindOne, mongodbInsert } from "../../loaders/mongodb";
-import { config } from "../../config/config";
-import { User } from "../../models/user";
+import config from "../../config";
+import { User } from "../../types/user";
 import { toUserFormat } from "../../utils/formatUtils";
 
 const ACCESS_TOKEN_EXPIRES: string = "10s";
@@ -18,7 +18,7 @@ export const tokenAuth = async (req: Request, res: Response): Promise<void> => {
 
     // "Bearer <token>" 형식으로 전송된 토큰에서 "Bearer " 부분을 제거하여 토큰을 추출합니다.
     const accessToken: string = authorizationHeader.split(" ")[1];
-    const data = jwt.verify(accessToken, config.access_secret_key as string);
+    const data = jwt.verify(accessToken, config.jwtAccessKey as string);
 
     const user = toUserFormat(data);
 
@@ -41,10 +41,9 @@ export const signin = async (req: Request, res: Response): Promise<void> => {
       await signup(accountOfGoogle);
     }
 
-    const userFindQuery = {
+    const user = await mongodbFindOne("user", {
       email: accountOfGoogle.email,
-    };
-    const user = await mongodbFindOne("user", userFindQuery);
+    });
 
     const token = issueToken(user);
 
@@ -86,19 +85,15 @@ const issueToken = (user: any) => {
   try {
     const payload: User = toUserFormat(user);
 
-    const accessToken = jwt.sign(payload, config.access_secret_key as string, {
+    const accessToken = jwt.sign(payload, config.jwtAccessKey as string, {
       expiresIn: ACCESS_TOKEN_EXPIRES,
       issuer: "access issuer",
     });
 
-    const refreshToken = jwt.sign(
-      payload,
-      config.refresh_secret_key as string,
-      {
-        expiresIn: "24h",
-        issuer: "refresh issuer",
-      }
-    );
+    const refreshToken = jwt.sign(payload, config.jwtRefreshKey as string, {
+      expiresIn: "24h",
+      issuer: "refresh issuer",
+    });
 
     return {
       accessToken,
@@ -118,20 +113,16 @@ export const reissueToken = (req: Request, res: Response) => {
       const refreshToken = authorizationHeader.split(" ")[1];
       const data: any = jwt.verify(
         refreshToken,
-        config.refresh_secret_key as string
+        config.jwtRefreshKey as string
       );
 
       const payload: User = toUserFormat(data);
 
       if (data) {
-        const accessToken = jwt.sign(
-          payload,
-          config.access_secret_key as string,
-          {
-            expiresIn: ACCESS_TOKEN_EXPIRES,
-            issuer: "access issuer",
-          }
-        );
+        const accessToken = jwt.sign(payload, config.jwtAccessKey as string, {
+          expiresIn: ACCESS_TOKEN_EXPIRES,
+          issuer: "access issuer",
+        });
 
         res.status(200).send(accessToken);
       }

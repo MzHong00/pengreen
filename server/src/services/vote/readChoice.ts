@@ -2,7 +2,7 @@ import { type Request, Response } from "express";
 import { ObjectId } from "mongodb";
 
 import { mongodbFind, mongodbFindOne } from "../../loaders/mongodb";
-import { Participant } from "../../models/participant";
+import { Participant } from "../../types/participant";
 
 const collection = "vote";
 

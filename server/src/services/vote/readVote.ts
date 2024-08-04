@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { ObjectId } from "mongodb";
 
 import { mongodbAggregate, mongodbFind } from "../../loaders/mongodb";
-import { Vote } from "../../models/vote";
+import { Vote } from "../../types/vote";
 
 const collection = "vote";
 

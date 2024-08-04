@@ -1,12 +1,9 @@
-import express from "express";
+import express, { Application } from "express";
 import cors from "cors";
-import { config } from "../config/config";
 
-import routes from "../api/routes/index";
+import routes from "../api";
 
-export const expressLoader = () => {
-  const app = express();
-
+export default ({ app }: { app: Application }) => {
   const corsOptions = {
     origin: "http://wslib.vercel.app",
     credentials: true,
@@ -14,11 +11,5 @@ export const expressLoader = () => {
 
   app.use(cors());
   app.use(express.json());
-  app.use("/api", routes);
-
-  const server = app.listen(config.port, () => {
-    console.log(`http://localhost:${config.port}`);
-  });
-  
-  return server;
+  app.use("/api", routes());
 };

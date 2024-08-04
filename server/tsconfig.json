@@ -1,7 +1,9 @@
 {
   "ts-node": {
-    "require": ["tsconfig-paths/register"]
-},
+    "require": [
+      "tsconfig-paths/register"
+    ]
+  },
   "compilerOptions": {
     "target": "es6",
     "lib": [
@@ -20,9 +22,11 @@
     "esModuleInterop": true
   },
   "include": [
-    "src"
-, "src/api/routes/index.ts", "api/index.ts"  ],
+    "src",
+    "src/api/routes/index.ts",
+    "api/app.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
- }
+}

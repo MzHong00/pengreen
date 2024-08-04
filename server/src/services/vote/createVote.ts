@@ -1,4 +1,4 @@
-import { VoteForm, type Vote } from "../../models/vote";
+import { VoteForm, type Vote } from "../../types/vote";
 import { mongodbInsert } from "../../loaders/mongodb";
 
 export const createVote = async (req: Request) => {
