@@ -1,5 +1,3 @@
-import { Participant } from "./participant";
-
 import { type ObjectId } from "mongodb";
 
 export interface Vote extends VoteForm {
@@ -46,3 +44,14 @@ export type Category =
   | "역사"
   | "인물"
   | "장소";
+
+export interface Participant {
+  user_id: string;
+  pick: Array<string>;
+}
+
+export interface Liker {
+  _id?: ObjectId;
+  user_id: string;
+  vote_id: string;
+}

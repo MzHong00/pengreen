@@ -1,24 +1,18 @@
-import axios from "axios";
+import { Cookies } from "react-cookie";
 
-export const reissueAccessToken = async (refreshToken: string) => {
-  try {
-    if (!refreshToken) {
-      throw new Error("Refresh token is missing");
-    }
+import axios from "shared/api/base";
 
-    const reissueResponse = await axios.post(
-      `${process.env.REACT_APP_API_ROOT}/api/account/reissue`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${refreshToken}`,
-        },
-      }
-    );
+const cookies = new Cookies();
 
-    return reissueResponse.data;
-  } catch (error) {
-    console.error("reissueToken error: ", error);
-    throw error;
-  }
+export const reissueAccessToken = async () => {
+  const refreshToken = cookies.get("refresh_token");
+  if (!refreshToken) throw new Error("Refresh token is missing");
+
+  const reissueResponse = await axios.post(
+    `${process.env.REACT_APP_API_ROOT}/api/account/reissue`,
+    {},
+    { headers: { Authorization: `Bearer ${refreshToken}` } }
+  );
+
+  return reissueResponse.data;
 };

@@ -2,7 +2,7 @@ import express from "express";
 
 import loader from "../src/loaders";
 import config from "../src/config";
-import { client } from "../src/loaders/mongodb";
+import mongoClient from "../src/loaders/mongodb";
 
 async function server() {
   const app = express();
@@ -19,7 +19,7 @@ async function server() {
 server().then((server) => {
   process.on("SIGINT", () => {
     server.close(() => {
-      client.close();
+      mongoClient.close();
       console.log("closed mongodb");
     });
   });
