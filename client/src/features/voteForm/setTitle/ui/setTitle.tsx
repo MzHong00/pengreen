@@ -1,5 +1,5 @@
 import { User } from "entities/user";
-import { blockSubmitByEnterKey } from "shared/utils/blockSubmitByEnterKey";
+import { blockSubmitByEnterKey } from "shared/helper/blockSubmitByEnterKey";
 
 import styles from "./setTitleBar.module.css";
 

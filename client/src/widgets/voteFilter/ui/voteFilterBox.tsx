@@ -4,7 +4,7 @@ import { type Category } from "entities/vote/vote";
 import { SelectCategory } from "features/vote/selectCategory";
 import { SortByButton } from "features/vote/sortBy";
 import { sortTypes } from "features/vote/sortBy/consts/sortTypes";
-import { firstLetterUpperCase } from "shared/utils/firstLetterUpperCase";
+import { firstLetterUpperCase } from "shared/helper/firstLetterUpperCase";
 
 import styles from './voteFilterBox.module.css'
 

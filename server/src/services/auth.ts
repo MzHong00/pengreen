@@ -1,3 +1,6 @@
+import jwt from "jsonwebtoken";
+import config from "../config";
+
 import { User } from "../types/user";
 import { issueToken } from "./jwtToken";
 import { toUserFormat } from "../utils/formatUtils";
@@ -15,6 +18,14 @@ export const signin = async (userData: User) => {
   const token = issueToken(user);
 
   return token;
+};
+
+export const getUser = (accessToken: string) => {
+  try {
+    return jwt.verify(accessToken, config.jwtAccessKey as string);
+  } catch (error) {
+    console.log((error as jwt.TokenExpiredError).expiredAt)
+  }
 };
 
 //회원가입하여 사용자 DB에 추가

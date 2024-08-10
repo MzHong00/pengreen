@@ -1,7 +1,4 @@
 import axios from 'shared/api/base'
-import { Cookies } from "react-cookie";
-
-const cookies = new Cookies();
 
 //구글 로그인 폼 호출
 export const fetchGoogleForm = async () => {
@@ -15,13 +12,10 @@ export const fetchGoogleForm = async () => {
 //code로 서버에 로그인 후, 토큰을 받아 브라우저에 쿠키 생성
 export const fetchOuathToken = async (redirect_code) => {
   try {
-    const auth = await axios.post(
+    await axios.post(
       `${process.env.REACT_APP_API_ROOT}/api/account/google/redirect`,
       { code: redirect_code },
     );
-
-    console.log(auth);
-    
   } catch (error) {
     console.error("fetchAccess_token error: ", error);
   }

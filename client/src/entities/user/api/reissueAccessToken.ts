@@ -11,7 +11,7 @@ export const reissueAccessToken = async () => {
   const reissueResponse = await axios.post(
     `${process.env.REACT_APP_API_ROOT}/api/account/reissue`,
     {},
-    { headers: { Authorization: `Bearer ${refreshToken}` } }
+    { headers: { "authorization": `Bearer ${refreshToken}` } }
   );
 
   return reissueResponse.data;

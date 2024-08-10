@@ -1,9 +1,9 @@
 import { Router } from "express";
 
 import googleOauth from "./googleOauth";
-import { signin } from "../../../services/auth";
+import { getUser, signin } from "../../../services/auth";
 import { User } from "../../../types/user";
-import { reissueToken, tokenAuth } from "../../../services/jwtToken";
+import { reissueToken } from "../../../services/jwtToken";
 
 const route = Router();
 
@@ -12,17 +12,16 @@ export default (app: Router) => {
 
   googleOauth(route);
 
-  route.post("/auth", (req, res) => {
+  route.post("/user", (req, res) => {
     const authorizationHeader = req.headers["authorization"];
     if (!authorizationHeader) return;
-
+    
     // "Bearer <token>" 형식으로 전송된 토큰에서 "Bearer " 부분을 제거하여 토큰을 추출합니다.
     const accessToken = authorizationHeader.split(" ")[1];
 
     if (!accessToken) return res.status(400).send("Token is missing");
 
-    const user = tokenAuth(accessToken);
-
+    const user = getUser(accessToken);
     if (!user) res.status(401).send("Token expired");
 
     res.status(200).send(user);

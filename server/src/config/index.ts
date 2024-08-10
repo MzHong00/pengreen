@@ -13,5 +13,5 @@ export default {
 
   jwtAccessKey: process.env.JWT_ACCESS_KEY,
   jwtRefreshKey: process.env.JWT_REFRESH_KEY,
-  jwtExpiredMinute: process.env.JWT_EXPIRED_MINUTE,
+  jwtExpiredSecond: `${process.env.JWT_EXPIRED_SECOND}s`,
 };

@@ -12,7 +12,7 @@ export const useUserFetch = () => {
 
   return useQuery({
     queryKey: ["user"],
-    queryFn: () => getUser(),
+    queryFn: () => accessTokenAuth(),
     enabled: !!accessToken,
   });
 };
@@ -30,14 +30,7 @@ const getUser = async (): Promise<User | undefined> => {
 };
 
 const accessTokenAuth = async (): Promise<User | undefined> => {
-  const accessToken = cookies.get("access_token");
-  if (!accessToken) throw new Error("access token is missing");
-
-  const user = await axios.post(
-    `${process.env.REACT_APP_API_ROOT}/api/account/auth`,
-    {},
-    { headers: { Authorization: `Bearer ${accessToken}` } }
-  );
+  const user = await axios.post(`api/account/user`);
 
   return user.data;
 };
