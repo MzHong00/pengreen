@@ -9,7 +9,7 @@ const oAuth2Client = new OAuth2Client(
   keys.web.redirect_uris[0]
 );
 
-export const googleLogin = () => {
+export const googleOauthForm = () => {
   const authorizeUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: [
@@ -27,11 +27,11 @@ export const googleLogout = () => {
       console.log(err, body);
     });
   } catch (error) {
-    console.log("로그아웃 에러");
+    throw new Error("로그아웃 에러")
   }
 };
 
-export const googleRedirect = async (googleCode: string): Promise<any> => {
+export const getGoogleProfiles = async (googleCode: string): Promise<any> => {
   try {
     const r = await oAuth2Client.getToken(googleCode);
     oAuth2Client.setCredentials(r.tokens);

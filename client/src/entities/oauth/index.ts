@@ -1,1 +1,1 @@
-export { fetchGoogleForm, fetchOuathToken } from "./api/googleOauth";
+export { fetchGoogleForm, googleOuathLogin } from "./api/googleOauth";

@@ -1,23 +1,16 @@
-import axios from "axios";
+import axios from "shared/api/base";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { type VoteActionChoiceDto } from "..";
-import { type VoteActionDto } from "entities/vote/vote";
 import { type VoteFormDto } from "entities/voteForm";
+import { VoteDto } from "entities/vote/vote";
+import { ChoiceDto } from "../model/types";
 
-export const useUpdateUserPick = ({
-  user_id,
-  vote_id,
-}: VoteActionDto) => {
+export const useUpdateUserPick = (vote_id: VoteDto["_id"]) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (selected: VoteFormDto['choice']) =>
-      updateUserPick({
-        user_id: user_id,
-        vote_id: vote_id,
-        choiceList: selected,
-      }),
+    mutationFn: (selected: VoteFormDto["choice"]) =>
+      updateUserPick(vote_id, selected),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["choice", vote_id] });
       queryClient.invalidateQueries({ queryKey: ["isParticipant", vote_id] });
@@ -26,17 +19,15 @@ export const useUpdateUserPick = ({
   });
 };
 
-const updateUserPick = async ({
-  user_id,
-  vote_id,
-  choiceList,
-}: VoteActionChoiceDto) => {
+const updateUserPick = async (
+  vote_id: VoteDto["_id"],
+  choiceList: ChoiceDto["content"][]
+) => {
   console.log("Pick Update Fetch");
   try {
     const fetchPick = await axios.post(
       `${process.env.REACT_APP_API_ROOT}/api/vote/update-choice`,
       {
-        user_id: user_id,
         vote_id: vote_id,
         choiceList: choiceList,
       }

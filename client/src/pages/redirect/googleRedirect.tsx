@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { fetchOuathToken } from "entities/oauth";
+import { googleOuathLogin } from "entities/oauth";
 
 export function Redirect() {
   useEffect(() => {
@@ -8,7 +8,7 @@ export function Redirect() {
       const params = new URLSearchParams(window.location.search);
       const name = params.get("code");
 
-      await fetchOuathToken(name);
+      await googleOuathLogin(name);
       window.opener.postMessage("login");
       window.close();
     };

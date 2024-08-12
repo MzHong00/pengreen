@@ -9,9 +9,9 @@ export const reissueAccessToken = async () => {
   if (!refreshToken) throw new Error("Refresh token is missing");
 
   const reissueResponse = await axios.post(
-    `${process.env.REACT_APP_API_ROOT}/api/account/reissue`,
+    `api/account/reissue`,
     {},
-    { headers: { "authorization": `Bearer ${refreshToken}` } }
+    { headers: { authorization: `Bearer ${refreshToken}` } }
   );
 
   return reissueResponse.data;

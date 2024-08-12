@@ -10,11 +10,6 @@ export interface VoteDto extends VoteFormDto {
   start_time: Date;
 }
 
-export interface VoteActionDto {
-  user_id?: string;
-  vote_id: string;
-}
-
 export interface Participant {
   user_id: string;
   participant: Array<string>;

@@ -7,24 +7,28 @@ import { mongodbFindOne } from "../data-access/mongodb";
 
 //로그인하여 token을 발급
 export const issueToken = (payload: User) => {
-  const accessToken = jwt.sign(payload, config.jwtAccessKey as string, {
-    expiresIn: config.jwtExpiredSecond,
-    issuer: "access issuer",
-  });
+  try {
+    const accessToken = jwt.sign(payload, config.jwtAccessKey as string, {
+      expiresIn: config.jwtExpiredSecond,
+      issuer: "access issuer",
+    });
 
-  const refreshToken = jwt.sign(
-    { _id: payload._id.toString() },
-    config.jwtRefreshKey as string,
-    {
-      expiresIn: "24h",
-      issuer: "refresh issuer",
-    }
-  );
+    const refreshToken = jwt.sign(
+      { _id: payload._id.toString() },
+      config.jwtRefreshKey as string,
+      {
+        expiresIn: "24h",
+        issuer: "refresh issuer",
+      }
+    );
 
-  return {
-    accessToken: accessToken,
-    refreshToken: refreshToken,
-  };
+    return {
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    };
+  } catch (error) {
+    throw new Error(`Issue Token Error: ${error}`);
+  }
 };
 
 export const reissueToken = async (refreshToken: string | undefined) => {
@@ -50,6 +54,6 @@ export const reissueToken = async (refreshToken: string | undefined) => {
 
     return accessToken;
   } catch (error) {
-    console.log("reissueToen 에러", error);
+    throw new Error(`ReissueToken Error: ", ${error}`);
   }
 };

@@ -1,38 +1,29 @@
-import axios from "axios";
+import axios from "shared/api/base";
 import { useQuery } from "@tanstack/react-query";
 
-import { VoteActionDto } from "entities/vote/vote";
+import { type VoteDto } from "entities/vote/vote";
+import { Cookies } from "react-cookie";
 
-export const useReadUserPick = ({
-  user_id,
-  vote_id,
-}: Omit<VoteActionDto, "choiceList">) => {
+export const useReadUserPick = (voteId: VoteDto["_id"]) => {
+  const cookies = new Cookies();
+  const accessToken = cookies.get("access_token");
+
   return useQuery({
-    queryKey: ["isParticipant", vote_id],
-    queryFn: () =>
-      readUserPick({
-        user_id: user_id,
-        vote_id: vote_id,
-      }),
-    enabled: !!user_id,
+    queryKey: ["isParticipant", voteId],
+    queryFn: () => readUserPick(voteId),
+    enabled: !!voteId && !!accessToken,
   });
 };
 
-const readUserPick = async ({
-  user_id,
-  vote_id,
-}: Omit<VoteActionDto, "choiceList">) => {
+const readUserPick = async (voteId: VoteDto["_id"]) => {
   try {
     const isParticipant = await axios.put(
       `${process.env.REACT_APP_API_ROOT}/api/vote/read-mypick`,
-      {
-        user_id: user_id,
-        vote_id: vote_id,
-      }
+      { vote_id: voteId }
     );
 
     return isParticipant.data;
   } catch (error) {
-    console.log("참여자 수 가져오기 에러");
+    new Error("참여자 수 가져오기 에러");
   }
 };

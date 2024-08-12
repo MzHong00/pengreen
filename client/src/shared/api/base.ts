@@ -13,11 +13,9 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     const accessToken = cookies.get("access_token");
-    if (!accessToken) throw new Error("access token is missing");
 
     if (!config.url?.includes("/reissue"))
       config.headers["authorization"] = `Bearer ${accessToken}`;
-    config.headers["Content-Type"] = "application/json";
 
     return config;
   },
@@ -44,7 +42,6 @@ instance.interceptors.response.use(
       const accessToken = cookies.get("access_token");
 
       error.config.headers = {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       };
 

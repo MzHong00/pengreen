@@ -6,7 +6,6 @@ export { useReadVoteById } from "./api/readVoteById";
 export { useReadVoteListByOwner } from "./api/readVoteByOwner";
 
 export {
-  type VoteActionDto,
   type VoteDto,
   type Participant,
   type Category,

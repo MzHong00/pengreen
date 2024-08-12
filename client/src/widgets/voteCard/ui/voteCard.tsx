@@ -1,4 +1,5 @@
 import { HTMLAttributes, useCallback, useMemo, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 import {
   useReadChoiceCount,
@@ -7,7 +8,7 @@ import {
 } from "entities/vote/choice";
 import { type VoteDto } from "entities/vote/vote";
 import { type VoteFormDto } from "entities/voteForm";
-import { useUserFetch } from "entities/user";
+import { type User } from "entities/user";
 import { useUpdateLike } from "entities/vote/likes";
 import { UpdateLike } from "features/vote/updateLike";
 import { Participant } from "features/vote/readParticipants";
@@ -39,41 +40,24 @@ export const VoteCard = ({ vote }: { vote: VoteDto }) => {
   const [isOpenSubmit, setIsOpenSubmit] = useState<boolean>(false);
 
   const [loginForm, openLoginForm] = useDialog(<LoginForm />);
+  const user = useQueryClient().getQueryData([
+    "user",
+  ]) as User;
 
-  const { data: user } = useUserFetch();
-  const { data: userPick } = useReadUserPick({
-    user_id: user?._id,
-    vote_id: vote._id,
-  });
-  const { data: choiceCount } = useReadChoiceCount({
-    vote_id: vote._id,
-    choiceList: vote.choice,
-  });
-  const { mutate: mutateLike } = useUpdateLike({
-    user_id: user?._id,
-    vote_id: vote._id,
-  });
-  const { mutate: mutatePick } = useUpdateUserPick({
-    user_id: user?._id,
-    vote_id: vote._id,
-  });
-
-  const isClickLike = useMemo(() => {
-    if (user?._id) {
-      return vote.like_member.includes(user._id);
-    }
-
-    return false;
-  }, [user?._id, vote.like_member]);
+  const { data: userPick } = useReadUserPick(vote._id);
+  const { data: choiceCount } = useReadChoiceCount(vote._id, vote.choice);
+  const { mutate: mutateLike } = useUpdateLike(vote._id);
+  const { mutate: mutatePick } = useUpdateUserPick(vote._id);
+  
+  const isClickLike = useMemo(
+    () => (user?._id ? vote.like_member.includes(user?._id) : false),
+    [user?._id, vote.like_member]
+  );
 
   const mutatePickHandler = useCallback(
     (event: React.MouseEvent<HTMLInputElement>) => {
       event.preventDefault();
-
-      if (!user) {
-        openLoginForm();
-        return;
-      }
+      if (!user?.name) return openLoginForm();
 
       setIsOpenSubmit((prev) => !prev);
 
@@ -85,17 +69,17 @@ export const VoteCard = ({ vote }: { vote: VoteDto }) => {
       //formData가 있을 때만 서버에 전송
       if (formChoiceData.length !== 0) mutatePick(formChoiceData);
     },
-    [user, openLoginForm, setIsOpenSubmit, mutatePick]
+    [user?.name, openLoginForm, setIsOpenSubmit, mutatePick]
   );
 
   const mutateLikeHandler = useCallback(() => {
-    if (!user) {
+    if (!user?.name) {
       openLoginForm();
       return;
     }
 
     mutateLike();
-  }, [user, openLoginForm, mutateLike]);
+  }, [user?.name, openLoginForm, mutateLike]);
 
   return (
     <form className={`${styles.cardContainer}`}>

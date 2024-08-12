@@ -1,36 +1,23 @@
-import axios from "axios";
+import axios from "shared/api/base";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { VoteDto } from "entities/vote/vote";
 
-import { VoteActionDto } from "entities/vote/vote";
-
-export const useUpdateLike = ({
-  user_id,
-  vote_id,
-}: VoteActionDto) => {
+export const useUpdateLike = (vote_id: VoteDto["_id"]) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: () =>
-      updateLike({
-        user_id: user_id,
-        vote_id: vote_id,
-      }),
+    mutationFn: () => updateLike(vote_id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["voteList"] });
     },
   });
 };
 
-const updateLike = async ({ user_id, vote_id }: VoteActionDto) => {
+const updateLike = async (vote_id: VoteDto["_id"]) => {
   try {
-    if (!user_id) return;
-
     const fetchLike = await axios.put(
       `${process.env.REACT_APP_API_ROOT}/api/vote/update-like`,
-      {
-        user_id: user_id,
-        vote_id: vote_id,
-      }
+      { vote_id: vote_id }
     );
 
     const { likesCount, isLiker } = fetchLike.data;

@@ -1,6 +1,6 @@
 import { useState, type MouseEvent } from "react";
 
-import { useUserFetch } from "entities/user";
+import { User } from "entities/user";
 import { VoteFormDto } from "entities/voteForm";
 import { SetTitle } from "features/voteForm/setTitle";
 import { SelectFormPage } from "features/voteForm/selectOptionForm";
@@ -11,11 +11,13 @@ import {
 import { VoteFormValidation } from "widgets/voteFormValidation";
 
 import styles from "./voteForm.module.css";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const VoteForm = () => {
-  const { data: user } = useUserFetch();
+  const user = useQueryClient().getQueryData(["user"]) as User | undefined;
+
   const [isOpenValidation, setIsOpenValidation] = useState<boolean>(false);
-  const [formData, setFormData] = useState<Omit<VoteFormDto, 'owner'>>();
+  const [formData, setFormData] = useState<Omit<VoteFormDto, "owner">>();
   const [invalidationItems, setInvalidationItems] = useState<string[]>([]);
 
   const changePageHandler = (e: MouseEvent<HTMLButtonElement>) => {
