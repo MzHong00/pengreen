@@ -54,6 +54,6 @@ export const reissueToken = async (refreshToken: string | undefined) => {
 
     return accessToken;
   } catch (error) {
-    throw new Error(`ReissueToken Error: ", ${error}`);
+    console.log(`ReissueToken Error: ", ${error}`);
   }
 };

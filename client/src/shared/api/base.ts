@@ -45,8 +45,18 @@ instance.interceptors.response.use(
         Authorization: `Bearer ${accessToken}`,
       };
 
-      const response = await axios.request(error.config);
+      // 기존 요청의 headers에 새로 발급된 access token을 설정
+      error.config.headers = {
+        ...error.config.headers,
+        Authorization: `Bearer ${accessToken}`,
+      };
 
+      // 기존 요청의 data를 JSON으로 파싱하여 복원
+      if (error.config.data) {
+        error.config.data = JSON.parse(error.config.data);
+      }
+
+      const response = await axios.request(error.config);
       return response;
     }
     return Promise.reject(error);

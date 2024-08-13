@@ -27,7 +27,8 @@ export const getUserByToken = (accessToken: string | undefined) => {
 
     return user;
   } catch (error) {
-    throw new Error(`${(error as jwt.TokenExpiredError).expiredAt}`);
+    console.log(`${(error as jwt.TokenExpiredError).expiredAt}`);
+    return undefined;
   }
 };
 

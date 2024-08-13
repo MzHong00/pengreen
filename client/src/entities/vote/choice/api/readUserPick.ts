@@ -7,7 +7,7 @@ import { Cookies } from "react-cookie";
 export const useReadUserPick = (voteId: VoteDto["_id"]) => {
   const cookies = new Cookies();
   const accessToken = cookies.get("access_token");
-
+  
   return useQuery({
     queryKey: ["isParticipant", voteId],
     queryFn: () => readUserPick(voteId),
