@@ -1,13 +1,8 @@
 import { HTMLAttributes, useCallback, useMemo, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-import {
-  useReadChoiceCount,
-  useReadUserPick,
-  useUpdateUserPick,
-} from "entities/vote/choice";
+import { ChoiceDto, useUpdateUserPick } from "entities/vote/choice";
 import { type VoteDto } from "entities/vote/vote";
-import { type VoteFormDto } from "entities/voteForm";
 import { type User } from "entities/user";
 import { useUpdateLike } from "entities/vote/likes";
 import { UpdateLike } from "features/vote/updateLike";
@@ -40,18 +35,22 @@ export const VoteCard = ({ vote }: { vote: VoteDto }) => {
   const [isOpenSubmit, setIsOpenSubmit] = useState<boolean>(false);
 
   const [loginForm, openLoginForm] = useDialog(<LoginForm />);
-  const user = useQueryClient().getQueryData([
-    "user",
-  ]) as User;
+  const { data: user } = useQuery<User>({ queryKey: ["user"] });
 
-  const { data: userPick } = useReadUserPick(vote._id);
-  const { data: choiceCount } = useReadChoiceCount(vote._id, vote.choice);
   const { mutate: mutateLike } = useUpdateLike(vote._id);
   const { mutate: mutatePick } = useUpdateUserPick(vote._id);
-  
+
   const isClickLike = useMemo(
     () => (user?._id ? vote.like_member.includes(user?._id) : false),
-    [user?._id, vote.like_member]
+    [user, vote.like_member]
+  );
+
+  const myPick = useMemo(
+    () =>
+      vote.participant_member.find(
+        (participant) => participant.user_id === user?._id
+      )?.pick,
+    [user, vote.participant_member]
   );
 
   const mutatePickHandler = useCallback(
@@ -61,13 +60,11 @@ export const VoteCard = ({ vote }: { vote: VoteDto }) => {
 
       setIsOpenSubmit((prev) => !prev);
 
-      const formChoiceData = new FormData(event.currentTarget.form!).getAll(
-        "choice"
-      ) as VoteFormDto["choice"];
-      console.log(formChoiceData);
+      const formData = new FormData(event.currentTarget.form!);
+      const choice = formData.getAll("choice") as ChoiceDto["content"][];
 
       //formData가 있을 때만 서버에 전송
-      if (formChoiceData.length !== 0) mutatePick(formChoiceData);
+      if (choice.length !== 0) mutatePick(choice);
     },
     [user?.name, openLoginForm, setIsOpenSubmit, mutatePick]
   );
@@ -92,24 +89,23 @@ export const VoteCard = ({ vote }: { vote: VoteDto }) => {
       <ChoiceSubmitBox
         isOpenSubmit={isOpenSubmit}
         name={user?.name}
-        choice={userPick}
+        myPick={myPick}
         max_choice={vote.max_choice}
         onClickSubmit={mutatePickHandler}
       />
       <ChoiceContentBox
         isOpenSubmit={isOpenSubmit}
-        choiceListIncludedCount={choiceCount}
         choice={vote.choice}
         max_choice={vote.max_choice}
       />
 
       <section className={styles.otherInfoBox}>
         <UpdateLike
-          like={vote.like}
+          like={vote.like_member.length}
           isUserLike={isClickLike}
           onClick={mutateLikeHandler}
         />
-        <Participant participant={vote.participant} />
+        <Participant participant={vote.participant_member.length} />
         <Button className={styles.openDetailButton}>자세히</Button>
       </section>
       {loginForm}

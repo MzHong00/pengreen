@@ -1,13 +1,7 @@
 import { ObjectId } from "mongodb";
 
-import {
-  mongodbAggregate,
-  mongodbFind,
-  mongodbFindOne,
-  mongodbInsert,
-  mongodbUpdate,
-} from "../data-access/mongodb";
-import { type Participant, type Vote, type VoteForm } from "../types/vote";
+import mongoService from "../loaders/mongodb";
+import { type Vote, type VoteForm } from "../types/vote";
 
 const collection = "vote";
 
@@ -15,14 +9,12 @@ export const createVote = async (formData: VoteForm): Promise<void> => {
   try {
     const vote: Vote = {
       ...formData,
-      like: 0,
       like_member: [],
-      participant: 0,
       participant_member: [],
       start_time: new Date(),
     };
 
-    mongodbInsert<Vote>(collection, vote);
+    await mongoService.insert<Vote>(collection, vote);
   } catch (error) {
     throw new Error(`Create Vote Error: ${error}`);
   }
@@ -35,7 +27,7 @@ export const readVote = async (
   sort: string
 ): Promise<Vote[]> => {
   try {
-    return await mongodbAggregate(collection, [
+    return await mongoService.aggregate<Vote>(collection, [
       { $match: category ? { category: category } : {} },
       { $sort: sort ? { [sort as string]: -1 } : { _id: -1 } },
       { $skip: page * votePerPage },
@@ -46,9 +38,9 @@ export const readVote = async (
   }
 };
 
-export const readVoteById = async (voteId: string): Promise<Vote> => {
+export const readVoteById = async (voteId: string): Promise<Vote | null> => {
   try {
-    const vote = await mongodbFindOne(collection, {
+    const vote = await mongoService.findOne<Vote>(collection, {
       _id: ObjectId.createFromHexString(voteId),
     });
 
@@ -60,7 +52,7 @@ export const readVoteById = async (voteId: string): Promise<Vote> => {
 
 export const readVoteByOwnerId = async (own_id: string): Promise<Vote[]> => {
   try {
-    const voteList = await mongodbFind(collection, {
+    const voteList = await mongoService.find<Vote>(collection, {
       "owner._id": own_id,
     });
 
@@ -70,97 +62,75 @@ export const readVoteByOwnerId = async (own_id: string): Promise<Vote[]> => {
   }
 };
 
-//투표 선택 수
-export const readChoiceCount = async (
-  vote_id: string,
-  choiceList: Array<string>
-) => {
-  let choiceCount = [];
-  try {
-    for (const choice of choiceList) {
-      const eachChoice: Participant[] = await mongodbFind(
-        collection,
-        {
-          _id: ObjectId.createFromHexString(vote_id),
-          "participant_member.pick": choice,
-        },
-        { projection: { participant_member: 1 } }
-      );
-
-      choiceCount.push({
-        content: choice,
-        count: eachChoice.length,
-      });
-    }
-
-    return choiceCount;
-  } catch (error) {
-    throw new Error(`Read Choice Error: ${error}`);
-  }
-};
-
-//사용자가 투표자인지 확인
-export const readUserPick = async (user_id: string, vote_id: string) => {
-  try {
-    const userPick = await mongodbFindOne(
-      collection,
-      {
-        _id: ObjectId.createFromHexString(vote_id),
-        "participant_member.user_id": user_id,
-      },
-      {
-        projection: {
-          _id: 0,
-          "participant_member.pick": 1,
-        },
-      }
-    );
-
-    return userPick?.participant_member[0].pick;
-  } catch (error) {
-    throw new Error(`Read User Error: ${error}`);
-  }
-};
-
-//투표를 했을 떄
 export const updateChoice = async (
   user_id: string,
   vote_id: string,
   choiceList: Array<string>
 ): Promise<void> => {
+  const voteId = new ObjectId(vote_id);
+
   try {
-    const isParticipant = await mongodbFind(
+    // 기존 참가자 데이터 조회
+    const participant = await mongoService.findOne<Vote>(
       collection,
       {
-        _id: ObjectId.createFromHexString(vote_id),
+        _id: voteId,
         "participant_member.user_id": user_id,
       },
-      { projection: { participant: 1 } }
+      { projection: { "participant_member.$": 1 } }
     );
 
-    if (isParticipant.length === 0) {
-      await mongodbUpdate(
-        collection,
-        { _id: ObjectId.createFromHexString(vote_id) },
-        {
-          $push: {
-            participant_member: {
-              user_id: user_id,
-              pick: choiceList,
+    const previousChoices = participant?.participant_member[0].pick as string[];
+
+    // 이전 선택 항목들의 count를 감소시키기 위한 업데이트
+    const decreaseCountOps = previousChoices?.map((choice) => ({
+      updateOne: {
+        filter: { _id: voteId, "choice.content": choice },
+        update: { $inc: { "choice.$.count": -1 } },
+      },
+    }));
+
+    // 새로운 선택 항목들의 count를 증가시키기 위한 업데이트
+    const increaseCountOps = choiceList.map((choice) => ({
+      updateOne: {
+        filter: { _id: voteId, "choice.content": choice },
+        update: { $inc: { "choice.$.count": 1 } },
+      },
+    }));
+
+    if (participant) {
+      const updatePickOps = {
+        updateOne: {
+          filter: { _id: voteId, "participant_member.user_id": user_id },
+          update: { $set: { "participant_member.$.pick": choiceList } },
+        },
+      };
+      // 모든 업데이트를 하나의 bulkWrite로 처리
+      await mongoService.bulkWrite<Vote>(collection, [
+        ...decreaseCountOps,
+        ...increaseCountOps,
+        updatePickOps,
+      ]);
+    } else {
+      const addParticipantOps = {
+        updateOne: {
+          filter: { _id: voteId },
+          update: {
+            $push: {
+              participant_member: {
+                user_id: user_id,
+                pick: choiceList,
+              },
             },
           },
-          $inc: { participant: 1 },
-        }
-      );
-    } else {
-      await mongodbUpdate(
-        collection,
-        {
-          _id: ObjectId.createFromHexString(vote_id),
-          "participant_member.user_id": user_id,
         },
-        { $set: { "participant_member.$.pick": choiceList } }
-      );
+      };
+
+      // 참가자 추가와 count 증가를 함께 처리
+      await mongoService.bulkWrite<Vote>(collection, [
+        ...increaseCountOps,
+        addParticipantOps,
+      ]);
     }
   } catch (error) {
     throw new Error(`Update Choice Error: ${error}`);
@@ -177,7 +147,7 @@ export const updateLike = async (
     const voteId = ObjectId.createFromHexString(vote_id);
 
     // 사용자가 좋아요를 누른 사람인지 확인
-    const isLiker = await mongodbFind(
+    const isLiker = await mongoService.find<Vote>(
       collection,
       {
         _id: voteId,
@@ -187,16 +157,16 @@ export const updateLike = async (
     );
 
     if (isLiker.length === 0) {
-      await mongodbUpdate(
+      await mongoService.update<Vote>(
         collection,
         { _id: voteId },
-        { $push: { like_member: user_id }, $inc: { like: 1 } }
+        { $push: { like_member: user_id } },
       );
     } else {
-      await mongodbUpdate(
+      await mongoService.update<Vote>(
         collection,
         { _id: voteId },
-        { $pull: { like_member: user_id }, $inc: { like: -1 } }
+        { $pull: { like_member: user_id } }
       );
     }
   } catch (error) {

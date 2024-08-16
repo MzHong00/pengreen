@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 
 import config from "../config";
 import { User } from "../types/user";
-import { mongodbFindOne } from "../data-access/mongodb";
+import mongoService from "../loaders/mongodb";
 
 //로그인하여 token을 발급
 export const issueToken = (payload: User) => {
@@ -41,7 +41,7 @@ export const reissueToken = async (refreshToken: string | undefined) => {
     ) as any;
     const userId = payload._id;
 
-    const user = await mongodbFindOne("user", {
+    const user = await mongoService.findOne("user", {
       _id: ObjectId.createFromHexString(userId),
     });
 

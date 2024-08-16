@@ -3,16 +3,14 @@ import { VoteFormDto } from "entities/voteForm";
 
 export interface VoteDto extends VoteFormDto {
   _id: string;
-  like: number;
-  like_member: Array<string>;
-  participant: number;
+  like_member: string[];
   participant_member: Participant[];
   start_time: Date;
 }
 
 export interface Participant {
   user_id: string;
-  participant: Array<string>;
+  pick: string[];
 }
 
 export type Category = (typeof categories)[number];

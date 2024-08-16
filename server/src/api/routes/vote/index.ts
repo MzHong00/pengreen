@@ -2,8 +2,6 @@ import { Router } from "express";
 
 import {
   createVote,
-  readChoiceCount,
-  readUserPick,
   readVote,
   readVoteById,
   readVoteByOwnerId,
@@ -55,28 +53,6 @@ export default (app: Router) => {
     const votes = readVoteByOwnerId(own_id);
 
     res.status(206).send(votes);
-  });
-
-  route.put("/read-choice-count", async (req, res) => {
-    const { vote_id, choiceList } = req.body;
-
-    if (!vote_id) return res.status(400).send("voteId is missing");
-    const choicesCount = await readChoiceCount(vote_id, choiceList);
-
-    res.send(choicesCount);
-  });
-
-  route.put("/read-mypick", async (req, res) => {
-    const { vote_id } = req.body;
-    const accessToken = extractBearerToken(req);
-    const user = getUserByToken(accessToken);
-    
-    if (!user) return res.status(401).send("Unauthorized: User not found");
-    if (!vote_id) return res.status(400).send("Bad Request: VoteId is missing");
-
-    const userPick = await readUserPick(user._id, vote_id);
-
-    res.status(206).send(userPick);
   });
 
   route.post("/update-choice", async (req, res) => {

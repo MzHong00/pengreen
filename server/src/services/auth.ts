@@ -1,16 +1,20 @@
 import jwt from "jsonwebtoken";
 
 import config from "../config";
-import { type User } from "../types/user";
 import { issueToken } from "./jwtToken";
-import { mongodbFindOne, mongodbInsert } from "../data-access/mongodb";
+import { type User } from "../types/user";
+import mongoService from "../loaders/mongodb";
 
 export const signin = async (userData: User) => {
   try {
     const isGuest = await isUserGuest(userData);
     if (isGuest) await signup(userData);
 
-    const user = await mongodbFindOne("user", { email: userData.email });
+    const user = await mongoService.findOne<User>("user", {
+      email: userData.email,
+    });
+
+    if (!user) throw new Error("Error: User is not found");
     const token = issueToken(user);
 
     return token;
@@ -27,7 +31,7 @@ export const getUserByToken = (accessToken: string | undefined) => {
 
     return user;
   } catch (error) {
-    console.log(`${(error as jwt.TokenExpiredError).expiredAt}`);
+    console.log(`AccessToken expired: ${(error as jwt.TokenExpiredError).expiredAt}`);
     return undefined;
   }
 };
@@ -35,7 +39,7 @@ export const getUserByToken = (accessToken: string | undefined) => {
 //회원가입하여 사용자 DB에 추가
 export const signup = async (user: User): Promise<void> => {
   try {
-    await mongodbInsert<User>("user", user);
+    await mongoService.insert<User>("user", user);
   } catch (error) {
     throw new Error("Signup error");
   }
@@ -44,7 +48,7 @@ export const signup = async (user: User): Promise<void> => {
 //boolean, 사용자 DB에 사용자가 존재하는지 여부
 export const isUserGuest = async (user: User): Promise<boolean> => {
   try {
-    const data = await mongodbFindOne(
+    const data = await mongoService.findOne<User>(
       "user",
       { email: user.email },
       { projection: { _id: 1 } }

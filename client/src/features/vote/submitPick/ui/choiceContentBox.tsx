@@ -8,13 +8,11 @@ import styles from "./choice.module.css";
 
 interface Props extends Pick<VoteDto, "choice" | "max_choice"> {
   isOpenSubmit: boolean;
-  choiceListIncludedCount: ChoiceDto[];
 }
 
 export const ChoiceContentBox = ({
   isOpenSubmit = false,
   choice: choiceList = [],
-  choiceListIncludedCount = [],
   max_choice = 1,
 }: Partial<Props>) => {
   const [selectedChoices, setSelectedChoices] = useState<
@@ -38,20 +36,20 @@ export const ChoiceContentBox = ({
     <div className={styles.contentBox}>
       {isOpenSubmit ? (
           choiceList.map((choice) => (
-            <div key={choice} className={styles.contentItem}>
+            <div key={choice.content} className={styles.contentItem}>
               <input
                 type="checkbox"
                 name="choice"
-                value={choice}
+                value={choice.content}
                 className={styles.choiceInput}
-                checked={selectedChoices.includes(choice)}
-                onChange={() => limitCheckHandler(choice)}
+                checked={selectedChoices.includes(choice.content)}
+                onChange={() => limitCheckHandler(choice.content)}
               />
-              <label className={styles.contentItemLabel}>{choice}</label>
+              <label className={styles.contentItemLabel}>{choice.content}</label>
             </div>
           ))
       ) : (
-        <NumChart data={choiceListIncludedCount} />
+        <NumChart data={choiceList} />
       )}
     </div>
   );

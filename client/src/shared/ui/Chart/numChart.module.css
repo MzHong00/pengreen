@@ -1,3 +1,9 @@
+.listContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
 .itemBox {
     width: fit-content;
     position: relative;

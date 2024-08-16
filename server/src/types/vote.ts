@@ -2,16 +2,14 @@ import { type ObjectId } from "mongodb";
 
 export interface Vote extends VoteForm {
   _id?: ObjectId;
-  like: number;
   like_member: Array<string>;
-  participant: number;
   participant_member: Participant[];
   start_time: Date;
 }
 
 export interface VoteForm {
   title: string;
-  choice: string[];
+  choice: ChoiceItem[];
   max_choice: number;
   category: Category;
   description: string;
@@ -44,6 +42,11 @@ export type Category =
   | "역사"
   | "인물"
   | "장소";
+
+export interface ChoiceItem {
+  content: string,
+  count: number
+}
 
 export interface Participant {
   user_id: string;

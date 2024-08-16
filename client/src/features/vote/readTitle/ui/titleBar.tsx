@@ -10,12 +10,12 @@ interface Props
 
 export const TitleBar = ({ title, picture, start_time }: Partial<Props>) => {
   return (
-    <div className={styles.titleBar}>
+    <section className={styles.titleBar}>
       <img alt="사진" src={picture} className={styles.profilesPicture} />
       <h1 title={title} className={styles.titleText}>
         {title}
       </h1>
       {start_time && <DiffDate start_time={start_time} />}
-    </div>
+    </section>
   );
 };

@@ -1,103 +1,126 @@
-import { FindOptions, type Document, type Filter } from "mongodb";
-import mongoClient from "../loaders/mongodb";
+import {
+  AnyBulkWriteOperation,
+  BulkWriteOptions,
+  FindOptions,
+  MongoClient,
+  OptionalUnlessRequiredId,
+  UpdateFilter,
+  UpdateOptions,
+  type Document,
+  type Filter,
+} from "mongodb";
 
-export async function mongodbInsert<T>(col: string, data: T) {
-  try {
-    const database = mongoClient.db("pengreen");
-    const collection_data = database.collection<any>(col);
+export class MongoDBService {
+  private db;
 
-    const result = await collection_data.insertOne(data);
-    console.log(`${col} 컬렉션에 ${data}입력 성공`);
-  } catch (error) {
-    throw new Error(`MongoDb Insert Error in ${error}`);
+  constructor(private client: MongoClient, private dbName: string) {
+    this.db = client.db(dbName);
   }
-}
 
-export const mongodbFind = async (
-  col: string,
-  query: Filter<Document>,
-  option?: FindOptions<Document>
-): Promise<any> => {
-  try {
-    const database = mongoClient.db("pengreen");
-    const selected_collection = database.collection(col);
-
-    const cursor = selected_collection.find(query, option);
-    const data = await cursor.toArray(); // 커서를 배열로 변환
-
-    return data;
-  } catch (error) {
-    throw new Error(`MongoDb Read Error in ${error}`);
+  // 컬렉션을 가져오는 메서드
+  private getCollection<T extends Document>(col: string) {
+    return this.db.collection<T>(col);
   }
-};
 
-export const mongodbFindOne = async (
-  col: string,
-  query: Filter<Document>,
-  option?: FindOptions<Document>
-): Promise<any> => {
-  try {
-    const database = mongoClient.db("pengreen");
-    const selected_collection = database.collection(col);
-
-    const data = await selected_collection.findOne(query, option);
-
-    return data;
-  } catch (error) {
-    throw new Error(`MongoDb ReadOne Error in ${error}`);
+  // 커스텀 에러 핸들링 메서드
+  private customError(action: string, error: any): never {
+    throw new Error(`MongoDB ${action} Error: ${error.message || error}`);
   }
-};
 
-export async function mongodbUpdate<T>(
-  col: string,
-  query: Object,
-  update: Object,
-  data?: T
-) {
-  try {
-    const database = mongoClient.db("pengreen");
-    const movies = database.collection<any>(col);
-
-    const result = await movies.updateOne(query, update, { upsert: true });
-
-    console.log(
-      `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`
-    );
-  } catch (error) {
-    throw new Error(`MongoDb Update Error in ${error}`);
-  }
-}
-
-export async function mongodbRemove(col: string, query: Object): Promise<void> {
-  try {
-    const database = mongoClient.db("pengreen");
-    const movies = database.collection(col);
-
-    const result = await movies.deleteMany(query);
-
-    if (result.deletedCount === 1) {
-      console.log("Successfully deleted one document.");
-    } else {
-      console.log("No documents matched the query. Deleted 0 documents.");
+  async insert<T extends Document>(
+    col: string,
+    data: OptionalUnlessRequiredId<T>
+  ): Promise<void> {
+    try {
+      const collection = this.getCollection<T>(col);
+      await collection.insertOne(data);
+      console.log(`${col} 컬렉션에 데이터 입력 성공`);
+    } catch (error) {
+      this.customError("Insert", error);
     }
-  } catch (error) {
-    throw new Error(`MongoDb Remove Error in ${error}`);
   }
-}
 
-export async function mongodbAggregate(
-  col: string,
-  pipeline: Array<Object>
-): Promise<any> {
-  try {
-    const database = mongoClient.db("pengreen");
-    const selected_collection = database.collection(col);
+  async find<T extends Document>(
+    col: string,
+    query: Filter<T>,
+    options?: FindOptions<T>
+  ): Promise<T[]> {
+    try {
+      const collection = this.getCollection<T>(col);
+      return (await collection.find(query, options).toArray()) as T[];
+    } catch (error) {
+      this.customError("Find", error);
+    }
+  }
 
-    const cursor = selected_collection.aggregate(pipeline);
-    const data = await cursor.toArray(); // 정렬된 데이터를 배열로 변환
+  async findOne<T extends Document>(
+    col: string,
+    query: Filter<T>,
+    options?: FindOptions<T>
+  ): Promise<T | null> {
+    try {
+      const collection = this.getCollection<T>(col);
+      return await collection.findOne(query, options);
+    } catch (error) {
+      this.customError("FindOne", error);
+    }
+  }
 
-    return data;
-  } catch (error) {
-    throw new Error(`MongoDb Aggregate Error in ${error}`);
+  async update<T extends Document>(
+    col: string,
+    query: Filter<T>,
+    update: UpdateFilter<T>,
+    options?: UpdateOptions
+  ): Promise<void> {
+    try {
+      const collection = this.getCollection<T>(col);
+      const result = await collection.updateOne(query, update, options);
+      console.log(
+        `${result.matchedCount} document(s) matched the filter, ${result.modifiedCount} document(s) updated`
+      );
+    } catch (error) {
+      this.customError("Update", error);
+    }
+  }
+
+  async remove<T extends Document>(
+    col: string,
+    query: Filter<T>
+  ): Promise<void> {
+    try {
+      const collection = this.getCollection<T>(col);
+      const result = await collection.deleteMany(query);
+      console.log(`Deleted ${result.deletedCount} document(s)`);
+    } catch (error) {
+      this.customError("Remove", error);
+    }
+  }
+
+  async aggregate<T extends Document>(
+    col: string,
+    pipeline: Document[]
+  ): Promise<T[]> {
+    try {
+      const collection = this.getCollection<T>(col);
+      return (await collection.aggregate(pipeline).toArray()) as T[];
+    } catch (error) {
+      this.customError("Aggregate", error);
+    }
+  }
+
+  async bulkWrite<T extends Document>(
+    col: string,
+    operations: AnyBulkWriteOperation<T>[],
+    options?: BulkWriteOptions
+  ): Promise<void> {
+    try {
+      const collection = this.getCollection<T>(col);
+      const result = await collection.bulkWrite(operations, options);
+      console.log(
+        `${result.matchedCount} document(s) matched the filter, ${result.modifiedCount} document(s) updated`
+      );
+    } catch (error) {
+      this.customError("BulkWrite", error);
+    }
   }
 }

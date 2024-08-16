@@ -1,7 +1,6 @@
 import axios from "shared/api/base";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { type VoteFormDto } from "entities/voteForm";
 import { VoteDto } from "entities/vote/vote";
 import { ChoiceDto } from "../model/types";
 
@@ -9,8 +8,8 @@ export const useUpdateUserPick = (vote_id: VoteDto["_id"]) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (selected: VoteFormDto["choice"]) =>
-      updateUserPick(vote_id, selected),
+    mutationFn: (pick: ChoiceDto["content"][]) =>
+      updateUserPick(vote_id, pick),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["choice", vote_id] });
       queryClient.invalidateQueries({ queryKey: ["isParticipant", vote_id] });

@@ -23,7 +23,11 @@ export const VoteCardSkeleton = ({
         />
       </section>
       <ChoiceSubmitBox name={owner?.name} max_choice={max_choice} disabled />
-      <ChoiceContentBox choice={choice} max_choice={max_choice} isOpenSubmit />
+      <ChoiceContentBox
+        choice={choice}
+        max_choice={max_choice}
+        isOpenSubmit={false}
+      />
       <section className={styles.otherInfoBox}>
         <UpdateLike />
         <Participant />
