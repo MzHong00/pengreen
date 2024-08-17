@@ -9,7 +9,7 @@ import mongoService from "../loaders/mongodb";
 export const issueToken = (payload: User) => {
   try {
     const accessToken = jwt.sign(payload, config.jwtAccessKey as string, {
-      expiresIn: config.jwtExpiredSecond,
+      expiresIn: `${config.jwtExpiredSecond}s`,
       issuer: "access issuer",
     });
 
@@ -48,7 +48,7 @@ export const reissueToken = async (refreshToken: string | undefined) => {
     if (!user) throw new Error("User not found or invalid");
 
     const accessToken = jwt.sign(user, config.jwtAccessKey as string, {
-      expiresIn: config.jwtExpiredSecond,
+      expiresIn: `${config.jwtExpiredSecond}s`,
       issuer: "access issuer",
     });
 

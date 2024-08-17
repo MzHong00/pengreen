@@ -9,7 +9,7 @@ import styles from "./header.module.css";
 
 export function LayoutHeader() {
   const { data: user } = useUserFetch();
-
+  
   const [loginForm, openLoginForm] = useDialog(<LoginForm />);
   const {
     ref: voteFormRef,

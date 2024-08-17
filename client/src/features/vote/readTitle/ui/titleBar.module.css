@@ -5,8 +5,10 @@
 }
 
 .titleText {
+    min-width: 25rem;
     overflow: hidden;
     font-weight: bold;
+    text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
 }

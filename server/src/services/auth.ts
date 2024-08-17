@@ -5,7 +5,7 @@ import { issueToken } from "./jwtToken";
 import { type User } from "../types/user";
 import mongoService from "../loaders/mongodb";
 
-export const signin = async (userData: User) => {
+export const login = async (userData: User) => {
   try {
     const isGuest = await isUserGuest(userData);
     if (isGuest) await signup(userData);
@@ -25,13 +25,13 @@ export const signin = async (userData: User) => {
 
 export const getUserByToken = (accessToken: string | undefined) => {
   if (!accessToken) return;
-
+  
   try {
     const user = jwt.verify(accessToken, config.jwtAccessKey as string) as User;
 
     return user;
   } catch (error) {
-    console.log(`AccessToken expired: ${(error as jwt.TokenExpiredError).expiredAt}`);
+    console.log(`${(error as jwt.TokenExpiredError)}, token: ${accessToken}`);
     return undefined;
   }
 };

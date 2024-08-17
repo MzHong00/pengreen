@@ -5,10 +5,8 @@
 }
 
 .itemBox {
-    width: fit-content;
     position: relative;
     display: flex;
-    justify-content: center;
     gap: 0.5rem;
     text-overflow: ellipsis;
 }
@@ -19,7 +17,6 @@
 }
 
 .itemText {
-    width: 21rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

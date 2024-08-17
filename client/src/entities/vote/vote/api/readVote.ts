@@ -9,7 +9,7 @@ export const useReadVote = (votePerPage: number, pageNumber: number) => {
   const [sortOptionParams] = useSearchParams();
   const categoryParams = sortOptionParams.get("category");
   const sortgoryParams = sortOptionParams.get("sort");
-
+  
   return useQuery({
     queryKey: ["voteList", pageNumber, categoryParams, sortgoryParams],
     queryFn: () =>

@@ -1,9 +1,9 @@
 import { HTMLAttributes, useCallback, useMemo, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { ChoiceDto, useUpdateUserPick } from "entities/vote/choice";
 import { type VoteDto } from "entities/vote/vote";
-import { type User } from "entities/user";
+import { useUserFetch, type User } from "entities/user";
 import { useUpdateLike } from "entities/vote/likes";
 import { UpdateLike } from "features/vote/updateLike";
 import { Participant } from "features/vote/readParticipants";
@@ -24,7 +24,7 @@ export const VoteCardList = ({ voteList = [], className, ...props }: Props) => {
   return (
     <div {...props} className={`${className}`}>
       {voteList.map(
-        (vote: VoteDto, idx: number) =>
+        (vote: VoteDto, idx: number) => 
           vote && <VoteCard key={idx} vote={vote} />
       )}
     </div>
@@ -35,8 +35,8 @@ export const VoteCard = ({ vote }: { vote: VoteDto }) => {
   const [isOpenSubmit, setIsOpenSubmit] = useState<boolean>(false);
 
   const [loginForm, openLoginForm] = useDialog(<LoginForm />);
-  const { data: user } = useQuery<User>({ queryKey: ["user"] });
-
+  
+  const { data: user } = useUserFetch();
   const { mutate: mutateLike } = useUpdateLike(vote._id);
   const { mutate: mutatePick } = useUpdateUserPick(vote._id);
 

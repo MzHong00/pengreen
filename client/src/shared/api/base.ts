@@ -40,7 +40,7 @@ instance.interceptors.response.use(
       }
 
       const accessToken = cookies.get("access_token");
-
+      
       error.config.headers = {
         Authorization: `Bearer ${accessToken}`,
       };

@@ -21,30 +21,20 @@ export const googleOauthForm = () => {
   return authorizeUrl;
 };
 
-export const googleLogout = () => {
-  try {
-    oAuth2Client.revokeCredentials((err, body) => {
-      console.log(err, body);
-    });
-  } catch (error) {
-    throw new Error("로그아웃 에러")
-  }
-};
-
-export const getGoogleProfiles = async (googleCode: string): Promise<any> => {
+export const googleOauth = async (googleCode: string): Promise<any> => {
   try {
     const r = await oAuth2Client.getToken(googleCode);
     oAuth2Client.setCredentials(r.tokens);
 
     const googleApi = "https://www.googleapis.com/oauth2/v2/userinfo";
 
-    const googleRedirect = await axios.get(googleApi, {
+    const googleUser = await axios.get(googleApi, {
       headers: {
         Authorization: `Bearer ${oAuth2Client.credentials.access_token}`,
       },
     });
     
-    return googleRedirect.data;
+    return googleUser.data;
   } catch (error) {
     throw new Error(`google redirect 에러 ${error}`)
   }

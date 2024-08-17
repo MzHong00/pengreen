@@ -4,16 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 
 import { User } from "../model/types";
 
-const cookies = new Cookies();
-
 export const useUserFetch = () => {
-  const accessToken = cookies.get("access_token");
+  const access_token = new Cookies().get("access_token");
 
-  return useQuery({
+  return useQuery<User>({
     queryKey: ["user"],
     queryFn: () => getUserByToken(),
     staleTime: 5000,
-    enabled: !!accessToken,
+    enabled: !!access_token,
   });
 };
 

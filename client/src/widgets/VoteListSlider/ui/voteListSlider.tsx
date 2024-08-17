@@ -7,22 +7,20 @@ import { VoteCardList } from "widgets/voteCard";
 
 import styles from "./voteListSlider.module.css";
 
-const VOTE_MAX_WIDTH = 550;
+const VOTE_WIDTH = 550;
+const VOTE_LIST_COLUMN = 2;
 
 export const VoteListSlider = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState<number>(1);
-  const votePerPage = useCalcVotePerPage(VOTE_MAX_WIDTH);
+  const votePerPage = useCalcVotePerPage(VOTE_WIDTH, VOTE_LIST_COLUMN);
 
-  const { data: preVote = [], refetch: preLoad } = useReadVote(
+  const { data: preVote, refetch: preLoad } = useReadVote(
     votePerPage,
     page - 1
   );
-  const { data: curVote = [], refetch: curLoad } = useReadVote(
-    votePerPage,
-    page
-  );
-  const { data: nxtVote = [], refetch: nxtLoad } = useReadVote(
+  const { data: curVote, refetch: curLoad } = useReadVote(votePerPage, page);
+  const { data: nxtVote, refetch: nxtLoad } = useReadVote(
     votePerPage,
     page + 1
   );
@@ -66,7 +64,7 @@ export const VoteListSlider = () => {
         )}
 
         <VoteCardList voteList={curVote} className={styles.voteList} />
-        
+
         {nxtVote?.length !== 0 && (
           <VoteCardList
             voteList={nxtVote}
