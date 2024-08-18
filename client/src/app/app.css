@@ -1,25 +1,53 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
-  --base-color: #35cdff;
-  --vote-card: rgba(224, 242, 254, 0.5);
-  --select-page-button: #96f5b8;
+  --base-color-blue: 53, 205, 255;
+  --base-color-green: 150, 245, 184;
+  --base-color-vote: 53, 205, 255, 0.05;
 }
 
- /* Chrome, Safari, Edge, Opera */
- input[type=number]::-webkit-outer-spin-button,
- input[type=number]::-webkit-inner-spin-button {
-     -webkit-appearance: none;
-     margin: 0;
- }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #e5e7eb;
+}
 
- /* Firefox */
- input[type=number] {
-     -moz-appearance: textfield;
- }
- 
+a {
+  color: inherit;
+  text-decoration: initial;
+}
+
+button, input[type="button"], input[type="submit"] {
+  background-color: transparent;
+  background-image: none;
+  font-weight: inherit;
+  line-height: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+dialog {
+  margin: auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+hr {
+  width: 100%;
+  border-width: 1px;
+  border-top: 1px;
+}
+
+
+
+/* Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* width */
 div::-webkit-scrollbar {
   width: 2px;

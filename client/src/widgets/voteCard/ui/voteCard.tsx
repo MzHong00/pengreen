@@ -1,16 +1,15 @@
 import { HTMLAttributes, useCallback, useMemo, useState } from "react";
-import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { ChoiceDto, useUpdateUserPick } from "entities/vote/choice";
 import { type VoteDto } from "entities/vote/vote";
-import { useUserFetch, type User } from "entities/user";
+import { useUserFetch } from "entities/user";
 import { useUpdateLike } from "entities/vote/likes";
 import { UpdateLike } from "features/vote/updateLike";
 import { Participant } from "features/vote/readParticipants";
 import { ChoiceSubmitBox } from "features/vote/submitPick";
 import { ChoiceContentBox } from "features/vote/submitPick";
 import { LoginForm } from "features/authentication/login";
-import { TitleBar } from "features/vote/readTitle";
+import { TitleBar } from "features/vote/title";
 import { useDialog } from "shared/hooks/useDialog";
 import { Button } from "shared/ui/Button";
 

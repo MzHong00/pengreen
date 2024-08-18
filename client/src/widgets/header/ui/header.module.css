@@ -18,7 +18,7 @@
     }
 }
 
-.headerRightSection {
+.profileCard {
     position: relative;
     display: flex;
     gap: 1.5rem;
@@ -30,10 +30,10 @@
 
 .profileMenuModal {
     width: max-content;
-    position: absolute;
-    right: 0;
-    top: 120%;
     padding: 0.25rem;
+    position: absolute;
+    top: 120%;
+    right: 0;
     background-color: white;
     box-shadow: 0px 0px 5px silver;
     font-size: small;

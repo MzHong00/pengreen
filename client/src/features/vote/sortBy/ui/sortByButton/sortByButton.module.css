@@ -10,7 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--base-color);
+    color: rgb(var(--base-color-blue));
     font-weight: bolder;
     font-size: 1.2em;
 }

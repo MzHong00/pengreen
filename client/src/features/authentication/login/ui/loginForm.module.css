@@ -9,27 +9,79 @@
     gap: 2.5rem;
 }
 
-.formTitle {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
+.formMain {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
 }
 
-.oauthTypeList {
-    display: grid;
-    gap: 0.5rem;
+.sectionContainer {
+    width: 100%;
+}
+
+.loginBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: small;
+    font-weight: bold;
+    gap: 1rem;
+}
+
+.loginInput {
+    height: 2.5rem;
+    padding-inline: 0.5rem;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.sendEmailButton {
+    margin: auto;
+    padding: 0.5rem;
+    border-radius: 100%;
+    background-color: rgba(var(--base-color-blue), 0.5);
+}
+
+.sectionLine {
+    width: 100%;
+    height: 1rem;
+    position: relative;
+    color: silver;
+    font-size: small;
+}
+
+.sectionText {
+    position: absolute;
+    left: 50%;
+    top: -50%;
+    transform: translateX(-50%);
+    background-color: white;
+    padding-inline: 1rem;
 }
 
 .oauthItemBox {
     display: flex;
     justify-content: center;
-    width: 18rem;
-    height: 2.5rem;
-    padding-left: 1.75rem;
-    padding-right: 1.75rem;
-    transition: opacity 0.3s ease;
+    gap: 1rem;
+    filter: drop-shadow(0px 1px 2px silver);
 }
 
-.otherDescription {
+.oauthItemBox > button {
+    border-radius: 100%;
+    padding: 3px;
+}
+
+.kakaoColor {
+    background-color: yellow;
+}
+
+.googleColor {
+    background-color: whitesmoke;
+}
+
+.formFooter {
     font-size: 0.875rem;
     line-height: 1.25rem;
 }

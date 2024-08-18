@@ -21,7 +21,7 @@ export function LayoutHeader() {
     <header className={styles.layoutHeader}>
       <span className={styles.logoTitle}>pengreen</span>
 
-      <div className={styles.headerRightSection}>
+      <div className={styles.profileCard}>
         {user ? (
           <>
             <ProfilesCard onClick={toggleVoteModal} picture={user.picture} />

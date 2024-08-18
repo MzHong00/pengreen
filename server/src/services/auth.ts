@@ -25,13 +25,13 @@ export const login = async (userData: User) => {
 
 export const getUserByToken = (accessToken: string | undefined) => {
   if (!accessToken) return;
-  
+
   try {
     const user = jwt.verify(accessToken, config.jwtAccessKey as string) as User;
 
     return user;
   } catch (error) {
-    console.log(`${(error as jwt.TokenExpiredError)}, token: ${accessToken}`);
+    console.log(`${(error as jwt.TokenExpiredError).expiredAt}`);
     return undefined;
   }
 };

@@ -12,9 +12,7 @@ import { useRef, type ReactNode, type MouseEvent } from "react";
     ]
 */
 
-export const useDialog = (
-  children: ReactNode,
-): [ReactNode, () => void] => {
+export const useDialog = (children: ReactNode): [ReactNode, () => void] => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const openHandler = () => dialogRef.current?.showModal();
@@ -22,15 +20,8 @@ export const useDialog = (
     e.target === e.currentTarget && dialogRef.current?.close();
 
   const JsxElement = (
-    <dialog
-      ref={dialogRef}
-      onClick={closeHandler}
-      className={`rounded-2xl overflow-hidden`}
-    >
-        {/* <div className="flex flex-row-reverse">
-          <IoMdClose onClick={closeHandler as any} className="cursor-pointer" />
-        </div> */}
-        {children}
+    <dialog ref={dialogRef} onClick={closeHandler}>
+      {children}
     </dialog>
   );
 

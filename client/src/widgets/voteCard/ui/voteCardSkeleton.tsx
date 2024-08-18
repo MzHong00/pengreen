@@ -2,7 +2,7 @@ import { VoteDto } from "entities/vote/vote";
 import { Participant } from "features/vote/readParticipants";
 import { UpdateLike } from "features/vote/updateLike";
 import { ChoiceContentBox, ChoiceSubmitBox } from "features/vote/submitPick";
-import { TitleBar } from "features/vote/readTitle";
+import { TitleBar } from "features/vote/title";
 import { Button } from "shared/ui/Button";
 
 import styles from "../ui/voteCard.module.css";

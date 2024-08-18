@@ -7,7 +7,7 @@ import styles from "./choice.module.css";
 interface Props extends User, Pick<VoteFormDto, "choice" | "max_choice"> {
   isOpenSubmit: boolean;
   onClickSubmit: (event: React.MouseEvent<HTMLInputElement>) => void;
-  myPick: Participant['pick']
+  myPick: Participant["pick"];
   disabled: boolean;
 }
 
@@ -22,7 +22,7 @@ export const ChoiceSubmitBox = ({
   return (
     <section className={styles.choiceSubmitBox}>
       <span
-        className={`flex ${myPick && styles.console}`}
+        className={`${myPick && styles.console} ${styles.submitContainer}`}
         data-username={userName}
         data-pick={myPick && myPick.join("\n")}
       >
@@ -30,10 +30,10 @@ export const ChoiceSubmitBox = ({
           type="submit"
           value={`${isOpenSubmit ? "제출" : "참여"}`}
           onClick={onClickSubmit}
-          disabled={disabled}
-          className={`${styles.actionButton} ${
-            myPick ? "bg-green-300" : "bg-sky-300"
+          className={`${styles.submitButton} ${
+            myPick ? styles.baseGreen : styles.baseBlue
           } `}
+          disabled={disabled}
         />
       </span>
       <div className={styles.maxChoiceButton}>

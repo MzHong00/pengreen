@@ -56,7 +56,7 @@
     align-items: center;
     position: absolute;
     bottom: 100%;
-    background-color: var(--select-page-button);
+    background-color: rgb(var(--base-color-green));
     border-radius: 5px;
     transition: 0.3s;
     transform: translateY(150%);

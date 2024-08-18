@@ -2,10 +2,10 @@ import styles from "./index.module.css";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const Button = ({ children, className, ...props }: Props) => {
+export const Button = ({ type="button", children, className, ...props }: Props) => {
   return (
     <button
-      type="button"
+      type={type}
       {...props}
       className={`${styles.button} ${className}`}
     >

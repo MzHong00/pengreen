@@ -8,6 +8,7 @@
     min-width: 25rem;
     overflow: hidden;
     font-weight: bold;
+    font-size: medium;
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
