@@ -9,8 +9,8 @@ export const createVote = async (formData: VoteForm): Promise<void> => {
   try {
     const vote: Vote = {
       ...formData,
-      like_member: [],
-      participant_member: [],
+      likes: [],
+      participants: [],
       start_time: new Date(),
     };
 
@@ -29,7 +29,7 @@ export const readVote = async (
   try {
     return await mongoService.aggregate<Vote>(collection, [
       { $match: category ? { category: category } : {} },
-      { $sort: sort ? { [sort as string]: -1 } : { _id: -1 } },
+      { $sort: sort ? { [`${sort}`]: -1 } : { _id: -1 } },
       { $skip: page * votePerPage },
       { $limit: votePerPage },
     ]);
@@ -75,12 +75,12 @@ export const updateChoice = async (
       collection,
       {
         _id: voteId,
-        "participant_member.user_id": user_id,
+        "participants.user_id": user_id,
       },
-      { projection: { "participant_member.$": 1 } }
+      { projection: { "participants.$": 1 } }
     );
 
-    const previousChoices = participant?.participant_member[0].pick as string[];
+    const previousChoices = participant?.participants[0].pick as string[];
 
     // 이전 선택 항목들의 count를 감소시키기 위한 업데이트
     const decreaseCountOps = previousChoices?.map((choice) => ({
@@ -101,8 +101,8 @@ export const updateChoice = async (
     if (participant) {
       const updatePickOps = {
         updateOne: {
-          filter: { _id: voteId, "participant_member.user_id": user_id },
-          update: { $set: { "participant_member.$.pick": choiceList } },
+          filter: { _id: voteId, "participants.user_id": user_id },
+          update: { $set: { "participants.$.pick": choiceList } },
         },
       };
       // 모든 업데이트를 하나의 bulkWrite로 처리
@@ -117,7 +117,7 @@ export const updateChoice = async (
           filter: { _id: voteId },
           update: {
             $push: {
-              participant_member: {
+              participants: {
                 user_id: user_id,
                 pick: choiceList,
               },
@@ -151,22 +151,22 @@ export const updateLike = async (
       collection,
       {
         _id: voteId,
-        like_member: { $in: [user_id] },
+        likes: { $in: [user_id] },
       },
-      { projection: { like_member: 1 } }
+      { projection: { likes: 1 } }
     );
 
     if (isLiker.length === 0) {
       await mongoService.update<Vote>(
         collection,
         { _id: voteId },
-        { $push: { like_member: user_id } },
+        { $push: { likes: user_id } },
       );
     } else {
       await mongoService.update<Vote>(
         collection,
         { _id: voteId },
-        { $pull: { like_member: user_id } }
+        { $pull: { likes: user_id } }
       );
     }
   } catch (error) {

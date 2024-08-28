@@ -1,25 +1,25 @@
-.container {
+.sortContainer {
     position: relative;
-    display: flex;
+}
+
+.sortByButton {
     flex-direction: column;
-    align-items: center;
     padding: 0.25rem;
 }
 
-.sortText {
+.curSortText {
     display: flex;
     justify-content: center;
     align-items: center;
     color: rgb(var(--base-color-blue));
     font-weight: bolder;
-    font-size: 1.2em;
+    font-size: 130%;
 }
 
-.sortButton {
-    height: 15px;
-    justify-content: center;
+.sortText {
+    display: flex;
     border-top-width: 1px;
-    font-size: 12px;
+    font-size: 80%;
     font-weight: lighter;
     font-family: math;
 }

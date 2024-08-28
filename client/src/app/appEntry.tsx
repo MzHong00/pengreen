@@ -15,7 +15,7 @@ const AppEntry = () => {
       <CookiesProvider>
         <RouterProvider router={appRouter} />
       </CookiesProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen />
     </QueryClientProvider>
   );
 };

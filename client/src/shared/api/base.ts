@@ -12,8 +12,10 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
+    // 토큰을 같이 전송
     const accessToken = cookies.get("access_token");
 
+    // 토큰 재발급 요청이 아니라면 access 토큰 전송 차단
     if (!config.url?.includes("/reissue"))
       config.headers["authorization"] = `Bearer ${accessToken}`;
 
@@ -28,7 +30,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => {
     if (response.status === 404) {
-      console.log("404 페이지로 넘어가야 함!");
+      console.log("404 Error");
     }
 
     return response;
@@ -36,9 +38,11 @@ instance.interceptors.response.use(
   async (error) => {
     if (error.response?.status === 401) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
+        // 토큰 재발급을 통해 쿠키에 적용된 상태
         await reissueAccessToken();
       }
 
+      /* ------- 토큰 인증 재요청 과정 ------- */
       const accessToken = cookies.get("access_token");
       
       error.config.headers = {

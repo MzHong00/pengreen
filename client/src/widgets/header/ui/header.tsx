@@ -2,6 +2,7 @@ import { useUserFetch } from "entities/user";
 import { LoginForm } from "features/authentication/login";
 import { ProfileMenu } from "widgets/profileMenu";
 import { ProfilesCard } from "widgets/profilesCard";
+import { Logo } from "widgets/logo";
 import { useDialog } from "shared/hooks/useDialog";
 import { useModal } from "shared/hooks/useModal";
 
@@ -19,7 +20,7 @@ export function LayoutHeader() {
 
   return (
     <header className={styles.layoutHeader}>
-      <span className={styles.logoTitle}>pengreen</span>
+      <Logo />
 
       <div className={styles.profileCard}>
         {user ? (

@@ -9,10 +9,10 @@ export const sortTypes: SortTypes[] = [
     },
     {
         sortType: 'Most liked',
-        queryString: 'like'
+        queryString: 'likes'
     },
     {
         sortType: 'Most Participants',
-        queryString: 'participant'
+        queryString: 'participants'
     },
 ]

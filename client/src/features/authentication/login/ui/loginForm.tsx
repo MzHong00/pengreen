@@ -13,7 +13,7 @@ export function LoginForm() {
     window.open(
       googleAuthUrl,
       "",
-      "width=400, height=600, left=800, top=300, scrollbars=yes"
+      "width=500, height=700, left=800, top=300, scrollbars=yes"
     );
   };
 

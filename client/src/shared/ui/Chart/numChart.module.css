@@ -1,18 +1,18 @@
-.listContainer {
+.itemList {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.5rem;
 }
 
-.itemBox {
+.item {
     position: relative;
     display: flex;
     gap: 0.5rem;
-    text-overflow: ellipsis;
 }
 
 .itemCount {
-    border-right: 2px solid #cef0ff;
+    border-right: 2px solid;
+    border-color: white;
     padding-right: 0.75rem;
 }
 

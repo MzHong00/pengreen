@@ -4,13 +4,12 @@ import { ChoiceDto, useUpdateUserPick } from "entities/vote/choice";
 import { type VoteDto } from "entities/vote/vote";
 import { useUserFetch } from "entities/user";
 import { useUpdateLike } from "entities/vote/likes";
+import { VoteCover } from "features/vote/cover";
 import { UpdateLike } from "features/vote/updateLike";
 import { Participant } from "features/vote/readParticipants";
 import { ChoiceSubmitBox } from "features/vote/submitPick";
 import { ChoiceContentBox } from "features/vote/submitPick";
-import { LoginForm } from "features/authentication/login";
 import { TitleBar } from "features/vote/title";
-import { useDialog } from "shared/hooks/useDialog";
 import { Button } from "shared/ui/Button";
 
 import styles from "./voteCard.module.css";
@@ -23,7 +22,7 @@ export const VoteCardList = ({ voteList = [], className, ...props }: Props) => {
   return (
     <div {...props} className={`${className}`}>
       {voteList.map(
-        (vote: VoteDto, idx: number) => 
+        (vote: VoteDto, idx: number) =>
           vote && <VoteCard key={idx} vote={vote} />
       )}
     </div>
@@ -33,81 +32,85 @@ export const VoteCardList = ({ voteList = [], className, ...props }: Props) => {
 export const VoteCard = ({ vote }: { vote: VoteDto }) => {
   const [isOpenSubmit, setIsOpenSubmit] = useState<boolean>(false);
 
-  const [loginForm, openLoginForm] = useDialog(<LoginForm />);
-  
   const { data: user } = useUserFetch();
   const { mutate: mutateLike } = useUpdateLike(vote._id);
   const { mutate: mutatePick } = useUpdateUserPick(vote._id);
 
   const isClickLike = useMemo(
-    () => (user?._id ? vote.like_member.includes(user?._id) : false),
-    [user, vote.like_member]
+    () => (user?._id ? vote.likes.includes(user?._id) : false),
+    [user, vote.likes]
   );
 
   const myPick = useMemo(
     () =>
-      vote.participant_member.find(
+      vote.participants.find(
         (participant) => participant.user_id === user?._id
       )?.pick,
-    [user, vote.participant_member]
+    [user, vote.participants]
   );
 
   const mutatePickHandler = useCallback(
     (event: React.MouseEvent<HTMLInputElement>) => {
       event.preventDefault();
-      if (!user?.name) return openLoginForm();
+      if (!user?.name || !event.currentTarget.form) return;
 
       setIsOpenSubmit((prev) => !prev);
 
-      const formData = new FormData(event.currentTarget.form!);
+      const formData = new FormData(event.currentTarget.form);
       const choice = formData.getAll("choice") as ChoiceDto["content"][];
 
       //formData가 있을 때만 서버에 전송
       if (choice.length !== 0) mutatePick(choice);
     },
-    [user?.name, openLoginForm, setIsOpenSubmit, mutatePick]
+    [user?.name, setIsOpenSubmit, mutatePick]
   );
 
   const mutateLikeHandler = useCallback(() => {
-    if (!user?.name) {
-      openLoginForm();
-      return;
-    }
+    if (!user?.name) return;
 
     mutateLike();
-  }, [user?.name, openLoginForm, mutateLike]);
+  }, [user?.name, mutateLike]);
 
   return (
-    <form className={`${styles.cardContainer}`}>
+    <div className={`${styles.cardContainer}`}>
       <TitleBar
         picture={vote.owner.picture}
         title={vote.title}
         start_time={vote.start_time}
       />
 
-      <ChoiceSubmitBox
-        isOpenSubmit={isOpenSubmit}
-        name={user?.name}
-        myPick={myPick}
-        max_choice={vote.max_choice}
-        onClickSubmit={mutatePickHandler}
-      />
-      <ChoiceContentBox
-        isOpenSubmit={isOpenSubmit}
-        choice={vote.choice}
-        max_choice={vote.max_choice}
-      />
+      <form className={styles.choiceBox}>
+        {user?.picture && (
+          <VoteCover
+            picture={user.picture}
+            choice={vote.choice}
+            className={styles.voteCover}
+          />
+        )}
+
+        <ChoiceSubmitBox
+          isOpenSubmit={isOpenSubmit}
+          name={user?.name}
+          myPick={myPick}
+          max_choice={vote.max_choice}
+          onClickSubmit={mutatePickHandler}
+        />
+        <ChoiceContentBox
+          isOpenSubmit={isOpenSubmit}
+          choice={vote.choice}
+          max_choice={vote.max_choice}
+        />
+      </form>
 
       <section className={styles.otherInfoBox}>
         <UpdateLike
-          like={vote.like_member.length}
+          like={vote.likes.length}
           isUserLike={isClickLike}
           onClick={mutateLikeHandler}
         />
-        <Participant participant={vote.participant_member.length} />
+        <Participant participant={vote.participants.length} />
         <Button className={styles.openDetailButton}>자세히</Button>
       </section>
-      {loginForm}
-    </form>
+    </div>
   );
 };

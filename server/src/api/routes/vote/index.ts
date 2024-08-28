@@ -30,7 +30,7 @@ export default (app: Router) => {
     const votePerPage = req.body.votePerPage === 0 ? 1 : req.body.votePerPage;
     const category = req.query.category as string;
     const sort = req.query.sort as string;
-
+    
     if (page < 0) return res.status(206).send([]);
     const votes = await readVote(page, votePerPage, category, sort);
 

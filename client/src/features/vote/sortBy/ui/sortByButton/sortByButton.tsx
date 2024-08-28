@@ -22,14 +22,15 @@ export const SortByButton = memo(
     };
 
     return (
-      <div className={styles.container}>
-        <span className={styles.sortText}>{currentSort}</span>
+      <div className={styles.sortContainer}>
+        <Button className={styles.sortByButton} onClick={toggleModal}>
+          <span className={styles.curSortText}>{currentSort}</span>
 
-        <Button onClick={toggleModal} className={styles.sortButton}>
-          <IoIosArrowDown size={12} />
-          Sort By
+          <span className={styles.sortText}>
+            <IoIosArrowDown size={12} />
+            Sort By
+          </span>
         </Button>
-
         {isOpen && <SelectSortItems ref={ref} onClick={selectSortHandler} />}
       </div>
     );

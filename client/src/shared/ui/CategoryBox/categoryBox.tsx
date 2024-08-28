@@ -15,15 +15,16 @@ export const CategoryBox = forwardRef<HTMLUListElement, Props>(
       <ul {...props} ref={ref}>
         {children}
         {categories.map((category) => (
-          <RoundButton
-            key={category}
-            className={`${styles.categoryButton} ${
-              selectedCategory === category && styles.selectedButton
-            }`}
-            onClick={buttonHandler}
-          >
-            {category}
-          </RoundButton>
+          <li key={category}>
+            <RoundButton
+              onClick={buttonHandler}
+              className={`${styles.categoryButton} ${
+                selectedCategory === category && styles.selectedButton
+              }`}
+            >
+              {category}
+            </RoundButton>
+          </li>
         ))}
       </ul>
     );

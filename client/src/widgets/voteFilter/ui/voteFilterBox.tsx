@@ -24,7 +24,7 @@ export const VoteFilterBox = () => {
 
   const removeCategoryParamsHandler = () => {
     filterParams.delete("category");
-    setFilterParams();
+    setFilterParams(filterParams);
   };
 
   const setSortParamsHandler = (event: React.MouseEvent<HTMLElement>) => {

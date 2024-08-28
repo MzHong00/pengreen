@@ -5,9 +5,7 @@
 }
 
 .titleText {
-    min-width: 25rem;
     overflow: hidden;
-    font-weight: bold;
     font-size: medium;
     text-align: center;
     text-overflow: ellipsis;
@@ -18,5 +16,5 @@
     width: 2rem;
     height: 2rem;
     margin-right: 0.75rem;
-    border-radius: 9999px;
+    border-radius: 100%;
 }

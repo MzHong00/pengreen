@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import { pageTypes } from "../consts/voteFormPageTypes";
 import { LimitChoiceCount } from "features/voteForm/limitChoiceCount";
 import { SetChoice } from "features/voteForm/setChoice";
 import { SetDescription } from "features/voteForm/setDescription";
@@ -10,6 +9,7 @@ import { Button } from "shared/ui/Button";
 import styles from "./selectFormPage.module.css";
 
 export const SelectFormPage = () => {
+  const pageTypes = ["항목 추가", "설정"];
   const [page, setPage] = useState("항목 추가");
   const [choiceList, setChoiceList] = useState<string[]>([]);
 
@@ -19,7 +19,9 @@ export const SelectFormPage = () => {
         {pageTypes.map((type) => (
           <Button
             key={type}
-            className={`${styles.headerItem} ${type === page && "bg-white"}`}
+            className={`${styles.headerItem} ${
+              type === page && styles.backgroundWhite
+            }`}
             onClick={() => setPage(type)}
           >
             <div className={styles.headerItemText}>
@@ -28,10 +30,11 @@ export const SelectFormPage = () => {
           </Button>
         ))}
       </div>
+
       <div className={styles.page}>
         <div
           className={`${styles.pageInner} ${
-            page === pageTypes[1] && "hidden"
+            page === pageTypes[1] && styles.hidden
           }`}
         >
           <SetChoice choiceList={choiceList} setChoiceList={setChoiceList} />
@@ -39,7 +42,7 @@ export const SelectFormPage = () => {
         </div>
         <div
           className={`${styles.pageInner}  ${
-            page === pageTypes[0] && "hidden"
+            page === pageTypes[0] && styles.hidden
           }`}
         >
           <SetDescription />
@@ -47,5 +50,5 @@ export const SelectFormPage = () => {
         </div>
       </div>
     </div>
-  )
+  );
 };

@@ -7,7 +7,8 @@ import { VoteCardList } from "widgets/voteCard";
 
 import styles from "./voteListSlider.module.css";
 
-const VOTE_SLICE_WIDTH = 550;
+const VOTE_SLICE_WIDTH = 750;
+// const VOTE_SLICE_WIDTH = 550;
 const VOTE_LIST_COLUMN = 2;
 
 export const VoteListSlider = () => {

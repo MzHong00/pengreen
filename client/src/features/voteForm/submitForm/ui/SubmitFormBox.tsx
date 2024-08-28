@@ -14,7 +14,7 @@ export const SubmitFormBox = ({ onSubmit, invalidationItems }: Props) => {
       <section className={styles.validationCheckBar}>
         {invalidationItems.length === 0 ? (
           <>
-            <p className={`${styles.vaildationText} text-green-600`}>
+            <p className={`${styles.vaildationText} ${styles.passText}`}>
               *투표를 생성할 수 있습니다.
             </p>
             <input
@@ -27,7 +27,10 @@ export const SubmitFormBox = ({ onSubmit, invalidationItems }: Props) => {
         ) : (
           <>
             {invalidationItems.map((item) => (
-              <p className={`${styles.vaildationText} text-red-500`} key={item}>
+              <p
+                key={item}
+                className={`${styles.vaildationText} ${styles.failText}`}
+              >
                 *{item} 입력이 올바르지 않습니다.
               </p>
             ))}

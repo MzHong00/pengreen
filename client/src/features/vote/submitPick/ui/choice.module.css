@@ -15,11 +15,11 @@
     z-index: 100;
 }
 
-
 .choiceSubmitBox {
+    height: 1rem;
+    margin-bottom: 0.5rem;
     position: relative;
     display: flex;
-    height: 1rem;
     gap: 0.5rem;
     font-size: 0.75rem;
 }
@@ -48,7 +48,7 @@
 }
 
 .baseGreen {
-    background-color: rgb(var(--base-color-blue)) !important
+    background-color: rgb(var(--base-color-green)) !important
 }
 
 .maxChoiceButton {

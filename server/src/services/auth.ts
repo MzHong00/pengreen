@@ -7,17 +7,13 @@ import mongoService from "../loaders/mongodb";
 
 export const login = async (userData: User) => {
   try {
-    const isGuest = await isUserGuest(userData);
-    if (isGuest) await signup(userData);
-
     const user = await mongoService.findOne<User>("user", {
       email: userData.email,
     });
 
-    if (!user) throw new Error("Error: User is not found");
-    const token = issueToken(user);
+    if (!user || !userData) return console.log("Error: User is not found");
 
-    return token;
+    return issueToken(user);
   } catch (error) {
     throw new Error("Login Error");
   }
@@ -37,9 +33,19 @@ export const getUserByToken = (accessToken: string | undefined) => {
 };
 
 //회원가입하여 사용자 DB에 추가
-export const signup = async (user: User): Promise<void> => {
+export const signup = async (userData: User) => {
   try {
-    await mongoService.insert<User>("user", user);
+    const isGuest = await isUserGuest(userData);
+    if (!isGuest) throw new Error("Already Our's member");
+
+    const validUser: User = {
+      ...userData,
+      userType: "regular",
+    };
+
+    await mongoService.insert<User>("user", validUser);
+
+    return issueToken(validUser);
   } catch (error) {
     throw new Error("Signup error");
   }

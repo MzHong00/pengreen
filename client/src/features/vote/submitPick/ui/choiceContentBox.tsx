@@ -21,8 +21,8 @@ export const ChoiceContentBox = ({
 
   const limitCheckHandler = (value: ChoiceDto["content"]) => {
     setSelectedChoices((prevSelectedChoices) => {
+      // 선택을 해제
       if (prevSelectedChoices.includes(value)) {
-        // 선택을 해제
         return prevSelectedChoices.filter((choice) => choice !== value);
       }
 
@@ -35,19 +35,19 @@ export const ChoiceContentBox = ({
   return (
     <div className={styles.contentBox}>
       {isOpenSubmit ? (
-          choiceList.map((choice) => (
-            <div key={choice.content} className={styles.contentItem}>
-              <input
-                type="checkbox"
-                name="choice"
-                value={choice.content}
-                className={styles.choiceInput}
-                checked={selectedChoices.includes(choice.content)}
-                onChange={() => limitCheckHandler(choice.content)}
-              />
-              <label className={styles.contentItemLabel}>{choice.content}</label>
-            </div>
-          ))
+        choiceList.map((choice) => (
+          <div key={choice.content} className={styles.contentItem}>
+            <input
+              type="checkbox"
+              name="choice"
+              value={choice.content}
+              className={styles.choiceInput}
+              checked={selectedChoices.includes(choice.content)}
+              onChange={() => limitCheckHandler(choice.content)}
+            />
+            <label className={styles.contentItemLabel}>{choice.content}</label>
+          </div>
+        ))
       ) : (
         <NumChart data={choiceList} />
       )}

@@ -1,8 +1,15 @@
-export interface User {
+import { regions } from "shared/consts";
+
+export interface User extends UserDetail {
   _id?: string;
   name: string;
   email: string;
   picture?: string;
-  dateOfBirth?: Date;
-  sex?: "female" | "male" | "남성" | "여성";
+  userType?: "regular" | "premium";
+}
+
+export interface UserDetail {
+  sex?: "남" | "여";
+  birth?: Date;
+  location?: (typeof regions)[number];
 }
