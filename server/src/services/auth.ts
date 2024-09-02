@@ -38,14 +38,14 @@ export const signup = async (userData: User) => {
     const isGuest = await isUserGuest(userData);
     if (!isGuest) throw new Error("Already Our's member");
 
-    const validUser: User = {
+    const newMember: User = {
       ...userData,
       userType: "regular",
     };
 
-    await mongoService.insert<User>("user", validUser);
+    await mongoService.insert<User>("user", newMember);
 
-    return issueToken(validUser);
+    return issueToken(newMember);
   } catch (error) {
     throw new Error("Signup error");
   }

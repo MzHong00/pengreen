@@ -1,14 +1,16 @@
 import { type ObjectId } from "mongodb";
 import { categories } from "./consts";
+import { User } from "./user";
 
 export interface Vote extends VoteForm {
-  _id?: ObjectId;
-  likes: Array<string>;
-  participants: Participant[];
+  _id?: ObjectId | string;
+  likes: Array<User["_id"]>;
+  participants: Array<Participant>;
   start_time: Date;
 }
 
 export interface VoteForm {
+  owner: User;
   title: string;
   choice: ChoiceItem[];
   max_choice: number;
@@ -17,17 +19,11 @@ export interface VoteForm {
 }
 
 export interface ChoiceItem {
-  content: string,
-  count: number
+  content: string;
+  count: number;
 }
 
 export interface Participant {
-  user_id: string;
-  pick: Array<string>;
-}
-
-export interface Liker {
-  _id?: ObjectId;
-  user_id: string;
-  vote_id: string;
+  user: Pick<User, "_id" | "location" | "gender" | "birth">;
+  pick: ChoiceItem['content'][];
 }

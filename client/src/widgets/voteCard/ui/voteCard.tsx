@@ -13,6 +13,7 @@ import { TitleBar } from "features/vote/title";
 import { Button } from "shared/ui/Button";
 
 import styles from "./voteCard.module.css";
+import { Link } from "react-router-dom";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   voteList: VoteDto[] | undefined;
@@ -44,11 +45,11 @@ export const VoteCard = ({ vote }: { vote: VoteDto }) => {
   const myPick = useMemo(
     () =>
       vote.participants.find(
-        (participant) => participant.user_id === user?._id
+        (participant) => participant.user._id === user?._id
       )?.pick,
     [user, vote.participants]
   );
-
+  
   const mutatePickHandler = useCallback(
     (event: React.MouseEvent<HTMLInputElement>) => {
       event.preventDefault();
@@ -109,7 +110,9 @@ export const VoteCard = ({ vote }: { vote: VoteDto }) => {
           onClick={mutateLikeHandler}
         />
         <Participant participant={vote.participants.length} />
-        <Button className={styles.openDetailButton}>자세히</Button>
+        <Button className={styles.openDetailButton}>
+          <Link to={`vote/${vote._id}`}>자세히</Link>
+        </Button>
       </section>
     </div>
   );

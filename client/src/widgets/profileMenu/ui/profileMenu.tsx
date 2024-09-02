@@ -24,10 +24,14 @@ export const ProfileMenu = forwardRef<HTMLDivElement, Partial<Props>>(
             <p>{email}</p>
           </div>
         </Link>
-        <Button onClick={logoutActions}>로그아웃</Button>
+        <Button className={styles.menuButton} onClick={logoutActions}>
+          로그아웃
+        </Button>
         <hr />
         <Link to="/dashboard">내 투표</Link>
-        <Button onClick={openVoteForm}>투표 생성</Button>
+        <Button className={styles.menuButton} onClick={openVoteForm}>
+          투표 생성
+        </Button>
         {voteForm}
       </nav>
     );

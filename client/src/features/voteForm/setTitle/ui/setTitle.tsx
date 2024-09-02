@@ -3,7 +3,11 @@ import { blockSubmitByEnterKey } from "shared/helper/blockSubmitByEnterKey";
 
 import styles from "./setTitleBar.module.css";
 
-export const SetTitle = ({ picture }: Pick<User, "picture">) => {
+interface Pros {
+  picture?: User["picture"];
+}
+
+export const SetTitle = ({ picture }: Pros) => {
   return (
     <div className={styles.container}>
       <img src={picture} alt="" className={styles.userImgBox} />
@@ -12,7 +16,7 @@ export const SetTitle = ({ picture }: Pick<User, "picture">) => {
         placeholder="제목"
         className={styles.titleInput}
         onKeyDown={blockSubmitByEnterKey}
-        required  
+        required
       />
     </div>
   );

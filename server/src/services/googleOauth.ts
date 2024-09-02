@@ -2,6 +2,8 @@ import axios from "axios";
 import { OAuth2Client } from "google-auth-library";
 
 import { keys } from "../config/oauth2.keys";
+import { filterByKeys } from "../utils/filterByKeys";
+import { User } from "../types/user";
 
 const oAuth2Client = new OAuth2Client(
   keys.web.client_id,
@@ -28,13 +30,13 @@ export const googleOauth = async (googleCode: string): Promise<any> => {
 
     const googleApi = "https://www.googleapis.com/oauth2/v2/userinfo";
 
-    const googleUser = await axios.get(googleApi, {
+    const fetchGoogle = await axios.get(googleApi, {
       headers: {
         Authorization: `Bearer ${oAuth2Client.credentials.access_token}`,
       },
     });
     
-    return googleUser.data;
+    return fetchGoogle.data;
   } catch (error) {
     throw new Error(`google redirect 에러 ${error}`)
   }

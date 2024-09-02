@@ -2,9 +2,9 @@ import { Router } from "express";
 
 import {
   createVote,
-  readVote,
-  readVoteById,
   readVoteByOwnerId,
+  readVoteList,
+  readVoteDetail,
   updateChoice,
   updateLike,
 } from "../../../services/vote";
@@ -25,25 +25,26 @@ export default (app: Router) => {
     res.status(201).send("Create successful");
   });
 
-  route.post("/read", async (req, res) => {
+  
+  route.get("/read-id", async (req, res) => {
+    const voteId = req.query.voteId as string;
+
+    if (!voteId) return res.status(400).send("voteId is missing");
+    const vote = await readVoteDetail(voteId);
+    
+    res.status(206).send(vote[0]);
+  });
+
+  route.post("/read-list", async (req, res) => {
     const page = parseInt(req.body.page as string) - 1;
     const votePerPage = req.body.votePerPage === 0 ? 1 : req.body.votePerPage;
     const category = req.query.category as string;
     const sort = req.query.sort as string;
     
     if (page < 0) return res.status(206).send([]);
-    const votes = await readVote(page, votePerPage, category, sort);
+    const votes = await readVoteList(page, votePerPage, category, sort);
 
     res.status(206).send(votes);
-  });
-
-  route.post("/read-id", async (req, res) => {
-    const { voteId } = req.body;
-
-    if (!voteId) return res.status(400).send("voteId is missing");
-    const vote = await readVoteById(voteId);
-
-    res.status(206).send(vote);
   });
 
   route.post("/read-owner", (req, res) => {
@@ -61,8 +62,8 @@ export default (app: Router) => {
 
     const user = getUserByToken(accessToken);
     if (!user) return res.status(401).send("Unauthorized: User not found");
-
-    await updateChoice(user._id, vote_id, choiceList);
+    
+    await updateChoice(user, vote_id, choiceList);
 
     res.status(200).send("Update Choice successful");
   });

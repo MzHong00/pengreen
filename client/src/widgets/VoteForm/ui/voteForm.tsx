@@ -1,4 +1,5 @@
 import { useState, type MouseEvent } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { User } from "entities/user";
 import { VoteFormDto } from "entities/voteForm";
@@ -11,7 +12,6 @@ import {
 import { VoteFormValidation } from "widgets/voteFormValidation";
 
 import styles from "./voteForm.module.css";
-import { useQueryClient } from "@tanstack/react-query";
 
 export const VoteForm = () => {
   const user = useQueryClient().getQueryData(["user"]) as User | undefined;

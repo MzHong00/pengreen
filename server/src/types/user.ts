@@ -1,7 +1,8 @@
-import { regions, sex } from "./consts";
+import { ObjectId } from "mongodb";
+import { regions, gender } from "./consts";
 
 export interface User extends UserDetail {
-  _id: string;
+  _id: ObjectId | string;
   name: string;
   email: string;
   picture?: string;
@@ -9,7 +10,7 @@ export interface User extends UserDetail {
 }
 
 export interface UserDetail {
-  sex?: (typeof sex)[number];
+  gender?: (typeof gender)[number];
   birth?: Date;
   location?: (typeof regions)[number];
 }

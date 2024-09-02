@@ -48,4 +48,4 @@ export const regions = [
 
 export const sortType = ["like", "participant", "latest"] as const;
 
-export const sex = ["남", "여"] as const;
+export const gender = ["남", "여"] as const;

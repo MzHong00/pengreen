@@ -8,3 +8,7 @@
     width: 3rem;
     border-radius: 100%;
 }
+
+.menuButton {
+    justify-content: start;
+}

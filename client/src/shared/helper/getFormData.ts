@@ -1,8 +1,8 @@
 export const getFormData = <T>(
-  htmlForm: HTMLFormElement | null,
+  htmlForm: HTMLFormElement,
   attachJson?: object
-): T | undefined => {
-  if (!htmlForm) return;
+): T=> {
+  if (!htmlForm) throw new Error("htmlForm is empty");
 
   const form = new FormData(htmlForm);
 

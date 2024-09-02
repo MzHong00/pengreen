@@ -16,15 +16,20 @@ export const SignupForm = ({ OAuthData }: Props) => {
   const onSubmitSignup = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const userData = getFormData<User>(
-      e.currentTarget.form,
-      filterByKeys<Omit<User, keyof UserDetail>>(OAuthData, [
-        "_id",
-        "name",
-        "email",
-        "picture",
-      ])
-    );
+    if (!OAuthData || !e.currentTarget.form) return;
+
+    const userDetail = getFormData<UserDetail>(e.currentTarget.form);
+    const userOAuth = filterByKeys<Omit<User, keyof UserDetail>>(OAuthData, [
+      "_id",
+      "name",
+      "email",
+      "picture",
+    ]);
+
+    const userData = {
+      ...userDetail,
+      ...userOAuth,
+    };
 
     if (userData) await signup(userData);
 
@@ -39,8 +44,8 @@ export const SignupForm = ({ OAuthData }: Props) => {
       <span>가입을 환영합니다!</span>
 
       <main className={styles.selectBox}>
-        <label htmlFor="sex">성별</label>
-        <select name="sex" id="sex">
+        <label htmlFor="gender">성별</label>
+        <select name="gender" id="gender">
           <option value="" disabled selected>
             선택
           </option>
@@ -72,7 +77,10 @@ export const SignupForm = ({ OAuthData }: Props) => {
         가입
       </Button>
 
-      <p className={styles.notifyText}>※ 이 정보는 통계 목적으로만 사용되며, 회원가입 후에도 언제든지 수정이 가능합니다.</p>
+      <p className={styles.notifyText}>
+        ※ 이 정보는 통계 목적으로만 사용되며, 회원가입 후에도 언제든지 수정이
+        가능합니다.
+      </p>
     </form>
   );
 };

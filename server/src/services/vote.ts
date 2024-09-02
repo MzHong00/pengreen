@@ -1,7 +1,9 @@
 import { ObjectId } from "mongodb";
 
 import mongoService from "../loaders/mongodb";
-import { type Vote, type VoteForm } from "../types/vote";
+import { type Participant, type Vote, type VoteForm } from "../types/vote";
+import { type User } from "../types/user";
+import { filterByKeys } from "../utils/filterByKeys";
 
 const collection = "vote";
 
@@ -20,7 +22,7 @@ export const createVote = async (formData: VoteForm): Promise<void> => {
   }
 };
 
-export const readVote = async (
+export const readVoteList = async (
   page: number,
   votePerPage: number,
   category: string,
@@ -38,19 +40,65 @@ export const readVote = async (
   }
 };
 
-export const readVoteById = async (voteId: string): Promise<Vote | null> => {
+export const readVoteDetail = async (voteId: Vote["_id"]) => {
   try {
-    const vote = await mongoService.findOne<Vote>(collection, {
-      _id: ObjectId.createFromHexString(voteId),
-    });
-
-    return vote;
+    return await mongoService.aggregate(collection, [
+      { $match: { _id: new ObjectId(voteId) } },
+      { $unwind: "$participants" },
+      {
+        $addFields: {
+          "participants.user.age": {
+            $dateDiff: {
+              startDate: {
+                $toDate: "$participants.user.birth",
+              },
+              endDate: "$$NOW",
+              unit: "year",
+            },
+          },
+        },
+      },
+      {
+        $facet: {
+          locationAggregate: [
+            {
+              $group: {
+                _id: "$participants.user.location",
+                locationCount: { $count: {} },
+              },
+            },
+          ],
+          genderAggregate: [
+            {
+              $group: {
+                _id: "$participants.user.gender",
+                genderCount: { $count: {} },
+              },
+            },
+          ],
+          ageAggregate: [
+            {
+              $bucket: {
+                groupBy: "$participants.user.age",
+                boundaries: [10, 20, 30, 40, 50, 60],
+                default: "other",
+                output: {
+                  count: { $sum: 1 },
+                },
+              },
+            },
+          ],
+        },
+      },
+    ]);
   } catch (error) {
-    throw new Error(`Read Vote By Id Error: ${error}`);
+    throw error;
   }
 };
 
-export const readVoteByOwnerId = async (own_id: string): Promise<Vote[]> => {
+export const readVoteByOwnerId = async (
+  own_id: User["_id"]
+): Promise<Vote[]> => {
   try {
     const voteList = await mongoService.find<Vote>(collection, {
       "owner._id": own_id,
@@ -63,8 +111,8 @@ export const readVoteByOwnerId = async (own_id: string): Promise<Vote[]> => {
 };
 
 export const updateChoice = async (
-  user_id: string,
-  vote_id: string,
+  user: User,
+  vote_id: Vote["_id"],
   choiceList: Array<string>
 ): Promise<void> => {
   const voteId = new ObjectId(vote_id);
@@ -75,20 +123,10 @@ export const updateChoice = async (
       collection,
       {
         _id: voteId,
-        "participants.user_id": user_id,
+        "participants.user._id": user._id,
       },
       { projection: { "participants.$": 1 } }
     );
-
-    const previousChoices = participant?.participants[0].pick as string[];
-
-    // 이전 선택 항목들의 count를 감소시키기 위한 업데이트
-    const decreaseCountOps = previousChoices?.map((choice) => ({
-      updateOne: {
-        filter: { _id: voteId, "choice.content": choice },
-        update: { $inc: { "choice.$.count": -1 } },
-      },
-    }));
 
     // 새로운 선택 항목들의 count를 증가시키기 위한 업데이트
     const increaseCountOps = choiceList.map((choice) => ({
@@ -99,9 +137,20 @@ export const updateChoice = async (
     }));
 
     if (participant) {
+      /* 이미 투표를 한 경우 */
+      const previousChoices = participant.participants[0].pick;
+
+      // 이전 선택 항목들의 count를 감소시키기 위한 업데이트
+      const decreaseCountOps = previousChoices.map((choice) => ({
+        updateOne: {
+          filter: { _id: voteId, "choice.content": choice },
+          update: { $inc: { "choice.$.count": -1 } },
+        },
+      }));
+
       const updatePickOps = {
         updateOne: {
-          filter: { _id: voteId, "participants.user_id": user_id },
+          filter: { _id: voteId, "participants.user._id": user._id },
           update: { $set: { "participants.$.pick": choiceList } },
         },
       };
@@ -112,13 +161,19 @@ export const updateChoice = async (
         updatePickOps,
       ]);
     } else {
+      /* 투표를 하지 않은 경우 */
       const addParticipantOps = {
         updateOne: {
           filter: { _id: voteId },
           update: {
             $push: {
               participants: {
-                user_id: user_id,
+                user: filterByKeys<Participant["user"]>(user, [
+                  "_id",
+                  "birth",
+                  "location",
+                  "gender",
+                ]),
                 pick: choiceList,
               },
             },
@@ -139,12 +194,12 @@ export const updateChoice = async (
 
 //좋아요 버튼 Count DB에 반영
 export const updateLike = async (
-  user_id: string,
-  vote_id: string
+  user_id: User["_id"],
+  vote_id: Vote["_id"]
 ): Promise<void> => {
   try {
     //_id는 ObjectId 타입이기 때문에 vote_id를 ObjectId로 바꾸고 비교해야 함
-    const voteId = ObjectId.createFromHexString(vote_id);
+    const voteId = new ObjectId(vote_id);
 
     // 사용자가 좋아요를 누른 사람인지 확인
     const isLiker = await mongoService.find<Vote>(
@@ -160,7 +215,7 @@ export const updateLike = async (
       await mongoService.update<Vote>(
         collection,
         { _id: voteId },
-        { $push: { likes: user_id } },
+        { $push: { likes: user_id } }
       );
     } else {
       await mongoService.update<Vote>(

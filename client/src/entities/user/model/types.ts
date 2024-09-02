@@ -4,12 +4,12 @@ export interface User extends UserDetail {
   _id?: string;
   name: string;
   email: string;
-  picture?: string;
+  picture: string;
   userType?: "regular" | "premium";
 }
 
 export interface UserDetail {
-  sex?: "남" | "여";
+  gender?: "남" | "여";
   birth?: Date;
   location?: (typeof regions)[number];
 }
