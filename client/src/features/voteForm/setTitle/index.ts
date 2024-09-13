@@ -1,1 +1,1 @@
-export { SetTitle } from "./ui/setTitle";
+export { TitleBar } from "./ui/titleBar";

@@ -1,4 +1,4 @@
-.container {
+.voteCover {
     padding: 0.75rem;
     display: flex;
     gap: 1rem;
@@ -10,7 +10,7 @@
     overflow: hidden;
 }
 
-.voteCover {
+.content {
     margin-block: auto;
     overflow: hidden;
 }

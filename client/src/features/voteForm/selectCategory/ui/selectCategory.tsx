@@ -9,10 +9,10 @@ import { useModal } from "shared/hooks/useModal";
 import styles from "./selectCategory.module.css";
 
 interface Props {
-  setInvalidationItems: Dispatch<React.SetStateAction<string[]>>;
+  setEmptyVoteFields: Dispatch<React.SetStateAction<string[]>>;
 }
 
-export const SelectCategory = ({ setInvalidationItems }: Props) => {
+export const SelectCategory = ({ setEmptyVoteFields }: Props) => {
   const [selectedCategory, setSelectedCategory] = useState<Category>();
   const { ref, isOpen, toggleModal } = useModal();
 
@@ -21,8 +21,8 @@ export const SelectCategory = ({ setInvalidationItems }: Props) => {
 
     setSelectedCategory(targetText);
     toggleModal(event);
-    if (setInvalidationItems)
-      setInvalidationItems((prev) =>
+    if (setEmptyVoteFields)
+      setEmptyVoteFields((prev) =>
         prev.filter((item) => item !== "카테고리")
       );
   };

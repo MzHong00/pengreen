@@ -1,1 +1,1 @@
-export { SetChoice } from "./ui/setChoice";
+export { DraggableChoiceList } from "./ui/choiceList/draggableChoiceList";

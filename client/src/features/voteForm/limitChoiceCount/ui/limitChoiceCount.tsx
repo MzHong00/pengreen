@@ -3,13 +3,13 @@ import { useState, type ChangeEvent } from "react";
 import styles from "./limitChoiceCount.module.css";
 
 interface Props {
-  choiceList: string[];
+  limitCount: number
 }
 
-export const LimitChoiceCount = ({ choiceList }: Props) => {
+export const LimitChoiceCount = ({ limitCount }: Props) => {
   const [maxChoice, setMaxChoice] = useState<number>(1);
 
-  const rangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangeMaxchoice = (event: ChangeEvent<HTMLInputElement>) => {
     setMaxChoice(parseInt(event.target.value));
   };
 
@@ -19,15 +19,15 @@ export const LimitChoiceCount = ({ choiceList }: Props) => {
         선택 개수:
         <span className={styles.innerDiv}>{maxChoice}</span>
       </label>
-          <input
-            type="range"
-            name="max_choice"
-            min="1"
-            max={choiceList.length}
-            value={maxChoice}
-            className={styles.input}
-            onChange={rangeHandler}
-          />
+      <input
+        type="range"
+        name="max_choice"
+        min="1"
+        max={limitCount}
+        value={maxChoice}
+        className={styles.input}
+        onChange={onChangeMaxchoice}
+      />
     </>
   );
 };

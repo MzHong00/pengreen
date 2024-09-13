@@ -1,13 +1,13 @@
 import { Button } from "shared/ui/Button";
 
-import styles from "./submitFormBox.module.css";
+import styles from "./formValidator.module.css";
 
 interface Props {
   onSubmit: (e: React.MouseEvent<HTMLInputElement>) => void;
   invalidationItems: string[];
 }
 
-export const SubmitFormBox = ({ onSubmit, invalidationItems }: Props) => {
+export const FormValidator = ({ onSubmit, invalidationItems }: Props) => {
   return (
     <div>
       <h2 className={styles.title}>투표를 생성 하시겠습니까?</h2>

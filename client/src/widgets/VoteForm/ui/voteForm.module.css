@@ -1,6 +1,7 @@
 .formContainer {
     width: 36rem;
-    height: 36rem;
+    height: 80vh;
+    max-height: 900px;
     display: flex;
     flex-direction: column;
     align-items: center;

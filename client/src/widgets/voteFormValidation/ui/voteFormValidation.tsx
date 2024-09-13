@@ -1,48 +1,53 @@
-import { type MouseEventHandler, type MouseEvent, type Dispatch } from "react";
+import {
+  type MouseEventHandler,
+  type MouseEvent,
+  type Dispatch,
+  HTMLAttributes,
+} from "react";
 import { MdKeyboardArrowLeft } from "@react-icons/all-files/md/MdKeyboardArrowLeft";
 
 import { type User } from "entities/user";
 import { type VoteFormDto } from "entities/voteForm";
 import { createVote } from "entities/vote/vote";
-import { getFormData, SubmitFormBox } from "features/voteForm/submitForm";
+import { FormValidator } from "features/voteForm/validateForm";
 import { SelectCategory } from "features/voteForm/selectCategory";
 import { VoteCardSkeleton } from "widgets/voteCard";
 import { Button } from "shared/ui/Button";
 
 import styles from "./voteFormValidation.module.css";
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
   owner?: User;
-  className?: string;
-  formData?: Omit<VoteFormDto, 'owner'>;
-  invalidationItems: string[];
-  setInvalidationItems: Dispatch<React.SetStateAction<string[]>>
+  formData?: Omit<VoteFormDto, "owner">;
+  emptyVoteFields: string[];
+  setEmptyVoteFields: Dispatch<React.SetStateAction<string[]>>;
   goBackHandler: MouseEventHandler<HTMLButtonElement>;
 }
 
 export const VoteFormValidation = ({
   owner,
-  className,
   formData,
-  invalidationItems,
-  setInvalidationItems,
+  emptyVoteFields,
+  setEmptyVoteFields,
   goBackHandler,
+  className,
+  ...props
 }: Props) => {
-  const onSubmitForm = (e: MouseEvent<HTMLInputElement>) => {
+  const onSubmitForm = async (e: MouseEvent<HTMLInputElement>) => {
     e.preventDefault();
 
-    if (!owner) return;
-    const formData = getFormData(e);
-    
-    createVote({
+    if (!owner || !formData) return;
+
+    await createVote({
       owner: owner,
-      ...formData
+      ...formData,
     });
+    
     window.location.reload();
   };
 
   return (
-    <div className={`${styles.validationContainer} ${className}`}>
+    <div className={`${styles.validationContainer} ${className}`} {...props}>
       <nav className={styles.topBar}>
         <Button onClick={goBackHandler}>
           <MdKeyboardArrowLeft size={30} />
@@ -51,16 +56,16 @@ export const VoteFormValidation = ({
       </nav>
 
       <main className={styles.vaildationContent}>
-        <SelectCategory setInvalidationItems={setInvalidationItems}/>
+        <SelectCategory setEmptyVoteFields={setEmptyVoteFields} />
         <VoteCardSkeleton
           owner={owner}
           title={formData?.title}
           max_choice={formData?.max_choice}
           choice={formData?.choice}
         />
-        <SubmitFormBox
+        <FormValidator
           onSubmit={onSubmitForm}
-          invalidationItems={invalidationItems}
+          invalidationItems={emptyVoteFields}
         />
       </main>
     </div>

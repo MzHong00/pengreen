@@ -25,12 +25,12 @@ const readVote = async (
 ): Promise<VoteDto[] | undefined> => {
   try {
     const votes = await axios.post(
-      "/api/vote/read-list",
+      `/api/vote/read-list`,
       {
         votePerPage: votePerPage,
         page: pageNumber,
       },
-      { params: queryString }
+      {params: {queryString}}
     );
 
     return votes.data;

@@ -1,1 +1,1 @@
-export { SetDescription } from "./ui/setDescription";
+export { DescriptionInput } from "./ui/descriptionInput";

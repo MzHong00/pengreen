@@ -1,6 +1,6 @@
-import styles from "./setDescription.module.css";
+import styles from "./descriptionInput.module.css";
 
-export const SetDescription = () => {
+export const DescriptionInput = () => {
   return (
     <>
       <label>

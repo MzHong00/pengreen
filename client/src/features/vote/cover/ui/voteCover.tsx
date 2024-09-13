@@ -13,9 +13,9 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 
 export const VoteCover = ({ picture, choice, className, ...props }: Props) => {
   return (
-    <div {...props} className={`${styles.container} ${className}`}>
+    <div {...props} className={`${styles.voteCover} ${className}`}>
       <img src={picture} alt="썸네일" />
-      <div className={`${styles.voteCover}`}>
+      <div className={`${styles.content}`}>
         <NumChart data={choice} className={styles.choice} />
       </div>
     </div>

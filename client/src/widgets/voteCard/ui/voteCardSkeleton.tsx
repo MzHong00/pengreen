@@ -1,7 +1,7 @@
 import { VoteDto } from "entities/vote/vote";
 import { Participant } from "features/vote/readParticipants";
 import { UpdateLike } from "features/vote/updateLike";
-import { ChoiceContentBox, ChoiceSubmitBox } from "features/vote/submitPick";
+import { ChoiceBox } from "features/vote/submitPick";
 import { TitleBar } from "features/vote/title";
 import { Button } from "shared/ui/Button";
 
@@ -14,7 +14,7 @@ export const VoteCardSkeleton = ({
   max_choice,
 }: Partial<VoteDto>) => {
   return (
-    <div className={`${styles.cardContainer}`}>
+    <div className={`${styles.cardContainer}`} style={{ height: "20rem" }}>
       <section className={styles.topSection}>
         <TitleBar
           picture={owner?.picture}
@@ -22,13 +22,14 @@ export const VoteCardSkeleton = ({
           start_time={new Date()}
         />
       </section>
-      <ChoiceSubmitBox name={owner?.name} max_choice={max_choice} disabled />
-      <ChoiceContentBox
+      <ChoiceBox
+        disabled
         choice={choice}
         max_choice={max_choice}
+        userName={owner?.name}
         isOpenSubmit={false}
       />
-      <section className={styles.otherInfoBox}>
+      <section className={styles.otherInfoBox} style={{ opacity: 1 }}>
         <UpdateLike />
         <Participant />
         <Button className={styles.openDetailButton}>자세히</Button>

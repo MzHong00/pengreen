@@ -1,14 +1,13 @@
 import { useState, type MouseEvent } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-
 import { User } from "entities/user";
 import { VoteFormDto } from "entities/voteForm";
-import { SetTitle } from "features/voteForm/setTitle";
-import { SelectFormPage } from "features/voteForm/selectOptionForm";
+import { TitleBar } from "features/voteForm/setTitle";
+import { SelectFormPage } from "features/voteForm/selectFormPage";
 import {
-  getFormData,
-  getInvalidationItems,
-} from "features/voteForm/submitForm";
+  getEmptyFieldsFromForm,
+  getVoteFormData,
+} from "features/voteForm/validateForm";
 import { VoteFormValidation } from "widgets/voteFormValidation";
 
 import styles from "./voteForm.module.css";
@@ -16,46 +15,48 @@ import styles from "./voteForm.module.css";
 export const VoteForm = () => {
   const user = useQueryClient().getQueryData(["user"]) as User | undefined;
 
-  const [isOpenValidation, setIsOpenValidation] = useState<boolean>(false);
   const [formData, setFormData] = useState<Omit<VoteFormDto, "owner">>();
-  const [invalidationItems, setInvalidationItems] = useState<string[]>([]);
+  const [isOpenSubmit, setIsOpenSubmit] = useState<boolean>(false);
+  const [emptyVoteFields, setEmptyVoteFields] = useState<string[]>([]);
 
   const changePageHandler = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setIsOpenValidation((prev) => !prev);
+    setIsOpenSubmit((prev) => !prev);
   };
 
-  const validateFormHandler = (e: MouseEvent<HTMLInputElement>) => {
-    const formData = getFormData(e);
-    const invalidationItems = getInvalidationItems(formData);
+  const moveToSubmitPageHandler = (e: MouseEvent<HTMLInputElement>) => {
+    const formData = getVoteFormData(e);
+    const emptyVoteFields = getEmptyFieldsFromForm(formData);
 
     setFormData(formData);
-    setInvalidationItems(invalidationItems);
-    setIsOpenValidation((prev) => !prev);
+    setEmptyVoteFields(emptyVoteFields);
+    setIsOpenSubmit((prev) => !prev);
   };
-
+  
   return (
     <form className={styles.formContainer}>
       <div className={styles.formContent}>
-        <SetTitle picture={user?.picture} />
+        <TitleBar picture={user?.picture} />
         <SelectFormPage />
         <input
           type="button"
-          value="생성하기"
+          value="다음"
           className={styles.toConfirmPageButton}
-          onClick={validateFormHandler}
+          onClick={moveToSubmitPageHandler}
         />
       </div>
+
       <VoteFormValidation
         owner={user}
         formData={formData}
-        invalidationItems={invalidationItems}
-        setInvalidationItems={setInvalidationItems}
+        emptyVoteFields={emptyVoteFields}
+        setEmptyVoteFields={setEmptyVoteFields}
         goBackHandler={changePageHandler}
         className={`${styles.vaildationContent} ${
-          isOpenValidation && styles.leftTransform
+          isOpenSubmit && styles.leftTransform
         }`}
       />
+
     </form>
   );
 };

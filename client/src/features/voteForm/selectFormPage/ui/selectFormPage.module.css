@@ -1,5 +1,5 @@
 .container {
-    height: 28rem;
+    height: 100%;
     display: flex;
     flex-direction: column;
     border-style: solid;
@@ -42,13 +42,13 @@
 .headerItemText {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     font-size: 0.875rem;
     color: #4b5563;
     gap: 0.75rem;
 }
 
 .page {
-    height: 25.5rem;
     padding: 0.75rem;
     display: flex;
     flex-direction: column;
@@ -58,16 +58,42 @@
     border-bottom-right-radius: 1rem;
     font-size: small;
     gap: 0.75rem;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
-.pageInner {
+.content {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1rem;
 }
 
-.backgroundWhite {
+.voteTypeContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.voteTypeContent {
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+
+.voteTypeButton {
+    padding-inline: 0.3rem;
+    padding-block: 0.1rem;
+    display: inline-block;
+    border-radius: inherit;
+    opacity: 0.5;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
+.activeTypeButton {
+    background-color: rgba(var(--base-color-blue), 0.2);
+    box-shadow: 0px 1px 2px #6b6b6b;
+    opacity: 1;
+}
+
+.bgWhite {
     background-color: white;
 }
 

@@ -1,19 +1,19 @@
 import { HTMLAttributes, useCallback, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { ChoiceDto, useUpdateUserPick } from "entities/vote/choice";
 import { type VoteDto } from "entities/vote/vote";
-import { useUserFetch } from "entities/user";
+import { User } from "entities/user";
 import { useUpdateLike } from "entities/vote/likes";
 import { VoteCover } from "features/vote/cover";
 import { UpdateLike } from "features/vote/updateLike";
 import { Participant } from "features/vote/readParticipants";
-import { ChoiceSubmitBox } from "features/vote/submitPick";
-import { ChoiceContentBox } from "features/vote/submitPick";
+import { ChoiceBox } from "features/vote/submitPick";
 import { TitleBar } from "features/vote/title";
 import { Button } from "shared/ui/Button";
 
 import styles from "./voteCard.module.css";
-import { Link } from "react-router-dom";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   voteList: VoteDto[] | undefined;
@@ -33,7 +33,8 @@ export const VoteCardList = ({ voteList = [], className, ...props }: Props) => {
 export const VoteCard = ({ vote }: { vote: VoteDto }) => {
   const [isOpenSubmit, setIsOpenSubmit] = useState<boolean>(false);
 
-  const { data: user } = useUserFetch();
+  const user = useQueryClient().getQueryData(["user"]) as User;
+
   const { mutate: mutateLike } = useUpdateLike(vote._id);
   const { mutate: mutatePick } = useUpdateUserPick(vote._id);
 
@@ -49,7 +50,7 @@ export const VoteCard = ({ vote }: { vote: VoteDto }) => {
       )?.pick,
     [user, vote.participants]
   );
-  
+
   const mutatePickHandler = useCallback(
     (event: React.MouseEvent<HTMLInputElement>) => {
       event.preventDefault();
@@ -89,17 +90,13 @@ export const VoteCard = ({ vote }: { vote: VoteDto }) => {
           />
         )}
 
-        <ChoiceSubmitBox
-          isOpenSubmit={isOpenSubmit}
-          name={user?.name}
+        <ChoiceBox
           myPick={myPick}
-          max_choice={vote.max_choice}
-          onClickSubmit={mutatePickHandler}
-        />
-        <ChoiceContentBox
-          isOpenSubmit={isOpenSubmit}
+          userName={user?.name}
           choice={vote.choice}
           max_choice={vote.max_choice}
+          isOpenSubmit={isOpenSubmit}
+          onClickSubmit={mutatePickHandler}
         />
       </form>
 

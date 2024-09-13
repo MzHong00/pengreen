@@ -1,2 +1,1 @@
-export { ChoiceContentBox } from "./ui/choiceContentBox";
-export { ChoiceSubmitBox } from "./ui/choiceSubmitBox";
+export { ChoiceBox } from "./ui/choiceBox";
